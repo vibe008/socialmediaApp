@@ -80,7 +80,7 @@ const Discover = ({ navigation }) => {
                    data={intrestText}
                    renderItem={(element) =>{
                     return(
-                        <View style={styles.list_content}> 
+                        <View style={styles.list_content} > 
                         <Text style={styles.intrest_text}>{element.item.text} </Text>
                         </View>
                     )

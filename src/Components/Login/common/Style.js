@@ -3,20 +3,20 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
     outerconatiner: {
         // backgroundColor:"red",
-        flex:1,
-        display:"flex",
-        alignItems:"center",
-        
+        flex: 1,
+        display: "flex",
+        alignItems: "center",
+
     },
 
     innerconatiner: {
-    // backgroundColor:"gray",
-    width:"80%",
-     textAlign:"start",
-    marginTop:90,
-    height:"70%",
-    display:"flex",
-    justifyContent:"center"
+        // backgroundColor:"gray",
+        width: "80%",
+        textAlign: "start",
+        marginTop: 90,
+        height: "70%",
+        display: "flex",
+        justifyContent: "center"
 
     },
 
@@ -34,32 +34,49 @@ export default StyleSheet.create({
         marginTop: 10,
         // backgroundColor:"red",
         alignItems: "center",
-        
+
     },
     checkboxContainer: {
-//   backgroundColor:'green',
-  display:'flex',
-  flexDirection:"row",
-  marginTop:20
+        //   backgroundColor:'green',
+        display: 'flex',
+        flexDirection: "row",
+        marginTop: 20
     },
-    
-    images:{
-        width:20,
-        height:20,
+
+    images: {
+        width: 20,
+        height: 20,
         resizeMode: 'contain'
 
     },
     button: {
-        backgroundColor:"#237fe4",
-        padding:10,
-        width:100,
-        display:"flex",
-        alignItems:"center",
-        borderRadius:3,
-        marginTop:12
+        backgroundColor: "#237fe4",
+        padding: 10,
+        width: 100,
+        display: "flex",
+        alignItems: "center",
+        borderRadius: 3,
+        marginTop: 12
     },
-    containerStyle:{
-        borderColor:"white",
+    containerStyle: {
+        borderColor: "white",
         // backgroundColor:"white"
+    },
+    showdate: {
+        display: "flex"
+    },
+    hidedate: {
+        display: "none"
+    },
+    hideDeletpic:{
+        display:"none"
+    },
+    showDeletpic:{
+        display:"flex",
+        flexDirection:"row",
+        // backgroundColor:"red",
+        justifyContent:"space-between"
+
     }
+
 })

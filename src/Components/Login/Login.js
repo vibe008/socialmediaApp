@@ -1,65 +1,82 @@
-import { Text, View, TextInput, Button, Image, TouchableOpacity, Alert } from 'react-native'
+import { Text, View, TextInput, Button, Image, TouchableOpacity, Alert, FlatList } from 'react-native'
 import Checkbox from 'expo-checkbox';
 import React, { useState, useEffect } from 'react'
 import styles from './common/Style';
 import Br_lines from './common/Br_lines'
-
-import Otp from '../Login/Otp'
-import { mouseProps } from 'react-native-web/dist/cjs/modules/forwardedProps';
 // import Front_page from './Front_page';
-
-const Login = ({navigation}) => {
+const Login = ({ navigation }) => {
     const [value, setValue] = useState("")
     const [isChecked, setChecked] = useState(false);
     const [visible, setVisible] = useState(false);
 
+    const [selectedCallingCode, setSelectedCallingCode] = useState('90');
 
 
 
- 
-    
-const toggleotp = ()=>{
-    // const  num = "1234567891"
-    // const newval = value
-    // if(newval.length === num.length){
-    //     navigation.navigate("Otp")
-    //     console.log(num);
-    //     // setOtppage(false)
-    //     console.log(value)
-    // }
-    // else{
-    //     console.log(num.length)
+    const toggleotp = () => {
+        // const  num = "1234567891"
+        // const newval = value
+        // if(newval.length === num.length){
+        //     navigation.navigate("Otp")
+        //     console.log(num);
+        //     // setOtppage(false)
+        //     console.log(value)
+        // }
+        // else{
+        //     console.log(num.length)
 
-    //     console.log("not");
-    //     Alert.alert("plese enter valid number")
-    //     // setOtppage(true)
-    // }
-    // setValue("")
-    navigation.navigate("Otp")
+        //     console.log("not");
+        //     Alert.alert("plese enter valid number")
+        //     // setOtppage(true)
+        // }
+        // setValue("")
+        navigation.navigate("Otp")
 
-}
-const [countryinfo ,  setCountryInfo] = useState(null)
+    }
 
-    useEffect(() => { 
 
-        fetch("https://restcountries.com/v2/all").then(res=>{
-            console.log(res)
-            res.json().then(r=>{
-                // console.log(r)
-                const ourArr = r.map(item=>{
-                    return {
-                        flag : item.flags.svg,
-                        code : item.callingCodes[0]
-                    }
-                })
-                setCountryInfo(countryinfo=>countryinfo=ourArr)
-            })
-        })
+    const [countryinfo, setCountryInfo] = useState('')
+    const getCountry = async () => {
+        try {
+            const response = await fetch("https://restcountries.com/v2/all")
+            const json = await response.json();
+            // console.log(json)
+            setCountryInfo(json)
+            // const ourarr = json.map((item) => {
+            //     return {
+            //         flag: item.flags.svg,
+            //         code: item.callingCodes
+            //     }
+            //     setCountryInfo(countryinfo => countryinfo = ourarr)
+            // })
+        }
+        catch (error) {
+            console.error(error);
+        }
+    }
+
+    useEffect(() => {
+
+        // fetch("https://restcountries.com/v2/all").then(res => {
+        //     console.log(res)
+        //     res.json().then(r => {
+        //         // console.log(r)
+        //         const ourArr = r.map(item => {
+        //             return {
+        //                 flag: item.flags.svg,
+        //                 code: item.callingCodes[0]
+
+        //             }
+        //         })
+        //         setCountryInfo(countryinfo => countryinfo = ourArr)
+        //     })
+        // })
         // setTimeout(() => {
         //     setVisible(!visible);
         // }, 1000);
+        getCountry()
     }, []);
-    return ( 
+    return (
 
 
 
@@ -68,10 +85,10 @@ const [countryinfo ,  setCountryInfo] = useState(null)
             {/* {visible ? "login": "landingpage" } */}
 
 
-           {/* {otppage ?  "" : "" } */}
-           
-        {/* //    login page start */}
-           <View style={styles.outerconatiner}>
+            {/* {otppage ?  "" : "" } */}
+
+            {/* //    login page start */}
+            <View style={styles.outerconatiner}>
                 <View style={styles.innerconatiner}>
 
                     <View>
@@ -86,18 +103,44 @@ const [countryinfo ,  setCountryInfo] = useState(null)
                         <View >
                             <Image style={styles.images}
                                 source={{
-                                    // uri: 'https://flagcdn.com/16x12/in.png ',
-                                    uri:countryinfo? countryinfo[0].svg:"https://flagcdn.com/16x12/in.png"
+                                    uri: 'https://flagcdn.com/16x12/in.png ',
+                                    // uri:countryinfo[1].flags.png
+                                    // uri:countryinfo? countryinfo.flags:"https://flagcdn.com/16x12/in.png"
                                 }} />
-
+                            <FlatList
+                                data={countryinfo}
+                                renderItem={(element) => {
+                                    return (
+                                        <>
+                                        <Image
+                                            source={
+                                                {
+                                                    // uri:element.item.flags.png
+                                                    uri: 'https://flagcdn.com/16x12/in.png '
+                                                } 
+                                            }
+                                        />
+                                        {/* <Text>{element.item.name}</Text>
+                                        <Text>{element.item.callingCodes}</Text> */}
+                                        </>
+                                    )
+                                }}
+                            // renderItem={({item})=>(
+                            //     <Image 
+                            //     source={{
+                            //         uri: item.flags.svg
+                            //     }}
+                            // )}
+                            />
                         </View>
+
                         <View style={{ marginLeft: 10 }}><Text>+91</Text></View>
                         <TextInput
-                        value={value}
+                            value={value}
                             style={{ marginLeft: 10 }}
                             placeholder='9714545454'
-                            onChangeText={(value)=> setValue(value)}
-                            
+                            onChangeText={(value) => setValue(value)}
+
                         />
                     </View>
 
@@ -124,18 +167,18 @@ const [countryinfo ,  setCountryInfo] = useState(null)
                             alignItems: "center"
                         }}
                         onPress={toggleotp}
-                        
+
                         disabled={isChecked === false}
                     >
                         <Text>NEXT</Text>
                     </TouchableOpacity>
 
                 </View>
-            </View> 
+            </View>
             {/* // login page end */}
-            
-            
-            
+
+
+
 
 
 

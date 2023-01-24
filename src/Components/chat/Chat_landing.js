@@ -15,7 +15,9 @@ const Chat_landing = ({ navigation }) => {
                     <Entypo name="menu" size={32} color="black" />
                 </View>
                 <View style={{ position: "relative" }}>
-                    <FontAwesome name="bell" size={30} color="black" />
+                    <FontAwesome name="bell" size={30} color="black" 
+                    onPress={()=> navigation.navigate("Notification")}
+                    />
                     <View style={{ position: "absolute", backgroundColor: "blue", width: 17, height: 17, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: 17 / 2, top: 0, right: 0 }}>
                         <Text style={{ fontSize: 10, color: "white" }}>3</Text>
                     </View>

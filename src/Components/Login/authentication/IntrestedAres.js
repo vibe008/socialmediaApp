@@ -1,13 +1,16 @@
-import { ScrollView, Text, TextInput, TouchableOpacity, View , style } from 'react-native'
+import { ScrollView, Text, TextInput, TouchableOpacity, View, style } from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker';
 import styles from '../common/Style'
 import Br_lines from '../common/Br_lines'
-import DateTimePickerModal from "react-native-modal-datetime-picker";
 import MultiSelect from 'react-native-multiple-select';
+import { EvilIcons } from '@expo/vector-icons';
+// morden date picker
+import DatePicker from 'react-native-modern-datepicker';
+// import DateTimePickerModal from "react-native-modal-datetime-picker";
+// import DatePicker from 'react-native-date-picker';
+import React, { useState, useRef } from 'react'
 
-import React, { useState , useRef } from 'react'
-
-const IntrestedAres = () => {
+const IntrestedAres = ({navigation}) => {
 
 
   const multiSelect = useRef(null)
@@ -17,57 +20,68 @@ const IntrestedAres = () => {
     name: 'Football'
   }, {
     id: 'a0s0a8ssbsd',
-    name: 'Ogun'
+    name: 'Movies'
   }, {
     id: '16hbajsabsd',
-    name: 'Calabar'
+    name: 'Travelling'
   }, {
     id: 'nahs75a5sg',
-    name: 'Lagos'
+    name: 'Cooking'
   }, {
     id: '667atsas',
-    name: 'Maiduguri'
+    name: 'Music'
   }, {
     id: 'hsyasajs',
-    name: 'Anambra'
+    name: 'Reading'
   }, {
     id: 'djsjudksjd',
-    name: 'Benue'
+    name: 'Games'
   }, {
     id: 'sdhyaysdj',
-    name: 'Kaduna'
-  }, {
-    id: 'suudydjsjd',
-    name: 'Abuja'
-    }
-];
+    name: 'Gardning'
+  }, 
+  ];
 
-const [selectedIntrestIte ,setSelectedIntrestIte] = useState([])
+  const [selectedIntrestIte, setSelectedIntrestIte] = useState([])
 
-const onSelectedItemsChange =(item)=>{
+  const onSelectedItemsChange = (item) => {
 
-  setSelectedIntrestIte((i)=>i = item)
-  
-}
-const clearSelectedCategories =()=>{
-  multiSelect.current._removeAllItems()
-}
+    setSelectedIntrestIte((i) => i = item)
+
+  }
+  const clearSelectedCategories = () => {
+    multiSelect.current._removeAllItems()
+  }
+
+
+  // date function picker
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [date, setDate] = useState("")
 
   const showDatePicker = () => {
-    setDatePickerVisibility(true);
+    setDatePickerVisibility(!isDatePickerVisible);
   };
-  const handleConfirm = (date) => {
-    console.log("A date has been picked: ", date);
-    hideDatePicker();
+  const handleConfirm = (datedata) => {
+    console.log("A date has been picked: ", datedata);
+    // setDate(datedata)
+    // console.log(date);
   };
   const hideDatePicker = () => {
     setDatePickerVisibility(false);
   };
 
+  // date picker end
 
-  
+  // morden date picker
+
+  const [selectedDate, setSelectedDate] = useState('Date Of Birth');
+
+  const onSelectDate = (morderdate) => {
+    setSelectedDate(morderdate)
+    console.log("morden", morderdate);
+  }
+
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
@@ -76,17 +90,10 @@ const clearSelectedCategories =()=>{
   ]);
 
 
-  const [areaOpen, setAreaOpen] = useState(false)
-  const [itrestvalue, setItrestvalue] = useState(null);
-  const [intrest, setIntrest] = useState([
-    { label: 'football', value: 'football' },
-    { label: 'cricket', value: 'cricket' },
-    { label: 'music', value: 'music' },
-    { label: 'coocking', value: 'coocking' },
-  ]);
-// const multiSelect = []
+
+  // const multiSelect = []
   return (
-    <View style={[styles.outerconatiner  , {position:"absolute" , top:100 ,   width:"100%"} ] }>
+    <View style={[styles.outerconatiner, { position: "absolute", top: 100, width: "100%" }]}>
       <View style={styles.innerconatiner}>
 
         <View>
@@ -99,100 +106,58 @@ const clearSelectedCategories =()=>{
         </View>
 
 
-        <View style={{ marginTop: 12, }}>
-          <View style={{ zIndex: 999 }}>
-            {/* <DropDownPicker
-              placeholder='Enter Your  Intrest'
-              style={styles.containerStyle}
-              open={areaOpen}
-              value={values}
-              items={intrest}
-              setOpen={setAreaOpen}
-              setValues={setValues}
-              setIntrest={setIntrest}
-              // theme="DARK"
-              multiple={true}
-              mode="BADGE"
-            /> */}
+{/* main div */}
+        <View style={{ marginTop:20}}>
 
+          <View style={{}}>
+            {/* multiselect */}
 
-
-            {/* <DropDownPicker  
-              placeholder='Enter Your  Intrest'
-              
-              // theme="DARK"
-              multiple={true}
-              mode="BADGE"
-              badgeDotColors={["#e76f51", "#00b4d8", "#e9c46a", "#e76f51", "#8ac926", "#00b4d8", "#e9c46a"]}
-            /> */}
-
-
-
-
-<MultiSelect
-          
-          hideTags
-          items={intrestItem}
-          uniqueKey="id"
-          ref={multiSelect}
-          onSelectedItemsChange={onSelectedItemsChange}
-          selectedItems={selectedIntrestIte}
-          selectText="Enter you itrest"
-          searchInputPlaceholderText="Search Intrest"
-          onChangeInput={ (text)=> console.log(text)}
-          // altFontFamily="ProximaNova-Light"
-          // styleDropdownMenu= {{display:"none"}}
-          // styleDropdownMenuSubsection={{display:"none"}}
-          // styleListContainer={{display:"none"}}
-          tagRemoveIconColor="blue"
-          tagBorderColor="blue"
-          tagTextColor="blue"
-          onToggleList={(e)=>{console.log('toggle',e);return false}}
-          hideDropdown={false}
-          selectedItemTextColor="#CCC"
-          selectedItemIconColor="#CCC"
-          itemTextColor="#000"
-          displayKey="name"
-          searchInputStyle={{ color: '#000' , height:50 ,  }}
-          submitButtonColor="#CCC"
-          submitButtonText="Submit"
-          onClearSelector={clearSelectedCategories}
-          onPress={()=>console.log('onpress')}
-          fixedHeight={false}
-          flatListProps={{intrestItem}}
-          // styleDropdownMenu={{padding:9}}
-          styleItemsContainer={{height:150}}
-          tagContainerStyle={{backgroundColor:'white' , height:35   }}
-          styleIndicator={{color:"#000"}}
-          // styleDropdownMenu={{height:50 , borderRadius:10 , backgroundColor:"red"}}
-          styleInputGroup={{ paddingRight:10 , borderRadius:8}}
-          // styleListContainer={{backgroundColor:"red"}}
-          // styleMainWrapper={{ borderRadius:19}}
-          // styleRowList={{backgroundColor:'gray'}}
-          styleDropdownMenuSubsection={{ borderRadius:7 , height:50 , paddingLeft:10}}
-          styleTextDropdown={{marginLeft:9}}
-          // styleSelectorContainer={{marginLeft:9}}
-          // styleItemContainer={{backgroundColor:"red"}}
-          
-          // searchInputStyle={{paddingRight:40}}
-          // styleIndicator="red"
-          
-
-        />
-        {multiSelect.current && selectedIntrestIte.length ? <ScrollView style={{minHeight:50 , maxHeight:100}}>
-
-        <View>
-          {multiSelect.current.getSelectedItemsExt(selectedIntrestIte)}
-        </View>
-        </ScrollView> :null}
+            <MultiSelect
+              hideTags
+              items={intrestItem}
+              uniqueKey="id"
+              ref={multiSelect}
+              onSelectedItemsChange={onSelectedItemsChange}
+              selectedItems={selectedIntrestIte}
+              selectText="Enter you itrest"
+              searchInputPlaceholderText="Search Intrest"
+              onChangeInput={(text) => console.log(text)}
+              onToggleList={(e) => { console.log('toggle', e); return false }}
+              hideDropdown={false}
+              selectedItemTextColor="#CCC"
+              selectedItemIconColor="#CCC"
+              itemTextColor="#000"
+              displayKey="name"
+              searchInputStyle={{ color: '#000', height: 50, }}
+              onClearSelector={clearSelectedCategories}
+              onPress={() => console.log('onpress')}
+              fixedHeight={false}
+              flatListProps={{ intrestItem }}
+              styleItemsContainer={{ height: 150 }}
+              tagContainerStyle={{ backgroundColor: 'skyblue', height: 35 }}
+              styleInputGroup={{ paddingRight: 10, borderRadius: 8 }}
+              styleDropdownMenuSubsection={{ borderRadius: 7, height: 50, paddingLeft: 10 }}
+              styleTextDropdown={{ marginLeft: 9 }}
+              // button
+              submitButtonColor="skyblue"
+              submitButtonText="Submit"
+              // tag
+              tagRemoveIconColor="white"
+              tagBorderColor="skyblue"
+              tagTextColor="white"
+            />
+            {multiSelect.current && selectedIntrestIte.length ?
+              <ScrollView style={{ minHeight: 50, maxHeight: 100 }}>
+                <View>
+                  {multiSelect.current.getSelectedItemsExt(selectedIntrestIte)}
+                </View>
+              </ScrollView> : null}
           </View>
 
-          <View style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between"
-          }}>
-            <View style={{ width: "50%", marginTop: 10, zIndex: 99 }}>
+          <View style={{display:"flex", flexDirection:"row", }} >
+            {/* flex gender datepicker */}
+            <View style={{width:"50%"}}>
+              {/* gender */}
               <DropDownPicker
                 placeholder='Gender'
                 style={styles.containerStyle}
@@ -205,19 +170,47 @@ const clearSelectedCategories =()=>{
               />
             </View>
 
-            <TouchableOpacity onPress={showDatePicker}>
-              <DateTimePickerModal
-                isVisible={isDatePickerVisible}
-                mode="date"
-                onConfirm={handleConfirm}
-                onCancel={hideDatePicker}
-              />
-              <Text>hi</Text>
+              {/* date picker */}
+            <View style={{backgroundColor:"white"  , display:"flex" , alignItems:"center", justifyContent:'space-evenly' , flexDirection:"row" , marginLeft:20 , borderRadius:6 , width:"42%"}}>
+            <TouchableOpacity onPress={showDatePicker}
+            style={{marginLeft:10}}
+            >
+            <Text>{selectedDate}</Text>
             </TouchableOpacity>
+
+            <View>
+              {isDatePickerVisible ?   <EvilIcons name="chevron-up" size={32}/>: <EvilIcons name="chevron-down" size={32}/>}
+            
+            </View>
+
+            </View>
+            {/* dateoicker end */}
+
           </View>
+          {/* gender flex */}
 
         </View>
+        {/* main div */}
 
+        <DatePicker
+                options={{
+                  backgroundColor: 'white',
+                  textHeaderColor: 'skyblue',
+                  textDefaultColor: 'skyblue',
+                  selectedTextColor: 'skyblue',
+                  mainColor: '#F4722B',
+                  textSecondaryColor: 'skycolor',
+                  borderColor: 'skyblue',
+                  position: "absolute",
+                  top: 40
+                }}
+                style={[isDatePickerVisible ?   styles.showdate: styles.hidedate ]}
+                mode="calendar"
+                onSelectedChange={onSelectDate}
+              /> 
+
+
+        {/* buttotn */}
         <View style={{ marginTop: 12 }}>
           <TouchableOpacity
             style={{
@@ -227,10 +220,12 @@ const clearSelectedCategories =()=>{
               color: "white ",
               zIndex: -1
             }}
+            onPress={()=> navigation.navigate("Test")}
           >
             <Text>CONTINUE</Text>
           </TouchableOpacity>
         </View>
+        {/* button end */}
 
       </View>
     </View>
