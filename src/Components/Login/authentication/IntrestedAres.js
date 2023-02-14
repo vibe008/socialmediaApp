@@ -2,12 +2,9 @@ import { ScrollView, Text, TextInput, TouchableOpacity, View, style } from 'reac
 import DropDownPicker from 'react-native-dropdown-picker';
 import styles from '../common/Style'
 import Br_lines from '../common/Br_lines'
-import MultiSelect from 'react-native-multiple-select';
+// import MultiSelect from 'react-native-multiple-select';
 import { EvilIcons } from '@expo/vector-icons';
-// morden date picker
 import DatePicker from 'react-native-modern-datepicker';
-// import DateTimePickerModal from "react-native-modal-datetime-picker";
-// import DatePicker from 'react-native-date-picker';
 import React, { useState, useRef } from 'react'
 
 const IntrestedAres = ({navigation}) => {
@@ -18,9 +15,9 @@ const IntrestedAres = ({navigation}) => {
   const intrestItem = [{
     id: '92iijs7yta',
     name: 'Football'
-  }, {
+  }, {                         
     id: 'a0s0a8ssbsd',
-    name: 'Movies'
+    name: 'Movies'                            
   }, {
     id: '16hbajsabsd',
     name: 'Travelling'
@@ -46,7 +43,7 @@ const IntrestedAres = ({navigation}) => {
 
   const onSelectedItemsChange = (item) => {
 
-    setSelectedIntrestIte((i) => i = item)
+    setSelectedIntrestIte(item)
 
   }
   const clearSelectedCategories = () => {
@@ -57,23 +54,15 @@ const IntrestedAres = ({navigation}) => {
   // date function picker
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [date, setDate] = useState("")
+
 
   const showDatePicker = () => {
     setDatePickerVisibility(!isDatePickerVisible);
   };
-  const handleConfirm = (datedata) => {
-    console.log("A date has been picked: ", datedata);
-    // setDate(datedata)
-    // console.log(date);
-  };
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
-  };
 
-  // date picker end
 
-  // morden date picker
+
+
 
   const [selectedDate, setSelectedDate] = useState('Date Of Birth');
 
@@ -93,7 +82,7 @@ const IntrestedAres = ({navigation}) => {
 
   // const multiSelect = []
   return (
-    <View style={[styles.outerconatiner, { position: "absolute", top: 100, width: "100%" }]}>
+    <View style={styles.outerconatiner}>
       <View style={styles.innerconatiner}>
 
         <View>
@@ -107,12 +96,12 @@ const IntrestedAres = ({navigation}) => {
 
 
 {/* main div */}
-        <View style={{ marginTop:20}}>
+        <View style={{ marginTop:20 , }}>
 
           <View style={{}}>
             {/* multiselect */}
 
-            <MultiSelect
+            {/* <MultiSelect
               hideTags
               items={intrestItem}
               uniqueKey="id"
@@ -121,7 +110,7 @@ const IntrestedAres = ({navigation}) => {
               selectedItems={selectedIntrestIte}
               selectText="Enter you itrest"
               searchInputPlaceholderText="Search Intrest"
-              onChangeInput={(text) => console.log(text)}
+              
               onToggleList={(e) => { console.log('toggle', e); return false }}
               hideDropdown={false}
               selectedItemTextColor="#CCC"
@@ -133,10 +122,10 @@ const IntrestedAres = ({navigation}) => {
               onPress={() => console.log('onpress')}
               fixedHeight={false}
               flatListProps={{ intrestItem }}
-              styleItemsContainer={{ height: 150 }}
+              styleItemsContainer={{ height: 150  ,}}
               tagContainerStyle={{ backgroundColor: 'skyblue', height: 35 }}
               styleInputGroup={{ paddingRight: 10, borderRadius: 8 }}
-              styleDropdownMenuSubsection={{ borderRadius: 7, height: 50, paddingLeft: 10 }}
+              styleDropdownMenuSubsection={{ borderRadius: 7, height: 50, paddingLeft: 10 ,}}
               styleTextDropdown={{ marginLeft: 9 }}
               // button
               submitButtonColor="skyblue"
@@ -145,13 +134,8 @@ const IntrestedAres = ({navigation}) => {
               tagRemoveIconColor="white"
               tagBorderColor="skyblue"
               tagTextColor="white"
-            />
-            {multiSelect.current && selectedIntrestIte.length ?
-              <ScrollView style={{ minHeight: 50, maxHeight: 100 }}>
-                <View>
-                  {multiSelect.current.getSelectedItemsExt(selectedIntrestIte)}
-                </View>
-              </ScrollView> : null}
+            /> */}
+
           </View>
 
           <View style={{display:"flex", flexDirection:"row", }} >
@@ -214,7 +198,7 @@ const IntrestedAres = ({navigation}) => {
         <View style={{ marginTop: 12 }}>
           <TouchableOpacity
             style={{
-              backgroundColor: "skyblue", padding: 10
+              backgroundColor: "#227ee3", padding: 10
               , display: "flex", alignItems: "center",
               borderRadius: 3,
               color: "white ",
@@ -222,10 +206,16 @@ const IntrestedAres = ({navigation}) => {
             }}
             onPress={()=> navigation.navigate("Test")}
           >
-            <Text>CONTINUE</Text>
+            <Text style={{color:"white" , fontSize:20 , fontWeight:"bold"}}>CONTINUE</Text>
           </TouchableOpacity>
         </View>
         {/* button end */}
+      {multiSelect.current && selectedIntrestIte.length ?
+              <ScrollView style={{  marginTop:0}} >
+                <View style={{}}>
+                  {multiSelect.current.getSelectedItemsExt(selectedIntrestIte)}
+                </View>
+              </ScrollView> : null}
 
       </View>
     </View>

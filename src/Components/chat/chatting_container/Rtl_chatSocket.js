@@ -1,151 +1,76 @@
-import {
-    Image, Text, View, FlatList, SafeAreaView, TextInput, Button, TouchableOpacity, NativeModules,
-    LayoutAnimation, Modal,ImageBackground
-} from 'react-native'
+import { Image, StyleSheet, Text, View, FlatList, SafeAreaView, TextInput, Alert, Button } from 'react-native'
 import React, { useState, useRef, useEffect } from 'react'
-const { UIManager } = NativeModules;
-UIManager.setLayoutAnimationEnabledExperimental &&
-    UIManager.setLayoutAnimationEnabledExperimental(true);
+import * as  Audio from 'expo-av';
 import moment from 'moment/moment';
 // import { AntDesign } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AntDesign } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import styles from '../../styles/Rtl_style'
 import { Entypo } from '@expo/vector-icons';
-import { Audio } from 'expo-av';
 import { Ionicons } from '@expo/vector-icons';
 import IntrestBar from './IntrestBar';
-import { isSearchBarAvailableForCurrentPlatform } from 'react-native-screens';
-import Slide from './Slide';
-// import { GestureDetector, TouchableOpacity } from 'react-native-gesture-handler';
-import Inputslide from './Inputslide';
-import Animated from 'react-native-reanimated';
-import FinalSlider from './FinalSlider';
-// import { Modal } from 'react-native-web';
+
+import io from 'socket.io-client'
+
+const socket = io.connect("http://localhost:3000")
 const Rtl_chat = ({ navigation }) => {
-    const [left, setLeft] = useState(-183)
     const [showbar, setShowbar] = useState(false)
     const [inputvalue, setInputvalue] = useState("")
     const [newvalue, setNewvalue] = useState("")
     const [inputmenu, setInputmenu] = useState(false)
+
+
+
+    const [socket] = useState(() => io("http://localhost:3000"));
+    const [message, setMessage] = useState("");
+    const [messages, setMessages] = useState([]);
+  
+    useEffect(() => {
+      socket.on("message", message => {
+        setMessages([...messages, message]);
+      });
+    }, []);
+  
+    const sendMessage = () => {
+      socket.emit("message", message);
+      setMessage("");
+    };
+
+    // const [currentMessage, setCurrentMessage] = useState("");
+    // const [messageList, setMessageList] = useState([]);
+
+    // const sendMessage = async () => {
+    //     if (currentMessage !== "") {
+    //       const messageData = {
+            
+    //         author: username,
+    //         message: currentMessage,
+    //         time:
+    //           new Date(Date.now()).getHours() +
+    //           ":" +
+    //           new Date(Date.now()).getMinutes(),
+    //         };
+    //         console.log(time);
+    
+    //       await socket.emit("send_message", messageData);
+    //       setMessageList((list) => [...list, messageData]);
+    //       setCurrentMessage("");
+    //     }
+    //   };
+    
+    //   useEffect(() => {
+    //     socket.on("receive_message", (data) => {
+    //       setMessageList((list) => [...list, data]);
+    //     });
+    //   }, [socket]);
+
+    const [username , setUsername] = useState("")
     const flatlistref = useRef()
-    const [modalVisible, setModalVisible] = useState(false);
-
-    // start recording
-    const [recording, setRecording] = useState();
-    const [playsound, setPlaySound] = useState([]);
-    const [soundmessage, setSoundmessage] = useState("")
-    const barOpen = () => {
-        // setShowbar(!showbar)
-        LayoutAnimation.spring();
-        if(left === -183){
-            setLeft(-67)
-        }
-        else{
-            setLeft(-183)
-        }
-        console.log("uuuuuuuu")
-        setModalVisible(true)
-    }
-    const barClose = ()=>{
-        LayoutAnimation.spring();
-        setLeft(-183)
-        setModalVisible(false)
-    }
-    async function startRecording() {
-        try {
-            const permission = await Audio.requestPermissionsAsync();
-            if (permission.status === "granted") {
-                await Audio.setAudioModeAsync({
-                    allowsRecordingIOS: true,
-                    playsInSilentModeIOS: true,
-                });
-                console.log('Starting recording..');
-                const { recording } = await Audio.Recording.createAsync(Audio.RecordingOptionsPresets.HIGH_QUALITY
-                );
-
-                setRecording(recording);
-                console.log('Recording started');
-            }
-
-            else {
-                setSoundmessage("not granted")
-            }
-        }
-        catch (err) {
-            console.error('Failed to start recording', err);
-        }
-    }
-
-    async function stopRecording() {
-        console.log('Stopping recording..');
-        setRecording(undefined);
-        await recording.stopAndUnloadAsync();
-        const updateRecordings = [...playsound];
-        const { sound, status } = await recording.createNewLoadedSoundAsync()
-        updateRecordings.push({
-            sound: sound,
-            duration: getDurationFormatted(status.duration),
-            file: recording.getURI()
-        })
-        setPlaySound(updateRecordings)
-
-        // await Audio.setAudioModeAsync({
-        //     allowsRecordingIOS: false,
-        // });
-        // const uri = recording.getURI();
-        // console.log('Recording stopped and stored at', uri);
-    }
-    function getDurationFormatted(data) {
-        const minutes = data / 1000 / 60;
-        const minutesDisplay = Math.floor(minutes);
-        const second = Math.round((minutes - minutesDisplay) * 60);
-        const displaysecond = second < 10 ? `0${second}  ` : second;
-        return `${minutesDisplay}: ${displaysecond} `;
-    }
-
-    function getRecordingdLine() {
-        return playsound.map((recordingline, index) => {
-            return (
-                <View key={index}>
-                    <Text> recording {index + 1} - {recordingline.duration}</Text>
-                    <Button onPress={() => recordingline.sound.replayAsync()} title="play"></Button>
-                </View>
-            )
-        })
-    }
-
-
-    // play recording
-
-
-    // async function playSound() {
-    //     console.log('Loading Sound');
-    //     const { sound } = await Audio.Sound.createAsync(require('../../../../assets/john-wick.mp3')
-    //     );
-    //     setPlaySound(sound);
-
-    //     console.log('Playing Sound');
-    //     await sound.playAsync();
-    // }
-
-    // React.useEffect(() => {
-    //     return playsound
-    //         ? () => {
-    //             console.log('Unloading Sound');
-    //             playsound.unloadAsync();
-    //         }
-    //         : undefined;
-    // }, [playsound]);
 
 
 
 
-
-
-
-
-    //  const user = Alert.prompt("jj")
     const currUser = 'shbsd33bjj44'
     const friendUser = 'shbsd33bjj45'
     const convertTime = (date) => {
@@ -156,7 +81,9 @@ const Rtl_chat = ({ navigation }) => {
         let time = moment(date).format('dddds')
         return time
     }
-    const message = [
+
+    // const message = [ change thhis
+    const messagedata = [
         {
             id: 1,
             senderId: 'shbsd33bjj44',
@@ -239,26 +166,45 @@ const Rtl_chat = ({ navigation }) => {
         },
     ]
 
+    // const [renderMsg, setRenderMsg] = useState(message)
+    // const newMsg = () => {
+    //     setRenderMsg((curData) => {
+    //         return [...curData, { id: Math.random().toString(36).slice(2), senderId: currUser, receiverId: friendUser, message: inputvalue, date: new Date(), time: new Date() }]
+    //     })
+
+    //     setInputvalue('')
+    // }
+    // useEffect(() => {
+    //     // console.log(renderMsg)
+    //     const timeout = setTimeout(() => {
+    //         flatlistref.current.scrollToEnd({ animated: true })
+    //     }, 100)
+
+    // }, [renderMsg])
 
 
 
-
-    const [renderMsg, setRenderMsg] = useState(message)
-    const newMsg = () => {
-        setRenderMsg((curData) => {
-            return [...curData, { id: Math.random().toString(36).slice(2), senderId: currUser, receiverId: friendUser, message: inputvalue, date: new Date(), time: new Date() }]
-        })
-
-        setInputvalue('')
-    }
-    useEffect(() => {
-        // console.log(renderMsg)
-        const timeout = setTimeout(() => {
-            flatlistref.current.scrollToEnd({ animated: true })
-        }, 100)
-
-    }, [renderMsg])
-
+    const UserName = async () => {
+        try {
+            const username = await AsyncStorage.getItem('username');
+          
+            return username;
+            // console.log( "nunm",phoneNumber);
+            // setUserNumber(phoneNumber)
+        } catch (error) {
+            console.log(error);
+        }
+      }
+    
+      useEffect(() => {
+        const getUsername = async () => {
+            const userName = await UserName();
+            setUsername(userName)
+            // setUserNumber(userName);
+            console.log(userName)
+        }
+        getUsername();
+    }, []);
 
     const ShowInputMenu = () => {
         setInputmenu(!inputmenu)
@@ -285,7 +231,7 @@ const Rtl_chat = ({ navigation }) => {
                 </View>
 
                 <View style={styles.Screeen_Name_container}>
-                    <Text style={{ fontSize: 15, fontWeight: "500" }}>screen name</Text>
+                    <Text style={{ fontSize: 15, fontWeight: "500" }}>{username}</Text>
                 </View>
 
                 <View style={styles.user_percentage}>
@@ -297,8 +243,8 @@ const Rtl_chat = ({ navigation }) => {
 
             {/* messages container  */}
             <FlatList
-                // style={{zIndex:99}}
-                data={renderMsg}
+                style={{}}
+                data={message }
                 showsVerticalScrollIndicator={false}
                 ref={flatlistref}
                 // keyExtractor={message.id}
@@ -307,23 +253,20 @@ const Rtl_chat = ({ navigation }) => {
                         <View style={styles.chat_container}>
 
 
-                            {(element.item.senderId == currUser) ?
+                            {(element.item.username === element.item.author ) ?
 
                                 /* right message */
 
                                 <View style={styles.right_chat_container}>
-
                                     <View style={styles.Right_message}>
                                         <View style={styles.inne_righ_message}>
-                                            {/* <Text>{soundmessage}</Text>
-                                    {getRecordingdLine()} */}
-                                            <Text style={{ color: "white" }} >
-
+                                            <Text style={{color:"white"}} >
+                                                {/* {newvalue} */}
                                                 {element.item.message}
                                             </Text>
                                         </View>
                                         <View style={styles.right_time}>
-                                            <Text style={{ fontSize: 12, marginRight: 6, color: "white" }}>{convertTime(element.item.time)}</Text>
+                                            <Text style={{ fontSize: 12, marginRight: 6 , color:"white" }}>{convertTime(element.item.time)}</Text>
                                             {/* <Ionicons name="ios-eye-outline" size={14} color="black" /> */}
                                             <Ionicons name="ios-eye-off-outline" size={14} color="white" />
                                         </View>
@@ -364,8 +307,7 @@ const Rtl_chat = ({ navigation }) => {
             <View style={styles.input_main_container}>
                 <View style={styles.input_container}>
 
-                    <View style={styles.plusicon}   >
-
+                    <View style={styles.plusicon} >
                         {inputmenu ? <Entypo name="cross" size={24} color="white" onPress={ShowInputMenu} /> : <AntDesign name="plus" size={24} color="white" onPress={ShowInputMenu} />}
 
 
@@ -374,26 +316,23 @@ const Rtl_chat = ({ navigation }) => {
                         title={recording ? 'Stop Recording' : 'Start Recording'}
                         onPress={recording ? stopRecording : startRecording}
                     /> */}
-                    {/* <Button title="Play Sound" onPress={playSound} /> */}
                     <View>
                         <TextInput style={styles.send_massage_container}
                             placeholder='Message....'
-                            value={inputvalue}
-                            onChangeText={(value) => {
-                                setInputvalue(value)
+                            value={currentMessage}
+                            onChangeText={(event) => {
+                                setCurrentMessage(event);
                             }}
-                            onSubmitEditing={() => { newMsg() }}
+                            onSubmitEditing={sendMessage}
                         />
                     </View>
                     <View style={styles.cam_emoji_section}>
 
 
-                        {/* <View style={styles.open_camera} >
-                            <Feather name="camera" size={24} color="black" />
-                        </View> */}
-                        <View style={styles.emoji}>
+                         <Button title="Send" onPress={sendMessage} />
+                        {/* <View style={styles.emoji}>
                             <Entypo name="emoji-happy" size={24} color="black" />
-                        </View>
+                        </View> */}
                     </View>
                 </View>
 
@@ -420,25 +359,16 @@ const Rtl_chat = ({ navigation }) => {
                     </View>
                 </View>
             </View>
-
-            <TouchableOpacity style={[ left === -67 ? styles.openforsidebar : styles.closeforsidebar]}onPress={barClose}>
-
-            </TouchableOpacity>
+            {/* input container end */}
 
 
-            <View style={[styles.showbar, { left: left }]} >
-            <ImageBackground source={require("../../../../assets/slidbgedit2.png")} resizeMode="cover" style={{height:"100%", width:"100%"}}> 
-            <FinalSlider/>
-            </ImageBackground>
-            {/* <Inputslide /> */}
-                <TouchableOpacity onPress={barOpen}
-                    style={{ position: "absolute", top: 0, left: 110 , height:110 , width:30 , justifyContent:"center", alignItems:"center"  }}>
-                        {left === -183 ? <Ionicons name='chevron-forward' size={30} color={"black"} /> :<Ionicons name='chevron-back' size={30} color={"black"} /> }
-                    
-                </TouchableOpacity>
+            {/* <View style={styles.itrest_bar}>
+                <IntrestBar showbar={showbar} />
             </View>
-         
-                {/* <TouchableOpacity onPress={barOpen} */}
+
+            <View style={styles.view_bar}>
+                <AntDesign name="doubleleft" size={24} color="orange" onPress={toggleBar} />
+            </View> */}
         </SafeAreaView>
 
     </>

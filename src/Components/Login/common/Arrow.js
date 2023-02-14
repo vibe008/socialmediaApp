@@ -27,6 +27,6 @@ const styles = StyleSheet.create({    mainheading: {
 arrow: {
     fontSize: 35,
     // marginLeft: 4,
-    color:"blue",
+    color:"#227ee3",
     
 },})

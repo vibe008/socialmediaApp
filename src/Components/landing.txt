@@ -1,0 +1,23 @@
+        <View style={{ width: '98%', marginLeft: "auto", flex: 1, marginRight: "auto", backgroundColor: "red", position: "relative" }}>
+
+            
+            <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", width: "90%", marginLeft: "auto", marginRight: "auto", }}>
+
+                <TouchableOpacity style={{ borderBottomColor: "#227ee3", borderBottomWidth: 3, borderRadius: 2 , borderTopColor:"red" ,borderTopWidth:3 }}   >
+                    <Text style={{ fontSize: 16, fontWeight: "500", padding: 8 }}>Discover</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    onPress={() => navigation.navigate("Chat")}>
+                    <Text style={{ fontSize: 16, fontWeight: "500", padding: 8 }}>Chat</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    onPress={() => { navigation.navigate('Circle') }}
+                >
+                    <Text style={{ fontSize: 16, fontWeight: "500", padding: 8 }}>Circle</Text>
+                </TouchableOpacity>
+            </View>
+
+            <Discover navigation={navigation} />
+        </View>

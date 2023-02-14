@@ -1,0 +1,113 @@
+import { StyleSheet, Text, View, TouchableOpacity , Image} from 'react-native'
+import React, { useState } from 'react'
+import { Entypo } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+const Header = ({navigation}) => {
+    const [menubar, setMenubar] = useState("")
+    const toggleMenuBar = () => {
+        setMenubar(!menubar)
+    }
+
+    return (
+        <>
+        <View>
+            <View style={{ display: "flex", justifyContent: "space-between", flexDirection: "row", alignItems: "center", width: '98%', marginLeft: "auto", position:"relative" }}>
+                <TouchableOpacity onPress={toggleMenuBar}>
+                    <Entypo name="menu" size={32} color="black" />
+                </TouchableOpacity>
+                <View style={{ position: "relative", paddingRight: 12 }}>
+                    <FontAwesome name="bell" size={24} color="black"
+                        onPress={() => navigation.navigate("Notification")}
+                    />
+                    <View style={{ position: "absolute", backgroundColor: "#227ee3", width: 17, height: 17, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: 17 / 2, top: 0, right: 0 }}>
+                        <Text style={{ fontSize: 10, color: "white" }}>3</Text>
+                    </View>
+                </View>
+                
+            </View>
+            <View style={[menubar ? styles.showmwnu : styles.hidemenu]}>
+                <TouchableOpacity onPress={toggleMenuBar}
+                    style={{ position: "absolute", top: -15, right: -15 , zIndex:9999, borderRadius:51 , backgroundColor:"white"}}
+                >
+                    <Entypo name='circle-with-cross' size={30} />
+                </TouchableOpacity>
+
+                <View style={styles.profile_section}>
+                    <View style={{ alignItems:"center" , padding:10}}>
+                        <Image style={{ height: 50, width: 50, borderRadius: 50 / 2, resizeMode: 'contain', }}
+                            source={{
+                                uri: "https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                            }} />
+                        <Text style={styles.text}>
+                            Rahul singh
+                        </Text>
+                        <Text style={styles.text}>
+                            xxyyzz
+                        </Text>
+                    </View>
+                    <View style={styles.intrest_section}>
+                        <Text style={{color:"white"}}>music, sports, Films , Games </Text>
+                    </View>
+                </View>
+
+            </View>
+            </View>
+        </>
+    )
+}
+
+export default Header
+
+const styles = StyleSheet.create({
+    showmwnu: {
+        display: "flex",
+        backgroundColor: "#dddde3",
+        height: "100%",
+        width: "70%",
+        position: "absolute",
+        top: 0,
+        left: 0,
+        // borderWidth:2,
+        borderColor:"#227ee3",
+        borderRadius:5,
+        zIndex:999
+        // borderRightWidth:2,
+        // borderBottomWidth:2,
+        // borderTopWidth:2
+        // paddingTop:50
+
+    },
+    hidemenu: {
+
+        display: "none"
+    },
+    profile_section: {
+        display: "flex",
+        flexDirection: "row",
+        // margin: 10,
+        justifyContent: "space-between",
+        // marginLeft:10,
+        backgroundColor:"#227ee3",
+        height:200,
+        color:"white",
+        
+    },
+    intrest_section: {
+        width: "50%",
+        padding:10
+        // backgroundColor: "green"
+    },
+    text:{
+        fontWeight:"500",
+        fontSize:15,
+        color:"white"
+    }
+})
+
+
+
+
+
+
+
+style={{ position: "absolute", backgroundColor: "#227ee3", width: 17, height: 17, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: 17 / 2, top: 0, right: 0 }}

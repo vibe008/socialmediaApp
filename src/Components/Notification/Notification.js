@@ -1,6 +1,7 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { FlatList, StyleSheet, Text, View ,TouchableOpacity} from 'react-native'
+import React,{useState} from 'react'
 import { FontAwesome } from '@expo/vector-icons';
+import {Feather} from '@expo/vector-icons'
 
 const Notification = () => {
 
@@ -66,14 +67,26 @@ const Notification = () => {
             time: "5:50:50"
         },
 
-
     ]
+
+    const [listitem, setlistitem] = useState(notification)
+
+
+    const deleteRow = (rowKey) => {
+        const newData = [...listitem];
+        // const newData = [...listitem,{ screenname : Math.random().toString(36).slice(2)}];
+        const prevIndex = listitem.findIndex(item => item.key === rowKey);
+        newData.splice(prevIndex, 1);
+        setlistitem(newData);
+    };
+
     return (
         <>
             <View style={styles.notification_Container} >
                 <FlatList
+                showsVerticalScrollIndicator={false}
                 // style={{marginBottom:20, backgroundColor:"red",height:"90%"}}
-                data={notification}
+                data={listitem}
                 renderItem={(element)=>{
                     return(
                         <View style={styles.Notification_box}>
@@ -94,6 +107,11 @@ const Notification = () => {
                                 </Text>
                             </View>
                         </View>
+                        <TouchableOpacity style={{ position:"absolute" , top:-4 , right:-2 }}
+                        onPress={deleteRow}
+                        >
+                            <Feather name="delete" size={20} color="skyblue" />
+                        </TouchableOpacity>
                     </View>
                     )
                 }}
@@ -142,8 +160,8 @@ const styles = StyleSheet.create({
 
     },
     message_time: {
-        // backgroundColor:'green',
-        width: "90%",
+        // backgroundColor:'red',
+        width: "85%",
         marginLeft: 10
     }
 })

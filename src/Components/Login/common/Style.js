@@ -6,58 +6,24 @@ export default StyleSheet.create({
         flex: 1,
         display: "flex",
         alignItems: "center",
-
+        position: "relative"
     },
 
     innerconatiner: {
         // backgroundColor:"gray",
         width: "80%",
-        textAlign: "start",
-        marginTop: 90,
+        // textAlign: "start",
+        // // marginTop: 90,
+
+        // display: "flex",
+        // justifyContent: "center",
         height: "70%",
-        display: "flex",
-        justifyContent: "center"
+        position: "absolute",
+        top: 150
 
     },
 
-    mainheading: {
-        fontSize: 30,
-        fontWeight: '500',
-        color: 'black'
-    },
-    inputcontainer: {
-        display: 'flex',
-        flexDirection: "row",
-        borderBottomColor: "gray",
-        borderBottomWidth: 1,
-        padding: 10,
-        marginTop: 10,
-        // backgroundColor:"red",
-        alignItems: "center",
 
-    },
-    checkboxContainer: {
-        //   backgroundColor:'green',
-        display: 'flex',
-        flexDirection: "row",
-        marginTop: 20
-    },
-
-    images: {
-        width: 20,
-        height: 20,
-        resizeMode: 'contain'
-
-    },
-    button: {
-        backgroundColor: "#237fe4",
-        padding: 10,
-        width: 100,
-        display: "flex",
-        alignItems: "center",
-        borderRadius: 3,
-        marginTop: 12
-    },
     containerStyle: {
         borderColor: "white",
         // backgroundColor:"white"
@@ -68,14 +34,14 @@ export default StyleSheet.create({
     hidedate: {
         display: "none"
     },
-    hideDeletpic:{
-        display:"none"
+    hideDeletpic: {
+        display: "none"
     },
-    showDeletpic:{
-        display:"flex",
-        flexDirection:"row",
+    showDeletpic: {
+        display: "flex",
+        flexDirection: "row",
         // backgroundColor:"red",
-        justifyContent:"space-between"
+        justifyContent: "space-between"
 
     }
 

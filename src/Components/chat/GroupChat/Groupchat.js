@@ -9,9 +9,10 @@ const Groupchat = ({ navigation }) => {
     const currentUSer = "a1b1c1"
     const OtherCircleUser = "a2b2c2"
 
-    const [inputmenu, setInputmenu] = useState(false)
+    const [inputmenu, setInputmenu] = useState("")
   const ShowInputMenu = ()=>{
     setInputmenu(!inputmenu)
+    console.log("toggle")
   }
     const message = [
         {
@@ -96,14 +97,14 @@ const Groupchat = ({ navigation }) => {
             <View style={styles.group_header}>
 
                 <View>
-                    <AntDesign name="arrowleft" size={32} onPress={() => navigation.goBack()} color={"blue"} />
+                    <AntDesign name="arrowleft" size={32} onPress={() => navigation.goBack()} color={"#227ee3"} />
                 </View>
                 <View style={styles.header_images}>
-                    <Image style={{ height: 50, width: 50, borderRadius: 50 / 2, resizeMode: 'contain', }}
+                    {/* <Image style={{ height: 50, width: 50, borderRadius: 50 / 2, resizeMode: 'contain', }}
                         source={{
                             uri: "https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                         }}
-                    />
+                    /> */}
                 </View>
                 <View style={styles.group_Name_container}>
                     <Text style={{ fontSize: 15, fontWeight: "500", color: "black" }}>Group name</Text>
@@ -117,6 +118,7 @@ const Groupchat = ({ navigation }) => {
                 <FlatList 
                     data={message}
                     ref={flatlistref}
+                    showsVerticalScrollIndicator={false}
                     renderItem={({ item, index }) => {
                         return (
 
@@ -127,9 +129,9 @@ const Groupchat = ({ navigation }) => {
                                          /* // right message current user show here */
                                     <View style={{  width: "100%", marginTop: 20 }}>
                                         <View style={{ maxWidth: "70%", alignSelf: "flex-end", marginRight: 10, marginBottom:10 ,  }}>
-                                            <View style={{ backgroundColor: "pink", padding: 20, borderTopRightRadius: 10, borderBottomRightRadius: 6, borderBottomLeftRadius: 10, position: "relative" , backgroundColor:'orange'}}>
+                                            <View style={{  padding: 20, borderTopRightRadius: 10, borderBottomRightRadius: 6, borderBottomLeftRadius: 10, position: "relative" , backgroundColor:'#227ee3'}}>
                                                 <View>
-                                                    <Text>{item.message}</Text>
+                                                    <Text style={{color:"white"}}>{item.message}</Text>
                                                 </View>
                                                 <View style={{ position: "absolute", top: -30, left: -20, height: 50, width: 50, borderRadius: 50 / 2 }}>
                                                     <Image style={{ height: "100%", width: "100%", borderRadius: 50 / 2 }}
@@ -148,7 +150,7 @@ const Groupchat = ({ navigation }) => {
                                     /* // left message othercircle user show here */
                                 <View style={{  width: "100%", marginTop: 20 }}>
                                 <View style={{ maxWidth: "70%", alignSelf: "flex-start", marginLeft: 10, marginBottom:10 ,  }}>
-                                    <View style={{ backgroundColor: "pink", padding: 20, borderTopRightRadius: 10, borderBottomRightRadius: 6, borderBottomLeftRadius: 10, position: "relative" , backgroundColor:"white" }}>
+                                    <View style={{ padding: 20, borderTopRightRadius: 10, borderBottomRightRadius: 6, borderBottomLeftRadius: 10, position: "relative" , backgroundColor:"white" }}>
                                         <View>
                                             <Text>{item.message}</Text>
                                         </View>
@@ -179,7 +181,7 @@ const Groupchat = ({ navigation }) => {
                 <View style={styles.input_container}>
 
                     <View style={styles.plusicon} >
-                        {inputmenu ?  <Entypo name="cross" size={24} color="black" />: <AntDesign name="plus" size={24} color="black"   onPress={ShowInputMenu}/> }
+                        {inputmenu ?  <Entypo name="cross" size={24} color="white" />: <AntDesign name="plus" size={24} color="white"   onPress={ShowInputMenu}/> }
                         
                         
                     </View>

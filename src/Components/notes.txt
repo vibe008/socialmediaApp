@@ -1,78 +1,39 @@
-import {
-    Image, Text, View, FlatList, SafeAreaView, TextInput, Button, TouchableOpacity, NativeModules,
-    LayoutAnimation, Modal,ImageBackground
-} from 'react-native'
+import { Image, StyleSheet, Text, View, FlatList, SafeAreaView, TextInput, Alert, Button } from 'react-native'
 import React, { useState, useRef, useEffect } from 'react'
-const { UIManager } = NativeModules;
-UIManager.setLayoutAnimationEnabledExperimental &&
-    UIManager.setLayoutAnimationEnabledExperimental(true);
+import * as  Audio from 'expo-av';
 import moment from 'moment/moment';
 // import { AntDesign } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import styles from '../../styles/Rtl_style'
 import { Entypo } from '@expo/vector-icons';
-import { Audio } from 'expo-av';
 import { Ionicons } from '@expo/vector-icons';
 import IntrestBar from './IntrestBar';
-import { isSearchBarAvailableForCurrentPlatform } from 'react-native-screens';
-import Slide from './Slide';
-// import { GestureDetector, TouchableOpacity } from 'react-native-gesture-handler';
-import Inputslide from './Inputslide';
-import Animated from 'react-native-reanimated';
-import FinalSlider from './FinalSlider';
-// import { Modal } from 'react-native-web';
 const Rtl_chat = ({ navigation }) => {
-    const [left, setLeft] = useState(-183)
     const [showbar, setShowbar] = useState(false)
     const [inputvalue, setInputvalue] = useState("")
     const [newvalue, setNewvalue] = useState("")
     const [inputmenu, setInputmenu] = useState(false)
     const flatlistref = useRef()
-    const [modalVisible, setModalVisible] = useState(false);
+    
 
-    // start recording
-    const [recording, setRecording] = useState();
-    const [playsound, setPlaySound] = useState([]);
-    const [soundmessage, setSoundmessage] = useState("")
-    const barOpen = () => {
-        // setShowbar(!showbar)
-        LayoutAnimation.spring();
-        if(left === -183){
-            setLeft(-67)
-        }
-        else{
-            setLeft(-183)
-        }
-        console.log("uuuuuuuu")
-        setModalVisible(true)
-    }
-    const barClose = ()=>{
-        LayoutAnimation.spring();
-        setLeft(-183)
-        setModalVisible(false)
-    }
+    const [recording, setRecording] = React.useState();
+
     async function startRecording() {
         try {
-            const permission = await Audio.requestPermissionsAsync();
-            if (permission.status === "granted") {
-                await Audio.setAudioModeAsync({
-                    allowsRecordingIOS: true,
-                    playsInSilentModeIOS: true,
-                });
-                console.log('Starting recording..');
-                const { recording } = await Audio.Recording.createAsync(Audio.RecordingOptionsPresets.HIGH_QUALITY
-                );
+            console.log('Requesting permissions..');
+            await Audio.requestPermissionsAsync();
+            await Audio.setAudioModeAsync({
+                allowsRecordingIOS: true,
+                playsInSilentModeIOS: true,
+            });
 
-                setRecording(recording);
-                console.log('Recording started');
-            }
-
-            else {
-                setSoundmessage("not granted")
-            }
-        }
-        catch (err) {
+            console.log('Starting recording..');
+            const { recording } = await Audio.Recording.createAsync(Audio.RecordingOptionsPresets.HIGH_QUALITY
+            );
+            setRecording(recording);
+            console.log('Recording started');
+        } catch (err) {
             console.error('Failed to start recording', err);
         }
     }
@@ -81,69 +42,12 @@ const Rtl_chat = ({ navigation }) => {
         console.log('Stopping recording..');
         setRecording(undefined);
         await recording.stopAndUnloadAsync();
-        const updateRecordings = [...playsound];
-        const { sound, status } = await recording.createNewLoadedSoundAsync()
-        updateRecordings.push({
-            sound: sound,
-            duration: getDurationFormatted(status.duration),
-            file: recording.getURI()
-        })
-        setPlaySound(updateRecordings)
-
-        // await Audio.setAudioModeAsync({
-        //     allowsRecordingIOS: false,
-        // });
-        // const uri = recording.getURI();
-        // console.log('Recording stopped and stored at', uri);
+        await Audio.setAudioModeAsync({
+            allowsRecordingIOS: false,
+        });
+        const uri = recording.getURI();
+        console.log('Recording stopped and stored at', uri);
     }
-    function getDurationFormatted(data) {
-        const minutes = data / 1000 / 60;
-        const minutesDisplay = Math.floor(minutes);
-        const second = Math.round((minutes - minutesDisplay) * 60);
-        const displaysecond = second < 10 ? `0${second}  ` : second;
-        return `${minutesDisplay}: ${displaysecond} `;
-    }
-
-    function getRecordingdLine() {
-        return playsound.map((recordingline, index) => {
-            return (
-                <View key={index}>
-                    <Text> recording {index + 1} - {recordingline.duration}</Text>
-                    <Button onPress={() => recordingline.sound.replayAsync()} title="play"></Button>
-                </View>
-            )
-        })
-    }
-
-
-    // play recording
-
-
-    // async function playSound() {
-    //     console.log('Loading Sound');
-    //     const { sound } = await Audio.Sound.createAsync(require('../../../../assets/john-wick.mp3')
-    //     );
-    //     setPlaySound(sound);
-
-    //     console.log('Playing Sound');
-    //     await sound.playAsync();
-    // }
-
-    // React.useEffect(() => {
-    //     return playsound
-    //         ? () => {
-    //             console.log('Unloading Sound');
-    //             playsound.unloadAsync();
-    //         }
-    //         : undefined;
-    // }, [playsound]);
-
-
-
-
-
-
-
 
     //  const user = Alert.prompt("jj")
     const currUser = 'shbsd33bjj44'
@@ -239,10 +143,6 @@ const Rtl_chat = ({ navigation }) => {
         },
     ]
 
-
-
-
-
     const [renderMsg, setRenderMsg] = useState(message)
     const newMsg = () => {
         setRenderMsg((curData) => {
@@ -297,7 +197,7 @@ const Rtl_chat = ({ navigation }) => {
 
             {/* messages container  */}
             <FlatList
-                // style={{zIndex:99}}
+                style={{}}
                 data={renderMsg}
                 showsVerticalScrollIndicator={false}
                 ref={flatlistref}
@@ -312,18 +212,15 @@ const Rtl_chat = ({ navigation }) => {
                                 /* right message */
 
                                 <View style={styles.right_chat_container}>
-
                                     <View style={styles.Right_message}>
                                         <View style={styles.inne_righ_message}>
-                                            {/* <Text>{soundmessage}</Text>
-                                    {getRecordingdLine()} */}
-                                            <Text style={{ color: "white" }} >
-
+                                            <Text style={{color:"white"}} >
+                                                {/* {newvalue} */}
                                                 {element.item.message}
                                             </Text>
                                         </View>
                                         <View style={styles.right_time}>
-                                            <Text style={{ fontSize: 12, marginRight: 6, color: "white" }}>{convertTime(element.item.time)}</Text>
+                                            <Text style={{ fontSize: 12, marginRight: 6 , color:"white" }}>{convertTime(element.item.time)}</Text>
                                             {/* <Ionicons name="ios-eye-outline" size={14} color="black" /> */}
                                             <Ionicons name="ios-eye-off-outline" size={14} color="white" />
                                         </View>
@@ -364,8 +261,7 @@ const Rtl_chat = ({ navigation }) => {
             <View style={styles.input_main_container}>
                 <View style={styles.input_container}>
 
-                    <View style={styles.plusicon}   >
-
+                    <View style={styles.plusicon} >
                         {inputmenu ? <Entypo name="cross" size={24} color="white" onPress={ShowInputMenu} /> : <AntDesign name="plus" size={24} color="white" onPress={ShowInputMenu} />}
 
 
@@ -374,7 +270,6 @@ const Rtl_chat = ({ navigation }) => {
                         title={recording ? 'Stop Recording' : 'Start Recording'}
                         onPress={recording ? stopRecording : startRecording}
                     /> */}
-                    {/* <Button title="Play Sound" onPress={playSound} /> */}
                     <View>
                         <TextInput style={styles.send_massage_container}
                             placeholder='Message....'
@@ -420,25 +315,17 @@ const Rtl_chat = ({ navigation }) => {
                     </View>
                 </View>
             </View>
-
-            <TouchableOpacity style={[ left === -67 ? styles.openforsidebar : styles.closeforsidebar]}onPress={barClose}>
-
-            </TouchableOpacity>
+            {/* input container end */}
 
 
-            <View style={[styles.showbar, { left: left }]} >
-            <ImageBackground source={require("../../../../assets/slidbgedit2.png")} resizeMode="cover" style={{height:"100%", width:"100%"}}> 
-            <FinalSlider/>
-            </ImageBackground>
-            {/* <Inputslide /> */}
-                <TouchableOpacity onPress={barOpen}
-                    style={{ position: "absolute", top: 0, left: 110 , height:110 , width:30 , justifyContent:"center", alignItems:"center"  }}>
-                        {left === -183 ? <Ionicons name='chevron-forward' size={30} color={"black"} /> :<Ionicons name='chevron-back' size={30} color={"black"} /> }
-                    
-                </TouchableOpacity>
+            <View style={{position:"absolute" , top:90 , left:90}}>
+                {/* <IntrestBar showbar={showbar} /> */}
+                <IntrestBar/>
             </View>
-         
-                {/* <TouchableOpacity onPress={barOpen} */}
+
+            {/* <View style={styles.view_bar}>
+                <AntDesign name="doubleleft" size={24} color="orange" onPress={toggleBar} />
+            </View> */}
         </SafeAreaView>
 
     </>

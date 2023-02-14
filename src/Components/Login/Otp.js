@@ -4,7 +4,7 @@ import OTPTextInput from 'react-native-otp-textinput';
 import Arrow from './common/Arrow';
 import Br_lines from './common/Br_lines';
 import styles from './common/Style'
-
+import styles1 from '../styles/Login_style'
 const Otp = ({ navigation }) => {
 
     const otpInput = useRef(null);
@@ -22,7 +22,7 @@ const Otp = ({ navigation }) => {
         otpInput.current.clear()
         if (otpval == '1234') {
             navigation.navigate('Chathome') 
-            console.log(otpval)
+            console.log("new page",otpval)
         }
         else {
             navigation.navigate('Auth')
@@ -55,7 +55,7 @@ const Otp = ({ navigation }) => {
                     /> */}
 
                     <OTPTextInput
-                        tintColor="blue"
+                        tintColor="#227ee3"
                         defaultValue={otpval}
                         // value={otpval}
                         handleTextChange={(value)=>{
@@ -68,13 +68,13 @@ const Otp = ({ navigation }) => {
                 </View>
 
                 <TouchableOpacity
-                    style={styles.button}
+                    style={styles1.verifybutton}
                     onPress={VerifyOtp}
                 // onPress={() => navigation.navigate('Rtlchat')}
                 >
 
 
-                    <Text>VERIFY</Text>
+                    <Text style={{color:"white" , fontSize:20 , fontWeight:"bold"}}>VERIFY</Text>
                 </TouchableOpacity>
 
             </View>
