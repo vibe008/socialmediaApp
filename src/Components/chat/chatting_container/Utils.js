@@ -1,42 +1,39 @@
 import React, { useState } from 'react';
-import { View, Text, Modal, TouchableOpacity } from 'react-native';
+import { FlatList, Text, TouchableOpacity, View , StyleSheet , Modal} from 'react-native';
 
-const items = [
-  { key: 1, title: 'Item 1' },
-  { key: 2, title: 'Item 2' },
-  { key: 3, title: 'Item 3' },
-];
+
 
 const App = () => {
+ const myArray = [
+  { id: 1, name: "apple" },
+  { id: 2, name: "banana" },
+  { id: 3, name: "orange" },
+ ]
   const [selectedItem, setSelectedItem] = useState(null);
-
-  const handleOpenModal = item => {
+  const handleItemPress = (item) => {
     setSelectedItem(item);
   };
-
-  const handleCloseModal = () => {
-    setSelectedItem(null);
-  };
-
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Modal
-        visible={selectedItem !== null}
-        animationType="slide"
-        onRequestClose={handleCloseModal}
-      >
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Text>{selectedItem ? selectedItem.title : ''}</Text>
-          <TouchableOpacity onPress={handleCloseModal}>
-            <Text>Close</Text>
-          </TouchableOpacity>
-        </View>
+  const ModalComponent = () => {
+    return (
+      <Modal visible={!!selectedItem} onRequestClose={() => setSelectedItem(null)}>
+        <Text>{selectedItem?.key} ui</Text>
       </Modal>
-      {items.map(item => (
-        <TouchableOpacity key={item.key} onPress={() => handleOpenModal(item)}>
-          <Text>{item.title}</Text>
+    );
+  };
+  return (
+    <View style={{marginTop:90 , marginLeft:90}}>
+  <View>
+    <FlatList
+      data={myArray}
+      keyExtractor={(item) => item.key}
+      renderItem={({ item }) => (
+        <TouchableOpacity onPress={() => handleItemPress(item)}>
+          <Text>{item.name}</Text>
         </TouchableOpacity>
-      ))}
+      )}
+    />
+    <ModalComponent />
+  </View>
     </View>
   );
 };

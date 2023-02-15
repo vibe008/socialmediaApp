@@ -12,6 +12,7 @@ const Chat_landing = ({ navigation }) => {
         <>
             <View style={{ backgroundColor: "white", paddingTop: 50, flex: 1, }}>
                 <Header navigation={navigation} />
+                
                 <Discover navigation={navigation} />
             </View>
         </>

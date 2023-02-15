@@ -7,61 +7,61 @@ const Notification = () => {
 
     const notification = [
         {
-            notificationId: 1,
+            notificationId: "1",
             message: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam magni cupiditate quaerat.",
             date: "2023-1-12",
             time: "12:8:48"
         },
         {
-            notificationId: 2,
+            notificationId: "2",
             message: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
             date: "2023-1-9",
             time: "10:35:2"
         },
         {
-            notificationId: 3,
+            notificationId: "3",
             message: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.Lorem ipsum dolor sit amet consectetur,",
             date: "2022-12-28",
             time: "9:40:10"
         },
         {
-            notificationId: 4,
+            notificationId: "4",
             message: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.Lorem ipsum ",
             date: "2022-12-26",
             time: "12:8:48"
         },
         {
-            notificationId: 5,
+            notificationId: "5",
             message: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.Lorem ipsum dolor sit amet consectetur,",
             date: "2022-12-23",
             time: "9:40:10"
         },
         {
-            notificationId: 6,
+            notificationId: "6",
             message: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.Lorem ipsum dolor sit amet consectetur,adipisicing elit.Lorem ipsum dolor",
             date: "2022-12-20",
             time: "10:35:2"
         },
         {
-            notificationId: 7,
+            notificationId: "7",
             message: "Lorem ipsum dolor sit amet consectetur, ipsum dolor",
             date: "2022-12-15",
             time: "5:50:50"
         },
         {
-            notificationId: 8,
+            notificationId: "8",
             message: "Lorem ipsum dolor sit amet consectetur, ipsum dolor",
             date: "2022-12-15",
             time: "5:50:50"
         },
         {
-            notificationId: 9,
+            notificationId: "9",
             message: "Lorem ipsum dolor sit amet consectetur, ipsum dolor",
             date: "2022-12-15",
             time: "5:50:50"
         },
         {
-            notificationId: 10,
+            notificationId: "10",
             message: "Lorem ipsum dolor sit amet consectetur, ipsum dolor",
             date: "2022-12-15",
             time: "5:50:50"
@@ -70,24 +70,23 @@ const Notification = () => {
     ]
 
     const [listitem, setlistitem] = useState(notification)
+    const [renderid , setRenderid] = useState(null)
 
-
-    const deleteRow = (rowKey) => {
-        const newData = [...listitem];
-        // const newData = [...listitem,{ screenname : Math.random().toString(36).slice(2)}];
-        const prevIndex = listitem.findIndex(item => item.key === rowKey);
-        newData.splice(prevIndex, 1);
-        setlistitem(newData);
-    };
-
+const deleteRow = (itemid)=>{
+const updateList = listitem.filter(item => item.notificationId !== itemid)
+setRenderid(itemid)
+console.log(itemid)
+setlistitem(updateList)
+}
     return (
         <>
             <View style={styles.notification_Container} >
                 <FlatList
                 showsVerticalScrollIndicator={false}
+                keyExtractor={(item) => item.notificationId.toString()}
                 // style={{marginBottom:20, backgroundColor:"red",height:"90%"}}
                 data={listitem}
-                renderItem={(element)=>{
+                renderItem={({item})=>{
                     return(
                         <View style={styles.Notification_box}>
                         {/* icon */}
@@ -98,18 +97,17 @@ const Notification = () => {
                         <View style={styles.message_time}>
                             <View style={styles.Notification_message}>
                                 <Text style={{ fontWeight: "500", fontSize: 13 }}>
-                                    {element.item.message}
+                                    {item.message}
                                 </Text>
                             </View>
                             <View style={{ marginTop: 7 }}>
                                 <Text style={{ fontSize: 12, color: "skyblue" }}>
-                                    {element.item.date}    {element.item.time}
+                                    {item.date}    {item.time}
                                 </Text>
                             </View>
                         </View>
                         <TouchableOpacity style={{ position:"absolute" , top:-4 , right:-2 }}
-                        onPress={deleteRow}
-                        >
+                        onPress={()=> deleteRow(item.notificationId)}>
                             <Feather name="delete" size={20} color="skyblue" />
                         </TouchableOpacity>
                     </View>

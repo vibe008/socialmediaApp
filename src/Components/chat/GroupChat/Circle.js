@@ -133,7 +133,7 @@ const Circle = ({ navigation }) => {
                 <Header navigation={navigation} />
             <View style={styles.chat_inner_container}>
                 <View style={styles.active_link}>
-                    {/* <View style={styles.active_link_inner}>
+                    <View style={styles.active_link_inner}>
 
 
                         <TouchableOpacity onPress={() => navigation.navigate("Chathome")}>
@@ -149,7 +149,7 @@ const Circle = ({ navigation }) => {
                             style={{ borderBottomColor: "#227ee3", borderBottomWidth: 3, borderRadius: 2 }}>
                             <Text style={{ fontSize: 16, fontWeight: "500", padding: 8 }}>Circle</Text>
                         </TouchableOpacity>
-                    </View> */}
+                    </View>
 
                 </View>
 

@@ -59,7 +59,7 @@ const highlightbar1 = ()=>{
                         </View>
                     </View>
                 </View>
-                <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", width: "90%", marginLeft: "auto", marginRight: "auto", zIndex: -1 }}>
+                {/* <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", width: "90%", marginLeft: "auto", marginRight: "auto", zIndex: -1 }}>
 
                     <TouchableOpacity style={[lightbar ?  styles.showligth : styles.hidelight  ]} 
                      onPress={highlightbar}  >
@@ -79,7 +79,7 @@ const highlightbar1 = ()=>{
                     >
                         <Text style={{ fontSize: 16, fontWeight: "500", padding: 8 }}>Circle</Text>
                     </TouchableOpacity>
-                </View>
+                </View> */}
             </View>
         </>
     )

@@ -30,8 +30,26 @@ const Discover = ({ navigation }) => {
 
     return (
         <SafeAreaView style={styles.Discover_container}>
+                <View style={styles.active_link}>
+                    <View style={styles.active_link_inner}>
+                        <TouchableOpacity onPress={() => navigation.navigate("Chathome")}
+                        style={{ borderBottomColor: "#227ee3", borderBottomWidth: 3, borderRadius: 2 ,}}>
+                            <Text style={{ fontSize: 16, fontWeight: "500", padding: 8 }}>Discover</Text>
 
+                        </TouchableOpacity >
+                        <TouchableOpacity 
+                        onPress={() => navigation.navigate("Chat")}>
+                            <Text style={{ fontSize: 16, fontWeight: "500", padding: 8 }}>Chat</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate("Circle")}
+                          >
+                            <Text style={{ fontSize: 16, fontWeight: "500", padding: 8 }}>Circle</Text>
+                        </TouchableOpacity>
+                    </View>
+
+                </View>
             <View style={styles.scroll_container} >
+                
                 <View style={styles.vertical_container}>
                     <FlatList
                         style={styles.flatlist_container}
@@ -72,7 +90,7 @@ const styles = StyleSheet.create({
         flex: 1,
         // position: "relative",
         backgroundColor: "white",
-        zIndex:-1
+        zIndex:-1,
     },
 
     scroll_container: {
@@ -147,36 +165,19 @@ const styles = StyleSheet.create({
     backTextWhite: {
         color: '#FFF',
     },
-    rowFront: {
-        alignItems: 'center',
-        backgroundColor: '#CCC',
-        borderBottomColor: 'black',
-        borderBottomWidth: 1,
-        justifyContent: 'center',
-        height: 50,
+
+    active_link_inner: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        height: 40,
+        // width:"100%"
+        // backgroundColor:"green"
     },
-    rowBack: {
-        alignItems: 'center',
-        backgroundColor: '#DDD',
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        paddingLeft: 15,
-    },
-    backRightBtn: {
-        alignItems: 'center',
-        bottom: 0,
-        justifyContent: 'center',
-        position: 'absolute',
-        top: 0,
-        width: 75,
-    },
-    backRightBtnLeft: {
-        backgroundColor: 'blue',
-        right: 75,
-    },
-    backRightBtnRight: {
-        backgroundColor: 'red',
-        right: 0,
-    },
+    active_link:{
+        // backgroundColor:"red",
+        width:"96%",
+        marginHorizontal:6
+    }
 })
