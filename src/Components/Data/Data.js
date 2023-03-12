@@ -1251,3 +1251,88 @@
         "flag": "https://flagcdn.com/w320/zw.png"
     }
 ]
+
+export   const message = [
+    {
+        id: 1,
+        senderId: 'shbsd33bjj44',
+        receiverId: 'shbsd33bjj45',
+        date: '2023-01-16T06:51:56.247Z',
+        time: '2023-01-16T06:51:56.247Z',
+        message: "hii , how are you",
+        audiomsg : '../../../../assets/john-wick.mp3'
+    },
+    {
+        id: 2,
+        senderId: 'shbsd33bjj45',
+        receiverId: 'shbsd33bjj44',
+        date: '2023-01-16T06:51:56.247Z',
+        time: '2023-01-16T06:51:56.247Z',
+        message: "good",
+        audiomsg : '../../../../assets/john-wick.mp3'
+    },
+    {
+        id: 3,
+        senderId: 'shbsd33bjj44',
+        receiverId: 'shbsd33bjj45',
+        date: '2023-01-16T06:51:56.247Z',
+        time: '2023-01-16T06:51:56.247Z',
+        message: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum corporis aliquid mollitia!"
+    },
+    {
+        id: 4,
+        senderId: 'shbsd33bjj45',
+        receiverId: 'shbsd33bjj44',
+        date: '2023-01-16T06:51:56.247Z',
+        time: '2023-01-16T06:51:56.247Z',
+        message: "Lorem ipsum dolor sit amet consectetur adipisicing elit. "
+    },
+    {
+        id: 5,
+        senderId: 'shbsd33bjj45',
+        receiverId: 'shbsd33bjj44',
+        date: '2023-01-16T06:51:56.247Z',
+        time: '2023-01-16T06:51:56.247Z',
+        message: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum corporis aliquid "
+    },
+    {
+        id: 6,
+        senderId: 'shbsd33bjj44',
+        receiverId: 'shbsd33bjj45',
+        date: '2023-01-16T06:51:56.247Z',
+        time: '2023-01-16T06:51:56.247Z',
+        message: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum "
+    },
+    {
+        id: 7,
+        senderId: 'shbsd33bjj45',
+        receiverId: 'shbsd33bjj44',
+        date: '2023-01-16T06:51:56.247Z',
+        time: '2023-01-16T06:51:56.247Z',
+        message: "Lorem ipsum dolor sit amet consectetur  "
+    },
+    {
+        id: 8,
+        senderId: 'shbsd33bjj45',
+        receiverId: 'shbsd33bjj44',
+        date: '2023-01-16T06:51:56.247Z',
+        time: '2023-01-16T06:51:56.247Z',
+        message: "Lorem ipsum dolor sit amet consectetur  "
+    },
+    {
+        id: 9,
+        senderId: 'shbsd33bjj44',
+        receiverId: ' shbsd33bjj45',
+        date: '2023-01-16T06:51:56.247Z',
+        time: '2023-01-16T06:51:56.247Z',
+        message: "Lorem ipsum dolor sit amet consectetur  "
+    },
+    {
+        id: 10,
+        senderId: 'shbsd33bjj44',
+        receiverId: 'shbsd33bjj45',
+        date: '2023-01-16T06:51:56.247Z',
+        time: '2023-01-16T06:51:56.247Z',
+        message: "Lorem ipsum dolor sit amet consectetur  "
+    },
+]

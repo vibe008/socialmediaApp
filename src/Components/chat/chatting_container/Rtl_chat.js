@@ -35,127 +35,6 @@ const Rtl_chat = ({ navigation }) => {
     const [recording, setRecording] = useState();
     const [playsound, setPlaySound] = useState([]);
     const [soundmessage, setSoundmessage] = useState("")
-    const barOpen = () => {
-        // setShowbar(!showbar)
-        LayoutAnimation.spring();
-        if(left === -183){
-            setLeft(-67)
-        }
-        else{
-            setLeft(-183)
-        }
-        console.log("uuuuuuuu")
-        setModalVisible(true)
-    }
-    const barClose = ()=>{
-        LayoutAnimation.spring();
-        setLeft(-183)
-        setModalVisible(false)
-    }
-    async function startRecording() {
-        try {
-            const permission = await Audio.requestPermissionsAsync();
-            if (permission.status === "granted") {
-                await Audio.setAudioModeAsync({
-                    allowsRecordingIOS: true,
-                    playsInSilentModeIOS: true,
-                });
-                console.log('Starting recording..');
-                const { recording } = await Audio.Recording.createAsync(Audio.RecordingOptionsPresets.HIGH_QUALITY
-                );
-
-                setRecording(recording);
-                console.log('Recording started');
-            }
-
-            else {
-                setSoundmessage("not granted")
-            }
-        }
-        catch (err) {
-            console.error('Failed to start recording', err);
-        }
-    }
-
-    async function stopRecording() {
-        console.log('Stopping recording..');
-        setRecording(undefined);
-        await recording.stopAndUnloadAsync();
-        const updateRecordings = [...playsound];
-        const { sound, status } = await recording.createNewLoadedSoundAsync()
-        updateRecordings.push({
-            sound: sound,
-            duration: getDurationFormatted(status.duration),
-            file: recording.getURI()
-        })
-        setPlaySound(updateRecordings)
-
-        // await Audio.setAudioModeAsync({
-        //     allowsRecordingIOS: false,
-        // });
-        // const uri = recording.getURI();
-        // console.log('Recording stopped and stored at', uri);
-    }
-    function getDurationFormatted(data) {
-        const minutes = data / 1000 / 60;
-        const minutesDisplay = Math.floor(minutes);
-        const second = Math.round((minutes - minutesDisplay) * 60);
-        const displaysecond = second < 10 ? `0${second}  ` : second;
-        return `${minutesDisplay}: ${displaysecond} `;
-    }
-
-    function getRecordingdLine() {
-        return playsound.map((recordingline, index) => {
-            return (
-                <View key={index}>
-                    <Text> recording {index + 1} - {recordingline.duration}</Text>
-                    <Button onPress={() => recordingline.sound.replayAsync()} title="play"></Button>
-                </View>
-            )
-        })
-    }
-
-
-    // play recording
-
-
-    // async function playSound() {
-    //     console.log('Loading Sound');
-    //     const { sound } = await Audio.Sound.createAsync(require('../../../../assets/john-wick.mp3')
-    //     );
-    //     setPlaySound(sound);
-
-    //     console.log('Playing Sound');
-    //     await sound.playAsync();
-    // }
-
-    // React.useEffect(() => {
-    //     return playsound
-    //         ? () => {
-    //             console.log('Unloading Sound');
-    //             playsound.unloadAsync();
-    //         }
-    //         : undefined;
-    // }, [playsound]);
-
-
-
-
-
-
-
-
-    //  const user = Alert.prompt("jj")
-    const currUser = 'shbsd33bjj44'
-    const friendUser = 'shbsd33bjj45'
-    const convertTime = (date) => {
-        let time = moment(date).format('LT')
-        return time
-    }
-    const convertDay = (date) => {
-        let time = moment(date).format('dddds')
-        return time
-    }
     const message = [
         {
             id: 1,
@@ -238,15 +117,102 @@ const Rtl_chat = ({ navigation }) => {
             message: "Lorem ipsum dolor sit amet consectetur  "
         },
     ]
-
-
-
-
-
+    
     const [renderMsg, setRenderMsg] = useState(message)
+    const barOpen = () => {
+        // setShowbar(!showbar)
+        LayoutAnimation.spring();
+        if(left === -183){
+            setLeft(-115)
+        }
+        else{
+            setLeft(-183)
+        }
+        console.log("uuuuuuuu")
+        setModalVisible(true)
+    }
+    const barClose = ()=>{
+        LayoutAnimation.spring();
+        setLeft(-183)
+        setModalVisible(false)
+    }
+    async function startRecording() {
+        try {
+            const permission = await Audio.requestPermissionsAsync();
+            if (permission.status === "granted") {
+                await Audio.setAudioModeAsync({
+                    allowsRecordingIOS: true,
+                    playsInSilentModeIOS: true,
+                });
+                console.log('Starting recording..');
+                const { recording } = await Audio.Recording.createAsync(Audio.RecordingOptionsPresets.HIGH_QUALITY
+                );
+
+                setRecording(recording);
+                console.log('Recording started');
+            }
+
+            else {
+                setSoundmessage("not granted")
+            }
+        }
+        catch (err) {
+            console.error('Failed to start recording', err);
+        }
+    }
+    function getDurationFormatted(data) {
+        const minutes = data / 1000 / 60;
+        const minutesDisplay = Math.floor(minutes);
+        const second = Math.round((minutes - minutesDisplay) * 60);
+        const displaysecond = second < 10 ? `0${second}  ` : second;
+        return `${minutesDisplay}: ${displaysecond} `;
+    }
+    async function stopRecording() {
+        console.log('Stopping recording..');
+        setRecording(undefined);
+        await recording.stopAndUnloadAsync();
+        const uri = recording.createNewLoadedSoundAsync()
+        console.log("uri",uri)
+        const updateRecordings = [...playsound];
+        const { sound, status } = await recording.createNewLoadedSoundAsync()
+        updateRecordings.push({
+            sound: sound,
+            duration: getDurationFormatted(status.duration),
+            file: recording.getURI()
+        })
+        setPlaySound(updateRecordings)
+        console.log(playsound)
+
+    }
+
+
+    function getRecordingdLine() {
+        return playsound.map((recordingline, index) => {
+            return (
+                <View key={index}>
+                    {/* <Text> recording {index + 1} - {recordingline.duration}</Text> */}
+                    <Button onPress={() => recordingline.sound.replayAsync()} title="play"></Button>
+                </View>
+            )
+        })
+    } 
+
+    //  const user = Alert.prompt("jj")
+    const currUser = 'shbsd33bjj44'
+    const friendUser = 'shbsd33bjj45'
+    const convertTime = (date) => {
+        let time = moment(date).format('LT')
+        return time
+    }
+    const convertDay = (date) => {
+        let time = moment(date).format('dddds')
+        return time
+    }  
+
+
     const newMsg = () => {
         setRenderMsg((curData) => {
-            return [...curData, { id: Math.random().toString(36).slice(2), senderId: currUser, receiverId: friendUser, message: inputvalue, date: new Date(), time: new Date() }]
+            return [...curData, { id: Math.random().toString(36).slice(2), senderId: currUser, receiverId: friendUser, message: inputvalue, date: new Date(), time: new Date() , usersound : playsound }]
         })
 
         setInputvalue('')
@@ -310,13 +276,13 @@ const Rtl_chat = ({ navigation }) => {
                             {(element.item.senderId == currUser) ?
 
                                 /* right message */
-
+ 
                                 <View style={styles.right_chat_container}>
 
                                     <View style={styles.Right_message}>
                                         <View style={styles.inne_righ_message}>
-                                            {/* <Text>{soundmessage}</Text>
-                                    {getRecordingdLine()} */}
+                                            <Text>{soundmessage}</Text>
+                                    {getRecordingdLine()}
                                             <Text style={{ color: "white" }} >
 
                                                 {element.item.message}
@@ -370,10 +336,7 @@ const Rtl_chat = ({ navigation }) => {
 
 
                     </View>
-                    {/* <Button
-                        title={recording ? 'Stop Recording' : 'Start Recording'}
-                        onPress={recording ? stopRecording : startRecording}
-                    /> */}
+
                     {/* <Button title="Play Sound" onPress={playSound} /> */}
                     <View>
                         <TextInput style={styles.send_massage_container}
@@ -391,9 +354,11 @@ const Rtl_chat = ({ navigation }) => {
                         {/* <View style={styles.open_camera} >
                             <Feather name="camera" size={24} color="black" />
                         </View> */}
-                        <View style={styles.emoji}>
-                            <Entypo name="emoji-happy" size={24} color="black" />
-                        </View>
+                        <TouchableOpacity
+                           onPress={()=>newMsg()}
+                        style={styles.emoji}>
+                            <Feather name="send" size={24} color="black" />
+                        </TouchableOpacity>
                     </View>
                 </View>
 
@@ -403,11 +368,11 @@ const Rtl_chat = ({ navigation }) => {
                             source={require("../../../../assets/camera.png")}
                         />
                     </View>
-                    <View style={styles.popup_box}>
+                    <TouchableOpacity style={styles.popup_box}>
                         <Image style={{ width: "100%", height: "100%" }}
                             source={require("../../../../assets/audio.png")}
                         />
-                    </View>
+                    </TouchableOpacity>
                     <View style={styles.popup_box}>
                         <Image style={{ width: "100%", height: "100%" }}
                             source={require("../../../../assets/gallery.png")}
@@ -421,18 +386,18 @@ const Rtl_chat = ({ navigation }) => {
                 </View>
             </View>
 
-            <TouchableOpacity style={[ left === -67 ? styles.openforsidebar : styles.closeforsidebar]}onPress={barClose}>
+            <TouchableOpacity style={[ left === -115 ? styles.openforsidebar : styles.closeforsidebar]}onPress={barClose}>
 
             </TouchableOpacity>
 
 
             <View style={[styles.showbar, { left: left }]} >
-            <ImageBackground source={require("../../../../assets/slidbgedit2.png")} resizeMode="cover" style={{height:"100%", width:"100%"}}> 
+            <ImageBackground source={require("../../../../assets/barimg2.png")} resizeMode="contain" style={{height:"100%", width:"100%", zIndex:-1}}> 
             <FinalSlider/>
             </ImageBackground>
             {/* <Inputslide /> */}
                 <TouchableOpacity onPress={barOpen}
-                    style={{ position: "absolute", top: 0, left: 110 , height:110 , width:30 , justifyContent:"center", alignItems:"center"  }}>
+                    style={{ position: "absolute", top: 0, left: 110 , height:110 , width:30 , justifyContent:"center", alignItems:"center"  , }}>
                         {left === -183 ? <Ionicons name='chevron-forward' size={30} color={"black"} /> :<Ionicons name='chevron-back' size={30} color={"black"} /> }
                     
                 </TouchableOpacity>

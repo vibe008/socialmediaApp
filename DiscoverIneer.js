@@ -18,7 +18,6 @@ const DiscoverIneer = ({ navigation }) => {
             messagecount: "1",
             key: '1',
             img: require('../../../assets/groupprofile1.jpg'),
-            joindate: '12/1/2023'
         },
 
         {
@@ -28,7 +27,6 @@ const DiscoverIneer = ({ navigation }) => {
             messagecount: "3",
             key: '2',
             img: require('../../../assets/groupprofile2.jpg'),
-            joindate: '2/1/2023'
         },
         {
             screenname: "dcesed",
@@ -37,7 +35,6 @@ const DiscoverIneer = ({ navigation }) => {
             messagecount: "5",
             key: '3',
             img: require("../../../assets/groupprofile3.jpg"),
-            joindate: '10/1/2023'
         },
         {
             screenname: "deskird",
@@ -46,7 +43,6 @@ const DiscoverIneer = ({ navigation }) => {
             messagecount: "1",
             key: '4',
             img: require('../../../assets/groupprofile1.jpg'),
-            joindate: '1/2/2023'
         },
         {
             screenname: "ehstrud",
@@ -55,7 +51,6 @@ const DiscoverIneer = ({ navigation }) => {
             messagecount: "4",
             key: '5',
             img: require('../../../assets/groupprofile4.jpg'),
-            joindate: '12/12/2022'
         },
         {
             screenname: "rdtsr",
@@ -64,7 +59,6 @@ const DiscoverIneer = ({ navigation }) => {
             messagecount: "6",
             key: '6',
             img: require('../../../assets/groupprofile5.jpg'),
-            joindate: '12/1/2023'
         },
         {
             screenname: "rhdtfy",
@@ -73,7 +67,6 @@ const DiscoverIneer = ({ navigation }) => {
             messagecount: "6",
             key: '7',
             img: require('../../../assets/groupprofile3.jpg'),
-            joindate: '12/2/2023'
         },
         {
             screenname: "rhftrh",
@@ -82,7 +75,6 @@ const DiscoverIneer = ({ navigation }) => {
             messagecount: "6",
             key: '8',
             img: require('../../../assets/groupprofile4.jpg'),
-            joindate: '20/1/2023'
         },
         {
             screenname: "tkrdnv",
@@ -91,7 +83,6 @@ const DiscoverIneer = ({ navigation }) => {
             messagecount: "6",
             key: '9',
             img: require('../../../assets/groupprofile2.jpg'),
-            joindate: '12/1/2022'
         },
         {
             screenname: "nfjdrt",
@@ -100,13 +91,13 @@ const DiscoverIneer = ({ navigation }) => {
             messagecount: "6",
             key: '10',
             img: require('../../../assets/groupprofile1.jpg'),
-            joindate: '12/1/2023'
         },
     ]
 
     const [listitem, setlistitem] = useState(shownmessage)
     const [modalVisible, setModalVisible] = useState(false);
     const [modalData,setModelData] = useState()
+
 
     const closeRow = (rowMap, rowKey) => {
         if (rowMap[rowKey]) {
@@ -115,24 +106,18 @@ const DiscoverIneer = ({ navigation }) => {
     };
 
     const deleteRow = (rowMap, rowKey) => {
-        console.log("rowkey", rowKey)
         closeRow(rowMap, rowKey);
         const newData = [...listitem];
+        // const newData = [...listitem,{ screenname : Math.random().toString(36).slice(2)}];
         const prevIndex = listitem.findIndex(item => item.key === rowKey);
         newData.splice(prevIndex, 1);
         setlistitem(newData);
     };
 
-    const openmodel = () => {
-
-        setModalVisible(true)
-        // console.log("ju",id)
-    }
-
-    const deletmodal = () => {
-
-    }
-    const renderedItem = (data) => (
+    // const showItem = ({item})=>{
+    // cosnt 
+    // }
+    const renderedItem = (data, rowMap) => (
         <View >
 
 
@@ -140,11 +125,12 @@ const DiscoverIneer = ({ navigation }) => {
                 <View >
 
                     <Modal
-                        // animationType="fade"
+                        animationType="fade"
                         closeOnClick={true}
                         transparent={true}
                         visible={modalVisible}
                     >
+                    {/* {console.log(data)} */}
                         <TouchableOpacity activeOpacity={8} onPress={() => { setModalVisible(!modalVisible) }} style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: "transparent" }}>
 
 
@@ -156,7 +142,7 @@ const DiscoverIneer = ({ navigation }) => {
                                 },
                                 shadowOpacity: 0.18,
                                 shadowRadius: 1.00,
-
+                                
                                 elevation: 1,
                             }}>
 
@@ -169,11 +155,10 @@ const DiscoverIneer = ({ navigation }) => {
 
                                         <View >
                                             <View style={{ marginTop: 30, backgroundColor: "#227ee3", width: 40, height: 40, borderRadius: 40 / 2, alignItems: "center", justifyContent: "center", marginLeft: 28, borderWidth: 2, borderColor: "white" }}>
-                                                <TouchableOpacity activeOpacity={8}
-                                                    onPress={() => {
-                                                        deleteRow(rowKey, data.item.key)
-                                                        console.log("deleting user", rowKey)
-                                                    }}>
+                                                <TouchableOpacity activeOpacity={8} onPress={() => {
+                                                    deleteRow(rowMap, data.item.key)
+                                                    alert("deleting user")
+                                                }}>
                                                     <MaterialIcons name='delete-forever' size={30} style={{ color: "white" }} />
                                                 </TouchableOpacity>
                                             </View>
@@ -191,11 +176,11 @@ const DiscoverIneer = ({ navigation }) => {
                                         </View>
                                         <View>
                                             <View style={{ marginTop: 30, backgroundColor: "#227ee3", width: 40, height: 40, borderRadius: 40 / 2, alignItems: "center", justifyContent: "center", marginRight: 30, borderWidth: 2, borderColor: "white" }}>
-                                                <TouchableOpacity activeOpacity={8} onPress={() => {
+                                                <TouchableOpacity activeOpacity={8} onPress={()=>{
                                                     navigation.navigate("Rtlchat")
                                                     setModalVisible(false)
                                                 }}>
-                                                    <MaterialCommunityIcons name='android-messages' size={28} style={{ color: "white" }} />
+                                                <MaterialCommunityIcons name='android-messages' size={28} style={{ color: "white" }} />
                                                 </TouchableOpacity>
                                             </View>
                                             <Text style={{ fontSize: 10, fontWeight: "700" }}>Message</Text>
@@ -206,12 +191,31 @@ const DiscoverIneer = ({ navigation }) => {
 
                                 </View>
 
-
-                                <View style={{ marginTop: 100, maxHeight: 200, height: 100, paddingLeft: 20 }}>
-                                    <View>
-                                        <Text>football , cricket , handball , gardning</Text>
+                                <View style={{ marginTop: 80, }}>
+                                    <View style={{ display: "flex", flexDirection: "row", backgroundColor: "white", width: "40%", justifyContent: "space-around", alignItems: "center", margin: 10 }}>
+                                        <Octicons name='dot-fill' size={20} color="#227ee3" />
+                                        <Text style={{ fontSize: 16, fontWeight: "700" }}>FootBall</Text>
                                     </View>
-
+                                    <View style={{ display: "flex", flexDirection: "row", backgroundColor: "white", width: "40%", justifyContent: "space-around", alignItems: "center", margin: 10 }}>
+                                        <Octicons name='dot-fill' size={20} color="#227ee3" />
+                                        <Text style={{ fontSize: 16, fontWeight: "700" }}>FootBall</Text>
+                                    </View>
+                                    <View style={{ display: "flex", flexDirection: "row", backgroundColor: "white", width: "40%", justifyContent: "space-around", alignItems: "center", margin: 10 }}>
+                                        <Octicons name='dot-fill' size={20} color="#227ee3" />
+                                        <Text style={{ fontSize: 16, fontWeight: "700" }}>FootBall</Text>
+                                    </View>
+                                    <View style={{ display: "flex", flexDirection: "row", backgroundColor: "white", width: "40%", justifyContent: "space-around", alignItems: "center", margin: 10 }}>
+                                        <Octicons name='dot-fill' size={20} color="#227ee3" />
+                                        <Text style={{ fontSize: 16, fontWeight: "700" }}>FootBall</Text>
+                                    </View>
+                                    <View style={{ display: "flex", flexDirection: "row", backgroundColor: "white", width: "40%", justifyContent: "space-around", alignItems: "center", margin: 10 }}>
+                                        <Octicons name='dot-fill' size={20} color="#227ee3" />
+                                        <Text style={{ fontSize: 16, fontWeight: "700" }}>FootBall</Text>
+                                    </View>
+                                    <View style={{ display: "flex", flexDirection: "row", backgroundColor: "white", width: "40%", justifyContent: "space-around", alignItems: "center", margin: 10 }}>
+                                        <Octicons name='dot-fill' size={20} color="#227ee3" />
+                                        <Text style={{ fontSize: 16, fontWeight: "700" }}>FootBall</Text>
+                                    </View>
 
                                 </View>
                             </View>
@@ -219,9 +223,7 @@ const DiscoverIneer = ({ navigation }) => {
                         </TouchableOpacity>
                     </Modal>
                     <TouchableOpacity style={styles.discovere_people_image}
-                        // key={data.item.key}
-
-                      onPress={() => {setModelData(data.item.screenname);setModalVisible(true); }}
+                        onPress={() => {setModelData(data.item.screenname);setModalVisible(true); }}
                     >
                         <Image style={{ height: 50, width: 50, borderRadius: 50 / 2, resizeMode: 'contain', }}
                             source={{
@@ -256,8 +258,9 @@ const DiscoverIneer = ({ navigation }) => {
 
 
     const renderHiddenItem = (data, rowMap) => (
+        
         <View style={styles.rowBack}>
-
+            
             <TouchableOpacity
                 style={[styles.backRightBtn, styles.backRightBtnLeft]}
                 onPress={() => closeRow(rowMap, data.item.key)}
@@ -272,7 +275,7 @@ const DiscoverIneer = ({ navigation }) => {
                 onPress={() => {
                     deleteRow(rowMap, data.item.key)
                     // alert("are you sure! you want to delet this user")
-                    console.log("deleting user back", data.item.key)
+                    alert("deleting user")
                 }}
             >
                 <View >
@@ -293,7 +296,6 @@ const DiscoverIneer = ({ navigation }) => {
                 previewOpenValue={-10}
                 previewOpenDelay={2000}
                 showsVerticalScrollIndicator={false}
-                keyExtractor={item => item.key}
             // onRowDidOpen={onRowDidOpen}
             />
         </View>
@@ -305,8 +307,8 @@ export default DiscoverIneer
 const styles = StyleSheet.create({
 
     container: {
-        // backgroundColor: 'red',
-        flex: 1,
+        // backgroundColor: 'resd',
+        // flex: 1,
         marginTop: 20
     },
 
@@ -316,8 +318,7 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         borderLeftColor: "gray",
         borderLeftWidth: 1,
-        paddingLeft: 10,
-
+        paddingLeft: 10
 
     },
     rowBack: {
@@ -360,12 +361,19 @@ const styles = StyleSheet.create({
         width: "100%",
         paddingTop: 10,
         paddingBottom: 10,
-        borderBottomColor: "#E0E0E0",
+        borderBottomColor: "#BDBDBD",
         borderBottomWidth: 1,
         position: "relative",
         marginBottom: 7,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62,
 
-
+        elevation: 3,
     },
 
     discovere_people_image: {

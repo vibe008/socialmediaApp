@@ -25,10 +25,11 @@ import Slider from './src/Components/chat/chatting_container/Slider';
 import Seekbar from './src/Components/chat/chatting_container/Seekbar';
 import IntrestBar from './src/Components/chat/chatting_container/IntrestBar';
 import Slide from './src/Components/chat/chatting_container/Slide'
-// import Utils from './src/Components/chat/chatting_container/Utils'
+import Utils from './src/Components/chat/chatting_container/Utils'
 import Inputslide from './src/Components/chat/chatting_container/Inputslide';
 import Demo from './src/Components/chat/chatting_container/Demo';
 import FinalSlider from './src/Components/chat/chatting_container/FinalSlider';
+import Groupinfo from './src/Components/chat/GroupChat/Groupinfo';
 const Stack = createNativeStackNavigator();
 export default function App() {
 
@@ -41,7 +42,6 @@ export default function App() {
     <>
    <NavigationContainer>
     <Stack.Navigator>
-
     <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/> 
     <Stack.Screen name="Otp" component={Otp} options={{ headerShown: false }}/> 
     <Stack.Screen name="Auth" component={Auth} options={{ headerShown: false }} />
@@ -55,8 +55,11 @@ export default function App() {
     <Stack.Screen name="Groupchat" component={Groupchat} options={{ headerShown: false }} />
     <Stack.Screen name="Circle" component={Circle} options={{ headerShown: false }} />
     <Stack.Screen name="Notification" component={Notification}  /> 
+    <Stack.Screen name="Groupinfo" component={Groupinfo} options={{ headerShown: false }} /> 
     </Stack.Navigator>
    </NavigationContainer>
+
+   {/* <Groupinfo/> */}
 {/* <Utils/> */}
    {/* <FinalSlider/> */}
 {/* <Demo/> */}

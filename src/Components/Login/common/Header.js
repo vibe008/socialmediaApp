@@ -2,10 +2,11 @@ import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native'
 import React, { useState } from 'react'
 import { Entypo } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
+import { Modal } from 'react-native';
 const Header = ({ navigation }) => {
     const [menubar, setMenubar] = useState("")
     const [ lightbar , setLightbar] = useState(false)
-
+   const [modelopen , setModalopen] = useState(false)
     const toggleMenuBar = () => {
         setMenubar(!menubar)
     }
@@ -23,7 +24,7 @@ const highlightbar1 = ()=>{
             <View style={styles.header}>
                 <View style={styles.inner_header}>
                     <View>
-                        <TouchableOpacity onPress={toggleMenuBar}>
+                        <TouchableOpacity onPress={()=>setModalopen(true)}>
                             <Entypo name="menu" size={32} color="black" />
                         </TouchableOpacity>
                     </View>
@@ -35,8 +36,22 @@ const highlightbar1 = ()=>{
                             <Text style={{ fontSize: 10, color: "white" }}>3</Text>
                         </View>
                     </View>
-                    <View style={[menubar ? styles.showmwnu : styles.hidemenu]}>
-                        <TouchableOpacity onPress={toggleMenuBar}
+
+                    <Modal
+                            animationType="fade"
+                            transparent={true}
+                            visible={modelopen}
+                            onRequestClose={() => {
+                            //   Alert.alert('Modal has been closed.');
+                              setModalopen(!modelopen);
+                            }}
+                    >
+                        <TouchableOpacity style={{flex:1 ,}}
+                        onPress={()=> setModalopen(!modelopen)}
+                        activeOpacity={8}
+                        >
+                    <View style={styles.showmwnu}>
+                        <TouchableOpacity onPress={()=>setModalopen(false)}
                             style={styles.cross_circle} >
                             <Entypo name='circle-with-cross' size={30} />
                         </TouchableOpacity>
@@ -58,28 +73,9 @@ const highlightbar1 = ()=>{
                             </View>
                         </View>
                     </View>
+                        </TouchableOpacity>
+                    </Modal>
                 </View>
-                {/* <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", width: "90%", marginLeft: "auto", marginRight: "auto", zIndex: -1 }}>
-
-                    <TouchableOpacity style={[lightbar ?  styles.showligth : styles.hidelight  ]} 
-                     onPress={highlightbar}  >
-                        <Text style={{ fontSize: 16, fontWeight: "500", padding: 8 }}>Discover</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                    style={styles.hidelight}
-                        onPress={highlightbar1}
-                        >
-                         
-                        <Text style={{ fontSize: 16, fontWeight: "500", padding: 8 }}>Chat</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        onPress={() => { navigation.navigate('Circle') }}
-                    >
-                        <Text style={{ fontSize: 16, fontWeight: "500", padding: 8 }}>Circle</Text>
-                    </TouchableOpacity>
-                </View> */}
             </View>
         </>
     )
@@ -89,11 +85,12 @@ export default Header
 
 const styles = StyleSheet.create({
     showmwnu: {
-        backgroundColor: "gray",
+        backgroundColor: "#F5F5F5",
         position: "absolute",
-        height: 700,
+        height: "100%",
         width: "80%",
-        zIndex: 999
+        zIndex: 999,
+        marginTop:20
 
     },
     hidemenu: {

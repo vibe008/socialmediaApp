@@ -218,7 +218,10 @@ export default StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
-        marginLeft: 10
+        marginLeft: 10,
+        justifyContent:'space-between',
+        width:"95%",
+        marginHorizontal:4
     },
     header_images: {
         marginLeft: 10,
@@ -255,8 +258,8 @@ export default StyleSheet.create({
     // marginRight:190,
     // bottom:190,
     // marginTop:90,
-    height:400
-
+    height:400,
+ zIndex:99
         
         
     },
@@ -264,7 +267,7 @@ export default StyleSheet.create({
     position:"absolute" ,
     height:"100%" , 
     width:"100%" ,
-    
+    // backgroundColor:"red"
   },
   closeforsidebar:{
     display:"none"

@@ -2,7 +2,7 @@ import { ScrollView, Text, TextInput, TouchableOpacity, View, style } from 'reac
 import DropDownPicker from 'react-native-dropdown-picker';
 import styles from '../common/Style'
 import Br_lines from '../common/Br_lines'
-// import MultiSelect from 'react-native-multiple-select';
+import MultiSelect from 'react-native-multiple-select';
 import { EvilIcons } from '@expo/vector-icons';
 import DatePicker from 'react-native-modern-datepicker';
 import React, { useState, useRef } from 'react'
@@ -101,7 +101,7 @@ const IntrestedAres = ({navigation}) => {
           <View style={{}}>
             {/* multiselect */}
 
-            {/* <MultiSelect
+            <MultiSelect
               hideTags
               items={intrestItem}
               uniqueKey="id"
@@ -134,7 +134,7 @@ const IntrestedAres = ({navigation}) => {
               tagRemoveIconColor="white"
               tagBorderColor="skyblue"
               tagTextColor="white"
-            /> */}
+            />
 
           </View>
 

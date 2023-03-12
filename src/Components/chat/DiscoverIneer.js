@@ -18,7 +18,7 @@ const DiscoverIneer = ({ navigation }) => {
             messagecount: "1",
             key: '1',
             img: require('../../../assets/groupprofile1.jpg'),
-            joindate : '12/1/2023'
+            joindate: '12/1/2023'
         },
 
         {
@@ -28,7 +28,7 @@ const DiscoverIneer = ({ navigation }) => {
             messagecount: "3",
             key: '2',
             img: require('../../../assets/groupprofile2.jpg'),
-            joindate : '2/1/2023'
+            joindate: '2/1/2023'
         },
         {
             screenname: "dcesed",
@@ -37,7 +37,7 @@ const DiscoverIneer = ({ navigation }) => {
             messagecount: "5",
             key: '3',
             img: require("../../../assets/groupprofile3.jpg"),
-            joindate : '10/1/2023'
+            joindate: '10/1/2023'
         },
         {
             screenname: "deskird",
@@ -46,7 +46,7 @@ const DiscoverIneer = ({ navigation }) => {
             messagecount: "1",
             key: '4',
             img: require('../../../assets/groupprofile1.jpg'),
-            joindate : '1/2/2023'
+            joindate: '1/2/2023'
         },
         {
             screenname: "ehstrud",
@@ -55,7 +55,7 @@ const DiscoverIneer = ({ navigation }) => {
             messagecount: "4",
             key: '5',
             img: require('../../../assets/groupprofile4.jpg'),
-            joindate : '12/12/2022'
+            joindate: '12/12/2022'
         },
         {
             screenname: "rdtsr",
@@ -64,7 +64,7 @@ const DiscoverIneer = ({ navigation }) => {
             messagecount: "6",
             key: '6',
             img: require('../../../assets/groupprofile5.jpg'),
-            joindate : '12/1/2023'
+            joindate: '12/1/2023'
         },
         {
             screenname: "rhdtfy",
@@ -73,7 +73,7 @@ const DiscoverIneer = ({ navigation }) => {
             messagecount: "6",
             key: '7',
             img: require('../../../assets/groupprofile3.jpg'),
-            joindate : '12/2/2023'
+            joindate: '12/2/2023'
         },
         {
             screenname: "rhftrh",
@@ -82,7 +82,7 @@ const DiscoverIneer = ({ navigation }) => {
             messagecount: "6",
             key: '8',
             img: require('../../../assets/groupprofile4.jpg'),
-            joindate : '20/1/2023'
+            joindate: '20/1/2023'
         },
         {
             screenname: "tkrdnv",
@@ -91,7 +91,7 @@ const DiscoverIneer = ({ navigation }) => {
             messagecount: "6",
             key: '9',
             img: require('../../../assets/groupprofile2.jpg'),
-            joindate : '12/1/2022'
+            joindate: '12/1/2022'
         },
         {
             screenname: "nfjdrt",
@@ -100,13 +100,13 @@ const DiscoverIneer = ({ navigation }) => {
             messagecount: "6",
             key: '10',
             img: require('../../../assets/groupprofile1.jpg'),
-             joindate : '12/1/2023' 
+            joindate: '12/1/2023'
         },
     ]
 
     const [listitem, setlistitem] = useState(shownmessage)
     const [modalVisible, setModalVisible] = useState(false);
-  
+    const [modalData, setModelData] = useState(null)
 
     const closeRow = (rowMap, rowKey) => {
         if (rowMap[rowKey]) {
@@ -115,130 +115,35 @@ const DiscoverIneer = ({ navigation }) => {
     };
 
     const deleteRow = (rowMap, rowKey) => {
-        console.log("rowkey",rowKey)
+        console.log("rowkey", rowKey)
         closeRow(rowMap, rowKey);
         const newData = [...listitem];
         const prevIndex = listitem.findIndex(item => item.key === rowKey);
-        newData.splice(prevIndex ,1);
+        newData.splice(prevIndex, 1);
         setlistitem(newData);
     };
 
-    const openmodel = ()=>{
+    const openmodel = () => {
 
         setModalVisible(true)
         // console.log("ju",id)
     }
 
-    const deletmodal = ()=>{
+    const deletmodal = () => {
 
     }
-    const renderedItem = (data ) => (
+    const renderedItem = (data) => (
         <View >
 
 
             <View style={styles.discover_People_container}>
                 <View >
 
-                    <Modal
-                        // animationType="fade"
-                        closeOnClick={true}
-                        transparent={true}
-                        visible={modalVisible}
-                    >
-                        <TouchableOpacity activeOpacity={8} onPress={() => { setModalVisible(!modalVisible) }} style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: "transparent" }}>
 
-
-                            <View style={{
-                                backgroundColor: "white", borderRadius: 10, shadowColor: "#000",
-                                shadowOffset: {
-                                    width: 0,
-                                    height: 1,
-                                },
-                                shadowOpacity: 0.18,
-                                shadowRadius: 1.00,
-                                
-                                elevation: 1,
-                            }}>
-
-                                <View style={{ backgroundColor: "#227ee3", height: 150, width: 300, borderRadius: 10, position: "relative" }}>
-                                    <View style={{ alignItems: "center", justifyContent: "center", marginTop: 30 }}>
-                                        <Text style={{ color: "white", padding: 5, fontSize: 20, fontWeight: "bold" }}>xxyyzz</Text>
-                                        <Text style={{ color: "white", padding: 5 }}>20/2/2023</Text>
-                                    </View>
-                                    <View style={{ position: "absolute", top: "70%", display: "flex", flexDirection: "row", width: "100%", justifyContent: "space-between" }}>
-
-                                        <View >
-                                            <View style={{ marginTop: 30, backgroundColor: "#227ee3", width: 40, height: 40, borderRadius: 40 / 2, alignItems: "center", justifyContent: "center", marginLeft: 28, borderWidth: 2, borderColor: "white" }}>
-                                                <TouchableOpacity activeOpacity={8}    
-                                                                onPress={() => {
-                                                                    deleteRow(rowKey, data.item.key)
-                                                                    console.log("deleting user",rowKey)
-                                                                }}>
-                                                    <MaterialIcons name='delete-forever' size={30} style={{ color: "white" }} />
-                                                </TouchableOpacity>
-                                            </View>
-                                            <View style={{ marginLeft: 20, justifyContent: "center", alignItems: "center" }}>
-                                                <Text style={{ fontSize: 10, fontWeight: "700" }}>Delete User</Text>
-                                            </View>
-                                        </View>
-                                        <View style={{ width: 120, height: 120, alignItems: "center", justifyContent: "center", borderRadius: 120 / 2, borderWidth: 5, borderColor: "white", }}>
-                                            <Image style={{ height: 110, width: 110, borderRadius: 110 / 2, resizeMode: 'contain', }}
-                                                source={{
-                                                    uri: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                                                }}
-
-                                            />
-                                        </View>
-                                        <View>
-                                            <View style={{ marginTop: 30, backgroundColor: "#227ee3", width: 40, height: 40, borderRadius: 40 / 2, alignItems: "center", justifyContent: "center", marginRight: 30, borderWidth: 2, borderColor: "white" }}>
-                                                <TouchableOpacity activeOpacity={8} onPress={()=>{
-                                                    navigation.navigate("Rtlchat")
-                                                    setModalVisible(false)
-                                                }}>
-                                                <MaterialCommunityIcons name='android-messages' size={28} style={{ color: "white" }} />
-                                                </TouchableOpacity>
-                                            </View>
-                                            <Text style={{ fontSize: 10, fontWeight: "700" }}>Message</Text>
-                                        </View>
-
-                                    </View>
-
-
-                                </View>
-
-                                <View style={{ marginTop: 80, maxHeight:200 }}>
-                                    <View style={{ display: "flex", flexDirection: "row", backgroundColor: "white", width: "40%", justifyContent: "space-around", alignItems: "center", margin: 10 }}>
-                                        <Octicons name='dot-fill' size={16} color="#227ee3" />
-                                        <Text style={{ fontSize: 16, fontWeight: "300" }}>FootBall</Text>
-                                    </View>
-                                    <View style={{ display: "flex", flexDirection: "row", backgroundColor: "white", width: "40%", justifyContent: "space-around", alignItems: "center", margin: 10 }}>
-                                        <Octicons name='dot-fill' size={16} color="#227ee3" />
-                                        <Text style={{ fontSize: 16, fontWeight: "300" }}>FootBall</Text>
-                                    </View>
-                                    <View style={{ display: "flex", flexDirection: "row", backgroundColor: "white", width: "40%", justifyContent: "space-around", alignItems: "center", margin: 10 }}>
-                                        <Octicons name='dot-fill' size={16} color="#227ee3" />
-                                        <Text style={{ fontSize: 16, fontWeight: "300" }}>FootBall</Text>
-                                    </View>
-                                    <View style={{ display: "flex", flexDirection: "row", backgroundColor: "white", width: "40%", justifyContent: "space-around", alignItems: "center", margin: 10 }}>
-                                        <Octicons name='dot-fill' size={16} color="#227ee3" />
-                                        <Text style={{ fontSize: 16, fontWeight: "300" }}>FootBall</Text>
-                                    </View>
-                                    <View style={{ display: "flex", flexDirection: "row", backgroundColor: "white", width: "40%", justifyContent: "space-around", alignItems: "center", margin: 10 }}>
-                                        <Octicons name='dot-fill' size={16} color="#227ee3" />
-                                        <Text style={{ fontSize: 16, fontWeight: "300" }}>FootBall</Text>
-                                    </View>
-
-
-                                </View>
-                            </View>
-
-                        </TouchableOpacity>
-                    </Modal>
                     <TouchableOpacity style={styles.discovere_people_image}
-                    // key={data.item.key}
-                   
-                    // onPress={openmodel}
-                  onPress={openmodel}
+                        // key={data.item.key}
+
+                        onPress={() => { setModelData(data.item.key); setModalVisible(true); }}
                     >
                         <Image style={{ height: 50, width: 50, borderRadius: 50 / 2, resizeMode: 'contain', }}
                             source={{
@@ -246,6 +151,79 @@ const DiscoverIneer = ({ navigation }) => {
                             }}
 
                         />
+                        <Modal
+                            // animationType="fade"
+                            closeOnClick={true}
+                            transparent={true}
+                            visible={modalData === data.item.key ? modalVisible : ""}
+                        >
+                            <TouchableOpacity activeOpacity={8} onPress={() => { setModalVisible(!modalVisible) }} style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: "transparent" }}>
+
+
+                                <View style={{
+                                    backgroundColor: "white", borderRadius: 10, shadowColor: "#000", shadowOffset: {
+                                        width: 0,
+                                        height: 1,
+                                    },
+                                    shadowOpacity: 0.18,
+                                    shadowRadius: 1.00,
+
+                                    elevation: 1,
+                                }}>
+
+                                    <View style={{ backgroundColor: "#227ee3", height: 150, width: 300, borderRadius: 10, position: "relative" }}>
+                                        <View style={{ alignItems: "center", justifyContent: "center", marginTop: 30 }}>
+                                            <Text style={{ color: "white", padding: 5, fontSize: 20, fontWeight: "bold" }}>
+                                                {modalData === data.item.key ? data.item.screenname : ""}</Text>
+                                            <Text style={{ color: "white", padding: 5 }}>20/2/2023</Text>
+                                        </View>
+                                        <View style={{ position: "absolute", top: "70%", display: "flex", flexDirection: "row", width: "100%", justifyContent: "space-between" }}>
+                                            <View >
+                                                <View style={{ marginTop: 30, backgroundColor: "#227ee3", width: 40, height: 40, borderRadius: 40 / 2, alignItems: "center", justifyContent: "center", marginLeft: 28, borderWidth: 2, borderColor: "white" }}>
+                                                    <TouchableOpacity activeOpacity={8} 
+                                                    // onPress={() => {
+                                                    //     deleteRow(rowKey, data.item.key)
+                                                    //     console.log("deleting user", rowKey)
+                                                    // }}
+                                                    >
+                                                        <MaterialIcons name='delete-forever' size={30} style={{ color: "white" }} />
+                                                    </TouchableOpacity>
+                                                </View>
+                                                <View style={{ marginLeft: 20, justifyContent: "center", alignItems: "center" }}>
+                                                    <Text style={{ fontSize: 10, fontWeight: "700" }}>Delete User</Text>
+                                                </View>
+                                            </View>
+                                            <View style={{ width: 120, height: 120, alignItems: "center", justifyContent: "center", borderRadius: 120 / 2, borderWidth: 5, borderColor: "white", }}>
+                                                <Image style={{ height: 110, width: 110, borderRadius: 110 / 2, resizeMode: 'contain', }}
+                                                    source={{ uri: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" }} />
+                                            </View>
+                                            <View>
+                                                <View style={{ marginTop: 30, backgroundColor: "#227ee3", width: 40, height: 40, borderRadius: 40 / 2, alignItems: "center", justifyContent: "center", marginRight: 30, borderWidth: 2, borderColor: "white" }}>
+                                                    <TouchableOpacity activeOpacity={8} onPress={() => {
+                                                        navigation.navigate("Rtlchat")
+                                                        setModalVisible(false)
+                                                    }}>
+                                                        <MaterialCommunityIcons name='android-messages' size={28} style={{ color: "white" }} />
+                                                    </TouchableOpacity>
+                                                </View>
+                                                <Text style={{ fontSize: 10, fontWeight: "700" }}>Message</Text>
+                                            </View>
+
+                                        </View>
+                                    </View>
+
+
+                                    <View style={{ marginTop: 100, maxHeight: 200, height: 100, paddingLeft: 20 }}>
+                                        <View>
+                                            <Text>{modalData === data.item.key ? data.item.peopleintrest : ""}</Text>
+                                        </View>
+
+
+                                    </View>
+                                </View>
+
+                            </TouchableOpacity>
+                        </Modal>
                     </TouchableOpacity>
                 </View>
                 <TouchableHighlight onPress={() => navigation.navigate('Rtlchat')}
@@ -289,7 +267,7 @@ const DiscoverIneer = ({ navigation }) => {
                 onPress={() => {
                     deleteRow(rowMap, data.item.key)
                     // alert("are you sure! you want to delet this user")
-                    console.log("deleting user back" , data.item.key)
+                    console.log("deleting user back", data.item.key)
                 }}
             >
                 <View >
@@ -330,11 +308,11 @@ const styles = StyleSheet.create({
     rowFront: {
         justifyContent: 'center',
         width: "80%",
-        marginLeft: 20,
-        borderLeftColor: "gray",
-        borderLeftWidth: 1,
+        marginLeft: 10,
+        // borderLeftColor: "gray",
+        // borderLeftWidth: 1,
         paddingLeft: 10,
-        
+
 
     },
     rowBack: {
@@ -377,20 +355,12 @@ const styles = StyleSheet.create({
         width: "100%",
         paddingTop: 10,
         paddingBottom: 10,
-        borderBottomColor: "#BDBDBD",
+        borderBottomColor: "#E0E0E0",
         borderBottomWidth: 1,
         position: "relative",
         marginBottom: 7,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.23,
-        shadowRadius: 2.62,
 
-        elevation: 3,
-        
+
     },
 
     discovere_people_image: {

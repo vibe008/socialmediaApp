@@ -20,50 +20,33 @@ const Rtl_chat = ({ navigation }) => {
     const [newvalue, setNewvalue] = useState("")
     const [inputmenu, setInputmenu] = useState(false)
 
+    const [currentMessage, setCurrentMessage] = useState("");
+    const [messageList, setMessageList] = useState([]);
 
-
-    const [socket] = useState(() => io("http://localhost:3000"));
-    const [message, setMessage] = useState("");
-    const [messages, setMessages] = useState([]);
-  
-    useEffect(() => {
-      socket.on("message", message => {
-        setMessages([...messages, message]);
-      });
-    }, []);
-  
-    const sendMessage = () => {
-      socket.emit("message", message);
-      setMessage("");
-    };
-
-    // const [currentMessage, setCurrentMessage] = useState("");
-    // const [messageList, setMessageList] = useState([]);
-
-    // const sendMessage = async () => {
-    //     if (currentMessage !== "") {
-    //       const messageData = {
+    const sendMessage = async () => {
+        if (currentMessage !== "") {
+          const messageData = {
             
-    //         author: username,
-    //         message: currentMessage,
-    //         time:
-    //           new Date(Date.now()).getHours() +
-    //           ":" +
-    //           new Date(Date.now()).getMinutes(),
-    //         };
-    //         console.log(time);
+            author: username,
+            message: currentMessage,
+            time:
+              new Date(Date.now()).getHours() +
+              ":" +
+              new Date(Date.now()).getMinutes(),
+            };
+            console.log(time);
     
-    //       await socket.emit("send_message", messageData);
-    //       setMessageList((list) => [...list, messageData]);
-    //       setCurrentMessage("");
-    //     }
-    //   };
+          await socket.emit("send_message", messageData);
+          setMessageList((list) => [...list, messageData]);
+          setCurrentMessage("");
+        }
+      };
     
-    //   useEffect(() => {
-    //     socket.on("receive_message", (data) => {
-    //       setMessageList((list) => [...list, data]);
-    //     });
-    //   }, [socket]);
+      useEffect(() => {
+        socket.on("receive_message", (data) => {
+          setMessageList((list) => [...list, data]);
+        });
+      }, [socket]);
 
     const [username , setUsername] = useState("")
     const flatlistref = useRef()
@@ -81,9 +64,7 @@ const Rtl_chat = ({ navigation }) => {
         let time = moment(date).format('dddds')
         return time
     }
-
-    // const message = [ change thhis
-    const messagedata = [
+    const message = [
         {
             id: 1,
             senderId: 'shbsd33bjj44',
@@ -244,7 +225,7 @@ const Rtl_chat = ({ navigation }) => {
             {/* messages container  */}
             <FlatList
                 style={{}}
-                data={message }
+                data={messageList }
                 showsVerticalScrollIndicator={false}
                 ref={flatlistref}
                 // keyExtractor={message.id}
@@ -329,10 +310,12 @@ const Rtl_chat = ({ navigation }) => {
                     <View style={styles.cam_emoji_section}>
 
 
-                         <Button title="Send" onPress={sendMessage} />
-                        {/* <View style={styles.emoji}>
-                            <Entypo name="emoji-happy" size={24} color="black" />
+                        {/* <View style={styles.open_camera} >
+                            <Feather name="camera" size={24} color="black" />
                         </View> */}
+                        <View style={styles.emoji}>
+                            <Entypo name="emoji-happy" size={24} color="black" />
+                        </View>
                     </View>
                 </View>
 

@@ -10,7 +10,7 @@ const Chat = ({ navigation }) => {
 
     const shownmessage = [
         {
-            username: "abhi",
+            username: "rohan",
             message: "Lorem ipsum dolor sit amet consectetur adipisicing elit..",
             lastonline: "5min",
             messagecount: "1",
@@ -133,6 +133,7 @@ const Chat = ({ navigation }) => {
     ]
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedItemId, setSelectedItemId] = useState(1);
+    const [value, setValue] = useState(null)
     const openmodel = (e) => {
 
         setModalVisible(true)
@@ -159,128 +160,102 @@ const Chat = ({ navigation }) => {
                     style={{}}
                     showsVerticalScrollIndicator={false}
                     data={shownmessage}
-                    keyExtractor={(item) => item.key}
+                    // keyExtractor={(item) => item.key}
                     renderItem={({ item }) => {
                         return (
                             <>
                                 <View style={{ flex: 1, }}>
-                                    <Modal
-                                        animationType="fade"
-                                        closeOnClick={true}
-                                        transparent={true}
-                                        visible={modalVisible}
-                                    >
-                                        <TouchableOpacity activeOpacity={8} onPress={() => { setModalVisible(!modalVisible) }} style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: "transparent" }}>
 
-                                            <View style={{
-                                                backgroundColor: "white", borderRadius: 10, shadowColor: "#000",
-                                                shadowOffset: {
-                                                    width: 0,
-                                                    height: 1,
-                                                },
-                                                shadowOpacity: 0.18,
-                                                shadowRadius: 1.00,
-
-                                                elevation: 1,
-                                            }}>
-
-                                                <View style={{ backgroundColor: "#227ee3", height: 150, width: 300, borderRadius: 10, position: "relative" }}>
-                                                    <View style={{ alignItems: "center", justifyContent: "center", marginTop: 30 }}>
-                                                        {/* <Text style={{ color: "white", padding: 5, fontSize: 20, fontWeight: "bold" }}>{pairkey === element.item.key ? "" : element.item.username}</Text> */}
-                                                        <Text style={{ color: "white", padding: 5, fontSize: 20, fontWeight: "bold" }}>
-                                                            {selectedItemId === item.key  ? item.username : "noo" }
-                                                        </Text>
-                                                        <Text style={{ color: "white", padding: 5 }}>20/2/2023</Text>
-                                                    </View>
-                                                    <View style={{ position: "absolute", top: "70%", display: "flex", flexDirection: "row", width: "100%", justifyContent: "space-between" }}>
-
-                                                        <View >
-                                                            <View style={{ marginTop: 30, backgroundColor: "#227ee3", width: 40, height: 40, borderRadius: 40 / 2, alignItems: "center", justifyContent: "center", marginLeft: 28, borderWidth: 2, borderColor: "white" }}>
-                                                                <TouchableOpacity activeOpacity={8} 
-                                                                    onPress={() => {
-                                                                        deleteRow(rowKey, data.item.key)
-                                                                        console.log("deleting user", rowKey)
-                                                                    }}>
-                                                                    <MaterialIcons name='delete-forever' size={30} style={{ color: "white" }} />
-                                                                </TouchableOpacity>
-                                                            </View>
-                                                            <View style={{ marginLeft: 20, justifyContent: "center", alignItems: "center" }}>
-                                                                <Text style={{ fontSize: 10, fontWeight: "700" }}>Delete User</Text>
-                                                            </View>
-                                                        </View>
-                                                        <View style={{ width: 120, height: 120, alignItems: "center", justifyContent: "center", borderRadius: 120 / 2, borderWidth: 5, borderColor: "white", }}>
-                                                            <Image style={{ height: 110, width: 110, borderRadius: 110 / 2, resizeMode: 'contain', }}
-                                                                source={{
-                                                                    uri: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                                                                }}
-
-                                                            />
-                                                        </View>
-                                                        <View>
-                                                            <View style={{ marginTop: 30, backgroundColor: "#227ee3", width: 40, height: 40, borderRadius: 40 / 2, alignItems: "center", justifyContent: "center", marginRight: 30, borderWidth: 2, borderColor: "white" }}>
-                                                                <TouchableOpacity activeOpacity={8} onPress={() => {
-                                                                    navigation.navigate("Rtlchat")
-                                                                    setModalVisible(false)
-                                                                }}>
-                                                                    <MaterialCommunityIcons name='android-messages' size={28} style={{ color: "white" }} />
-                                                                </TouchableOpacity>
-                                                            </View>
-                                                            <Text style={{ fontSize: 10, fontWeight: "700" }}>Message</Text>
-                                                        </View>
-
-                                                    </View>
-
-
-                                                </View>
-
-                                                <View style={{ marginTop: 80, maxHeight: 200 }}>
-                                                    <View style={{ display: "flex", flexDirection: "row", backgroundColor: "white", width: "40%", justifyContent: "space-around", alignItems: "center", margin: 10 }}>
-                                                        <Octicons name='dot-fill' size={16} color="#227ee3" />
-                                                        <Text style={{ fontSize: 16, fontWeight: "300" }}>FootBall</Text>
-                                                    </View>
-                                                    <View style={{ display: "flex", flexDirection: "row", backgroundColor: "white", width: "40%", justifyContent: "space-around", alignItems: "center", margin: 10 }}>
-                                                        <Octicons name='dot-fill' size={16} color="#227ee3" />
-                                                        <Text style={{ fontSize: 16, fontWeight: "300" }}>FootBall</Text>
-                                                    </View>
-                                                    <View style={{ display: "flex", flexDirection: "row", backgroundColor: "white", width: "40%", justifyContent: "space-around", alignItems: "center", margin: 10 }}>
-                                                        <Octicons name='dot-fill' size={16} color="#227ee3" />
-                                                        <Text style={{ fontSize: 16, fontWeight: "300" }}>FootBall</Text>
-                                                    </View>
-                                                    <View style={{ display: "flex", flexDirection: "row", backgroundColor: "white", width: "40%", justifyContent: "space-around", alignItems: "center", margin: 10 }}>
-                                                        <Octicons name='dot-fill' size={16} color="#227ee3" />
-                                                        <Text style={{ fontSize: 16, fontWeight: "300" }}>FootBall</Text>
-                                                    </View>
-                                                    <View style={{ display: "flex", flexDirection: "row", backgroundColor: "white", width: "40%", justifyContent: "space-around", alignItems: "center", margin: 10 }}>
-                                                        <Octicons name='dot-fill' size={16} color="#227ee3" />
-                                                        <Text style={{ fontSize: 16, fontWeight: "300" }}>FootBall</Text>
-                                                    </View>
-
-
-                                                </View>
-                                            </View>
-
-                                        </TouchableOpacity>
-                                    </Modal>
                                     <View style={{
-                                        width: "100%", display: "flex", flexDirection: "row", marginBottom: 5, marginTop: 5, borderBottomWidth: 1, borderColor: "gray", paddingBottom: 5, shadowColor: "#000",
-                                        shadowOffset: {
-                                            width: 0,
-                                            height: 2,
-                                        },
-                                        shadowOpacity: 0.25,
-                                        shadowRadius: 3.84,
+                                        width: "100%", display: "flex", flexDirection: "row", marginBottom: 5, marginTop: 5, borderBottomWidth: 1, borderColor: "#E0E0E0", paddingBottom: 5, backgroundColor: "white", paddingTop: 5
+                                    }}>
+                                        <TouchableOpacity activeOpacity={0}
+                                            onPress={(e) => {
+                                                if (shownmessage.filter(item => item.key === e)) {
+                                                    setValue(item.key)
+                                                    setModalVisible(true)
+                                                }
+                                            }}>
+                                            <Modal 
+                                                animationType="fade"
+                                                closeOnClick={true}
+                                                transparent={true}
+                                                visible={value === item.key ? modalVisible:""}
+                                            >
+                                                <TouchableOpacity activeOpacity={8} onPress={() => { setModalVisible(!modalVisible) }} style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: "transparent" }}>
 
-                                        elevation: 5, backgroundColor: "white", paddingTop: 5
-                                     }}>
-                                        <TouchableOpacity activeOpacity={3} 
-                                         onPress={() => {setSelectedItemId(item.key)
-                                            if(selectedItemId === item.key){
-                                                console.log("ik")
-                                                setModalVisible(true)
-                                            }else{
-                                                
-                                            }
-                                         }}>
+                                                    <View style={{
+                                                        backgroundColor: "white", borderRadius: 10, shadowColor: "#000",
+                                                        shadowOffset: {
+                                                            width: 0,
+                                                            height: 1,
+                                                        },
+                                                        shadowOpacity: 0.18,
+                                                        shadowRadius: 1.00,
+
+                                                        elevation: 1,
+                                                    }}>
+
+                                                        <View style={{ backgroundColor: "#227ee3", height: 150, width: 300, borderRadius: 10, position: "relative" }}>
+                                                            <View style={{ alignItems: "center", justifyContent: "center", marginTop: 30 }}>
+                                                                {/* <Text style={{ color: "white", padding: 5, fontSize: 20, fontWeight: "bold" }}>{pairkey === element.item.key ? "" : element.item.username}</Text> */}
+                                                                <Text style={{ color: "white", padding: 5, fontSize: 20, fontWeight: "bold" }}>
+                                                                    {value === item.key ? item.username : "noo"}
+                                                                    
+                                                                </Text>
+                                                                <Text style={{ color: "white", padding: 5 }}>20/2/2023</Text>
+                                                            </View>
+                                                            <View style={{ position: "absolute", top: "70%", display: "flex", flexDirection: "row", width: "100%", justifyContent: "space-between" }}>
+
+                                                                <View >
+                                                                    <View style={{ marginTop: 30, backgroundColor: "#227ee3", width: 40, height: 40, borderRadius: 40 / 2, alignItems: "center", justifyContent: "center", marginLeft: 28, borderWidth: 2, borderColor: "white" }}>
+                                                                        <TouchableOpacity activeOpacity={8}
+                                                                            // onPress={() => {
+                                                                            //     deleteRow(rowKey, data.item.key)
+                                                                            //     console.log("deleting user", rowKey)
+                                                                            // }}
+                                                                            >
+                                                                            <MaterialIcons name='delete-forever' size={30} style={{ color: "white" }} />
+                                                                        </TouchableOpacity>
+                                                                    </View>
+                                                                    <View style={{ marginLeft: 20, justifyContent: "center", alignItems: "center" }}>
+                                                                        <Text style={{ fontSize: 10, fontWeight: "700" }}>Delete User</Text>
+                                                                    </View>
+                                                                </View>
+                                                                <View style={{ width: 120, height: 120, alignItems: "center", justifyContent: "center", borderRadius: 120 / 2, borderWidth: 5, borderColor: "white", }}>
+                                                                    <Image style={{ height: 110, width: 110, borderRadius: 110 / 2, resizeMode: 'contain', }}
+                                                                        source={value === item.key ?item.img :""}
+ 
+                                                                    />
+                                                                </View>
+                                                                <View>
+                                                                    <View style={{ marginTop: 30, backgroundColor: "#227ee3", width: 40, height: 40, borderRadius: 40 / 2, alignItems: "center", justifyContent: "center", marginRight: 30, borderWidth: 2, borderColor: "white" }}>
+                                                                        <TouchableOpacity activeOpacity={8} onPress={() => {
+                                                                            navigation.navigate("Rtlchat")
+                                                                            setModalVisible(false)
+                                                                        }}>
+                                                                            <MaterialCommunityIcons name='android-messages' size={28} style={{ color: "white" }} />
+                                                                        </TouchableOpacity>
+                                                                    </View>
+                                                                    <Text style={{ fontSize: 10, fontWeight: "700" }}>Message</Text>
+                                                                </View>
+
+                                                            </View>
+
+
+                                                        </View>
+
+                                                        <View style={{ marginTop: 100, maxHeight: 200, height: 100, paddingLeft: 20 }}>
+                                                            <View>
+                                                                <Text>football , cricket , handball , gardning</Text>
+                                                            </View>
+
+
+                                                        </View>
+                                                    </View>
+
+                                                </TouchableOpacity>
+                                            </Modal>
                                             <View>
                                                 <View style={styles.userprofile_status}>
                                                     <Image style={{ height: 60, width: 60, borderRadius: 60 / 2, resizeMode: 'contain' }}
@@ -342,7 +317,7 @@ const styles = StyleSheet.create({
         width: "96%",
         marginHorizontal: 6,
         zIndex: -1,
-        marginTop: 20
+        // marginTop: 20
     },
     active_link: {
         // backgroundColor:"red",

@@ -64,7 +64,7 @@ const FinalSlider = () => {
                     locations={[
                         0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.92, 0.94, 0.96, 0.98, 1,
                     ]}
-                    colors={['#D50000', '#B71C1C', '#C62828', '#FF8A80', '#EF5350', '#E57373', '#EF9A9A', '#FFCDD2', '#FFEBEE', '#E3F2FD', '#BBDEFB', '#90CAF9', '#64B5F6', '#42A5F5', '#2196F3']}>
+                    colors={['#D50000', '#B71C1C', '#C62828', '#FF8A80', '#EF5350', '#E57373', '#EF9A9A', '#FFCDD2', '#c9e9f6', '#b3e0f2', '#9dd7ef', '#87ceeb', '#71c5e7', '#5bbce4', '#45b3e0']}>
                     <Animated.View style={[styles.bar, stylebar]} />
                 </AnimatedLinearGradient>
                 <PanGestureHandler onGestureEvent={handleGesture}>
@@ -89,9 +89,10 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         height: Slider_hight,
         width: 10,
-        marginLeft: 80,
+        marginLeft: 100,
         transform: [{ rotate: "-180deg" }],
-        zIndex:99
+        
+    
     },
     bar: {
         // backgroundColor:"red",
@@ -120,7 +121,7 @@ const styles = StyleSheet.create({
     textinputstyle: {
         position: "absolute",
         // top:"30%"
-        left: -80,
+        left: -38,
         transform: [{ rotate: "180deg" }],
         color: "white",
         backgroundColor:"#227ee3",
@@ -132,9 +133,14 @@ const styles = StyleSheet.create({
         // alignSelf:"center",
         display:"flex",
         // padding:5,
-        bottom:-49,
-        paddingLeft:7,
-        fontSize:10
+        bottom:113,
+        // paddingLeft:7,
+        fontSize:10,
+        textAlign:"center",
+        borderColor:"white",
+        borderWidth:1,
+        
+        
     }, 
        imgback: {
         height: "100%",

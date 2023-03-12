@@ -1,15 +1,18 @@
-import { StyleSheet, Text, View, Image, FlatList , TextInput } from 'react-native'
+import { StyleSheet, Text, View, Image, FlatList , TextInput ,TouchableOpacity } from 'react-native'
 import React, { useState, useEffect, useRef } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import styles from '../../styles/Rtl_style'
 import { Entypo } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
+// import { TouchableOpacity } from 'react-native-gesture-handler';
+
 const Groupchat = ({ navigation }) => {
     const flatlistref = useRef()
 
     const currentUSer = "a1b1c1"
     const OtherCircleUser = "a2b2c2"
 
-    const [inputmenu, setInputmenu] = useState("")
+    const [inputmenu, setInputmenu] = useState(false)
   const ShowInputMenu = ()=>{
     setInputmenu(!inputmenu)
     console.log("toggle")
@@ -99,16 +102,12 @@ const Groupchat = ({ navigation }) => {
                 <View>
                     <AntDesign name="arrowleft" size={32} onPress={() => navigation.goBack()} color={"#227ee3"} />
                 </View>
-                <View style={styles.header_images}>
-                    {/* <Image style={{ height: 50, width: 50, borderRadius: 50 / 2, resizeMode: 'contain', }}
-                        source={{
-                            uri: "https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                        }}
-                    /> */}
-                </View>
                 <View style={styles.group_Name_container}>
                     <Text style={{ fontSize: 15, fontWeight: "500", color: "black" }}>Group name</Text>
                 </View>
+                <TouchableOpacity onPress={()=> {navigation.navigate("Groupinfo")}}>
+                <Feather name='info' size={25}/>
+                </TouchableOpacity>
             </View>
             {/* header end */}
 
