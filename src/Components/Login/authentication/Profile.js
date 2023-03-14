@@ -9,11 +9,6 @@ const Profile = ({ navigation }) => {
   const [imagepath, setImagepath] = useState('')
 
   const showImagePicker = async () => {
-    // const permisionResult = await ImagePicker.requestMediaLibraryPermissionsAsync()
-    // if(permisionResult.granted === false){
-    //   alert("permision denied")
-    //   return
-    // }
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaType: ImagePicker.MediaTypeOptions.All,
     })
@@ -26,6 +21,10 @@ const Profile = ({ navigation }) => {
     }
   }
 
+    const goToChatHandler = async()=>{
+      
+      navigation.navigate("Chathome")
+    }
 
   // camera
   const openCamera = async () => {
@@ -94,7 +93,7 @@ const Profile = ({ navigation }) => {
             </TouchableOpacity>
 
             <TouchableOpacity style={{ padding: 10, width: "100%", textAlignments: "center", marginTop: 10 }}
-              onPress={() => navigation.navigate("Chathome")}>
+              onPress={goToChatHandler}>
               <Text style={{ color: '#237fe4', textAlign: "center" }}>
                 SKIP
               </Text>
@@ -108,7 +107,7 @@ const Profile = ({ navigation }) => {
               </TouchableOpacity>
 
               <TouchableOpacity
-                onPress={() => navigation.navigate("Chathome")}
+                onPress={goToChatHandler}
               >
                 <Text>Next</Text>
               </TouchableOpacity>

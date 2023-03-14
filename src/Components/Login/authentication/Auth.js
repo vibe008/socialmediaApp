@@ -53,6 +53,7 @@ const Navigatetointrest  = ()=>{
     console.log("enter number")
   }
   else{
+    AsyncStorage.setItem('userData',JSON.stringify({fullName:userName,email:userEmail,phone:userNumber}))
     navigation.navigate("IntrestedAres")
   }
 }

@@ -1,11 +1,14 @@
-import { ScrollView, Text, TextInput, TouchableOpacity, View, style } from 'react-native'
+import { ScrollView, Text, TextInput, TouchableOpacity, View, style, Alert } from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker';
 import styles from '../common/Style'
 import Br_lines from '../common/Br_lines'
 import MultiSelect from 'react-native-multiple-select';
 import { EvilIcons } from '@expo/vector-icons';
 import DatePicker from 'react-native-modern-datepicker';
-import React, { useState, useRef } from 'react'
+import getInterest from '../../../Service/interest';
+import React, { useState, useRef , useEffect} from 'react'
+import apiUrl from '../../../Service/env';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const IntrestedAres = ({navigation}) => {
 
@@ -40,6 +43,7 @@ const IntrestedAres = ({navigation}) => {
   ];
 
   const [selectedIntrestIte, setSelectedIntrestIte] = useState([])
+  const [intrestitem , setIntrestitem] = useState(intrestItem)
 
   const onSelectedItemsChange = (item) => {
 
@@ -49,7 +53,16 @@ const IntrestedAres = ({navigation}) => {
   const clearSelectedCategories = () => {
     multiSelect.current._removeAllItems()
   }
-
+const getData = async()=>{
+  const resp = await getInterest()
+  console.log(resp)
+  // setIntrestitem([...resp.message])
+}
+useEffect(() => {
+  fetch(apiUrl+'interest/list').then(resp=>resp.json()).then(data=>{console.log(data)
+    setIntrestitem([...data.message])
+  })
+}, [])
 
   // date function picker
 
@@ -62,7 +75,28 @@ const IntrestedAres = ({navigation}) => {
 
 
 
-
+  const continueHandler=async()=>{
+    let JSONdata = await AsyncStorage.getItem('userData')
+    let data = JSON.parse(JSONdata)
+    let interests = []
+      for(let si of selectedIntrestIte){
+        for(let i of intrestitem){
+          if(si === i._id){
+            interests.push(i)
+          }
+      }
+    }
+    // console.log(interests)
+    if(interests.length && selectedDate && value){
+      let newData = {...data,dob:selectedDate,gender:value,interests}
+      await AsyncStorage.setItem('userData',JSON.stringify(newData))
+      console.log(newData)
+      navigation.navigate("Test")
+    }else{
+      Alert.alert('Please select options!')
+    }
+    
+  }
 
   const [selectedDate, setSelectedDate] = useState('Date Of Birth');
 
@@ -103,8 +137,8 @@ const IntrestedAres = ({navigation}) => {
 
             <MultiSelect
               hideTags
-              items={intrestItem}
-              uniqueKey="id"
+              items={intrestitem}
+              uniqueKey="_id"
               ref={multiSelect}
               onSelectedItemsChange={onSelectedItemsChange}
               selectedItems={selectedIntrestIte}
@@ -116,7 +150,7 @@ const IntrestedAres = ({navigation}) => {
               selectedItemTextColor="#CCC"
               selectedItemIconColor="#CCC"
               itemTextColor="#000"
-              displayKey="name"
+              displayKey="title"
               searchInputStyle={{ color: '#000', height: 50, }}
               onClearSelector={clearSelectedCategories}
               onPress={() => console.log('onpress')}
@@ -204,7 +238,7 @@ const IntrestedAres = ({navigation}) => {
               color: "white ",
               zIndex: -1
             }}
-            onPress={()=> navigation.navigate("Test")}
+            onPress={continueHandler}
           >
             <Text style={{color:"white" , fontSize:20 , fontWeight:"bold"}}>CONTINUE</Text>
           </TouchableOpacity>
