@@ -13,7 +13,7 @@ const Test = ({navigation}) => {
         </View>
         <View style={{ }}>
           <TouchableOpacity style={{ backgroundColor: "#237fe4", padding: 10, borderRadius: 3, display: "flex", alignItems: 'center' , marginVertical:15 }}
-          onPress={()=> navigation.navigate("Questions")}
+          onPress={()=> navigation.navigate("QueContainer")}
           >
             <Text style={{ color: 'white' }}>
               YES

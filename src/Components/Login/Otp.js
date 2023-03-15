@@ -7,6 +7,8 @@ import Br_lines from './common/Br_lines';
 import styles from './common/Style'
 import styles1 from '../styles/Login_style'
 import login from '../../Service/login';
+import Constants from 'expo-constants';
+import * as Device from 'expo-device';
 const Otp = ({ navigation }) => {
 
     const otpInput = useRef(null);
@@ -39,16 +41,23 @@ const Otp = ({ navigation }) => {
     }, []);
 
     const VerifyOtp = async() => {
+        const deviceId = Device.osInternalBuildId;
+        console.log(deviceId)
         let number = userNumber
-        const data = number+"/"+otpval
+        const data = number+"/"+otpval+"/"+deviceId
         const resp = await login(data)
         console.log(resp)
+       
         setOtpval("")
         otpInput.current.clear()
         if(resp.status === 201){
             Alert.alert('Wrong otp Try again!')
         }
-        if (resp.isUserPresent) {
+        else if(resp.status === 202){
+            Alert.alert('Device not verified!')
+        }
+        else if (resp.isUserPresent) {
+            await AsyncStorage.setItem('userDataResp',JSON.stringify(resp))
             navigation.navigate('Chathome') 
             console.log("new page",otpval)
         }

@@ -15,32 +15,7 @@ const IntrestedAres = ({navigation}) => {
 
   const multiSelect = useRef(null)
 
-  const intrestItem = [{
-    id: '92iijs7yta',
-    name: 'Football'
-  }, {                         
-    id: 'a0s0a8ssbsd',
-    name: 'Movies'                            
-  }, {
-    id: '16hbajsabsd',
-    name: 'Travelling'
-  }, {
-    id: 'nahs75a5sg',
-    name: 'Cooking'
-  }, {
-    id: '667atsas',
-    name: 'Music'
-  }, {
-    id: 'hsyasajs',
-    name: 'Reading'
-  }, {
-    id: 'djsjudksjd',
-    name: 'Games'
-  }, {
-    id: 'sdhyaysdj',
-    name: 'Gardning'
-  }, 
-  ];
+  const intrestItem = [];
 
   const [selectedIntrestIte, setSelectedIntrestIte] = useState([])
   const [intrestitem , setIntrestitem] = useState(intrestItem)

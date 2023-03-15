@@ -4,6 +4,9 @@ import styles from '../common/Style'
 import Arrow from '../common/Arrow'
 import Br_lines from '../common/Br_lines'
 import * as ImagePicker from 'expo-image-picker';
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import saveUserData from '../../../Service/user'
+import * as Device from 'expo-device';
 const Profile = ({ navigation }) => {
 
   const [imagepath, setImagepath] = useState('')
@@ -22,7 +25,18 @@ const Profile = ({ navigation }) => {
   }
 
     const goToChatHandler = async()=>{
-      
+      const deviceId = Device.osInternalBuildId;
+      const deviceToken = await Device.getUptimeAsync()
+      const deviceType = Device.osName
+      console.log('deviceType',deviceType)
+      // console.log("deviceId",deviceId)
+      console.log("tocken",deviceToken)
+      const jsondata = await AsyncStorage.getItem('userData')
+      const data = JSON.parse(jsondata)
+      const newdata = {...data,profileImgUrl:imagepath,deviceId,deviceToken,deviceType}
+      const resp = await saveUserData(newdata)
+      console.log(resp)
+      await AsyncStorage.setItem('userDataResp',JSON.stringify(resp))
       navigation.navigate("Chathome")
     }
 

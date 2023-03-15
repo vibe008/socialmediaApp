@@ -5,11 +5,13 @@ import styles from './common/Style';
 import styles1 from '../styles/Login_style'
 import Br_lines from './common/Br_lines'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import login from '../../Service/login';
 import {items} from '../Data/Data.js'
 // import Front_page from './Front_page';
 const Login = ({ navigation }) => {
+    
     const [value, setValue] = useState("")
     const [isChecked, setChecked] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
@@ -30,12 +32,14 @@ const Login = ({ navigation }) => {
 
     AsyncStorage.setItem('phonenumber', phonenumber)
 
+    // const deviceId = Constants.deviceId;
+
 
 
     const toggleotp = () => {
     if(value == ""){
     setChecked(true)
-    console.log("no")
+
 }
 else{
 
