@@ -1,6 +1,7 @@
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React,{useState,useEffect} from 'react'
 import { FontAwesome } from "@expo/vector-icons"
+import AsyncStorage from '@react-native-async-storage/async-storage'
 const opstyle = { backgroundColor: "white", width: 300, display: "flex", flexDirection: "row", margin: 10, padding: 20, borderRadius: 5, shadowColor: "#000",
 shadowOffset: {
 	width: 0,
@@ -141,11 +142,14 @@ const Questions = (props) => {
           </View>
 
       <TouchableOpacity style={{ marginTop: 20, backgroundColor: "gray", padding: 20, borderRadius: 5, width: 300, alignSelf: "center" }}
-        onPress={()=>{
+        onPress={async()=>{
           setInitVal(mark)
           console.log(mark)
           if(props.count ===props.length-1)
           {
+            const data = await AsyncStorage.getItem('userData')
+            const newdata = {...JSON.parse(data),quizResult:mark}
+            await AsyncStorage.setItem('userData',JSON.stringify(newdata))
             props.navigation.navigate('Profile')
           }else
           props.countHandler(props.count+1)
