@@ -57,7 +57,8 @@ const Otp = ({ navigation }) => {
             Alert.alert('Device not verified!')
         }
         else if (resp.isUserPresent) {
-            await AsyncStorage.setItem('userDataResp',JSON.stringify(resp))
+            const data = {data:resp.isUserPresent,avatar:resp.avatar}
+            await AsyncStorage.setItem('userDataResp',JSON.stringify(data))
             navigation.navigate('Chathome') 
             console.log("new page",otpval)
         }

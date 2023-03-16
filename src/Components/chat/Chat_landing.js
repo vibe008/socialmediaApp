@@ -1,20 +1,30 @@
 import { Button, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Discover from './Discover'
 import { Entypo } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import Chat_Profile from './Chat_Profile';
 import Header from '../Login/common/Header';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // import Rtl_chat from './chatting_container/Rtl_chat';
 const Chat_landing = ({ navigation }) => {
+    const [userData,setUserData] = useState()
+    useEffect(()=>{
+        (async()=>{
+            console.log('Chat_landing useEffect')
+            const data = await AsyncStorage.getItem('userDataResp')
+            console.log(data)
+            setUserData(JSON.parse(data))
+        })();
+    },[])
 
     return (
-        <>
-            <View style={{ backgroundColor: "white", paddingTop: 50, flex: 1, }}>
-                <Header navigation={navigation} />
-                
-                <Discover navigation={navigation} />
-            </View>
+        <>{userData && <View style={{ backgroundColor: "white", paddingTop: 50, flex: 1, }}>
+        <Header navigation={navigation} data = {userData}/>
+        
+        <Discover navigation={navigation}/>
+    </View>}
+            
         </>
     )
 }

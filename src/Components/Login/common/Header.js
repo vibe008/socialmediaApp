@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Image as ImageReact } from 'react-native'
+import Image from 'react-native-remote-svg';
 import React, { useState } from 'react'
 import { Entypo } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { Modal } from 'react-native';
-const Header = ({ navigation }) => {
+const Header = ({ navigation,data }) => {
     const [menubar, setMenubar] = useState("")
     const [ lightbar , setLightbar] = useState(false)
    const [modelopen , setModalopen] = useState(false)
@@ -59,17 +60,18 @@ const highlightbar1 = ()=>{
                             <View style={styles.img_name}>
                                 <Image style={{ height: 50, width: 50, borderRadius: 50 / 2, resizeMode: 'contain', }}
                                     source={{
-                                        uri: "https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                                        uri: "data:image/svg+xml;utf8,"+data.avatar
                                     }} />
+                                
                                 <Text style={styles.text}>
-                                    Rahul singh
+                                    Name: {data.data.fullName}
                                 </Text>
                                 <Text style={styles.text}>
-                                    xxyyzz
+                                    Screen Name: {data.data.screenName}
                                 </Text> 
                             </View>
                             <View style={styles.intrest_section}>
-                                <Text style={{ color: "white" }}>music, sports, Films , Games </Text>
+                                <Text style={{ color: "white" }}>Interests: {(data.data.interests.map(item=>item.title)).join(',')}</Text>
                             </View>
                         </View>
                     </View>
@@ -112,7 +114,7 @@ const styles = StyleSheet.create({
     },
     intrest_section: {
         width: "50%",
-        padding: 10,
+        padding: 20,
         // backgroundColor:"red"
     },
     text: {
