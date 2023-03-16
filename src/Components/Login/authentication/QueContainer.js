@@ -27,14 +27,13 @@ const questionRespData =[
       __v: 0
     }
   ]
-const queMaker = ()=>{
 
-}
 const QueContainer = ({navigation}) => {
     const [count,setCount] = useState(0)
     const countHandler=(newcount)=>{
         setCount(newcount)
     }
+  
   return (
     <>
      {/* {questionRespData.map((item)=>{
