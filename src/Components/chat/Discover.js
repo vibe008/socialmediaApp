@@ -36,7 +36,7 @@ const Discover = ({ navigation }) => {
                         style={{ borderBottomColor: "#227ee3", borderBottomWidth: 3, borderRadius: 2 ,}}>
                             <Text style={{ fontSize: 16, fontWeight: "500", padding: 8 }}>Discover</Text>
 
-                        </TouchableOpacity >
+                        </TouchableOpacity>
                         <TouchableOpacity 
                         onPress={() => navigation.navigate("Chat")}>
                             <Text style={{ fontSize: 16, fontWeight: "500", padding: 8 }}>Chat</Text>

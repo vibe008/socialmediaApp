@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View, TouchableOpacity, FlatList, Image , Modal } from 'react-native'
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import Header from '../../Login/common/Header'
 import { MaterialIcons } from "@expo/vector-icons"
 import { Feather } from "@expo/vector-icons"
 import { Octicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 const Circle = ({ navigation }) => {
 
     const shownmessage = [
@@ -132,9 +133,19 @@ const Circle = ({ navigation }) => {
     ]
     const [modalVisible, setModalVisible] = useState(false);
 const [value , setValue] = useState(null)
-    return (
+
+const [userData,setUserData] = useState()
+    useEffect(()=>{
+        (async()=>{
+            console.log('Chat useEffect')
+            const data = await AsyncStorage.getItem('userDataResp')
+            console.log(data)
+            setUserData(JSON.parse(data))
+        })();
+    },[])
+    return (<>{userData &&
         <View style={styles.chat_outer_container}>
-            <Header navigation={navigation} />
+            <Header navigation={navigation} data = {userData}/>
             <View style={styles.chat_inner_container}>
                 <View style={styles.active_link}>
                     <View style={styles.active_link_inner}>
@@ -282,7 +293,8 @@ const [value , setValue] = useState(null)
                 />
 
             </View>
-        </View>
+        </View>}
+        </>
     )
 }
 
