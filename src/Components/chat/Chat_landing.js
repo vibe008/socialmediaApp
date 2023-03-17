@@ -22,7 +22,7 @@ const Chat_landing = ({ navigation }) => {
         <>{userData && <View style={{ backgroundColor: "white", paddingTop: 50, flex: 1, }}>
         <Header navigation={navigation} data = {userData}/>
         
-        <Discover navigation={navigation}/>
+        <Discover navigation={navigation} data = {userData}/>
     </View>}
             
         </>
