@@ -1,7 +1,8 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Questions from './Questions'
-const questionRespData =[
+import getQuestions from '../../../Service/question'
+const demoquestionRespData =[
     {
       _id: "641196fa4a042cea0207878d",
       query: "Which one of the following river flows between Vindhyan and Satpura ranges?",
@@ -27,22 +28,25 @@ const questionRespData =[
       __v: 0
     }
   ]
-const queMaker = ()=>{
 
-}
 const QueContainer = ({navigation}) => {
+    const [questionRespData,setQuestionRespData] = useState()
     const [count,setCount] = useState(0)
     const countHandler=(newcount)=>{
         setCount(newcount)
     }
+    useEffect(()=>{
+      (async()=>{
+        const resp = await getQuestions()
+        setQuestionRespData(resp.message)
+      })()
+    },[])
   return (
     <>
-     {/* {questionRespData.map((item)=>{
-            return <Questions item = {item} key={item._id}/>
-            
-            
-     })} */}
-     <Questions item={questionRespData[count]} countHandler={countHandler} count={count} length = {questionRespData.length} navigation={navigation}/>
+      {questionRespData && 
+        <Questions item={questionRespData[count]} countHandler={countHandler} count={count} length = {questionRespData.length} navigation={navigation}/>
+      }
+    
     </>
 
   )
