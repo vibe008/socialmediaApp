@@ -1,31 +1,25 @@
 import { SafeAreaView, StyleSheet, Text, View, FlatList, TouchableOpacity, Image, TouchableHighlight } from 'react-native'
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 
 import  {SwipeListView}  from 'react-native-swipe-list-view';
 import DiscoverIneer from './DiscoverIneer';
+import getInterests from '../../Service/interest';
 
 
-const Discover = ({ navigation }) => {
-    const intrestText = [
-        {
-            text: "All"
-        },
-        {
-            text: "Personal"
-        },
-        {
-            text: "Design"
-        },
-        {
-            text: "Work"
-        },
-        {
-            text: "Football"
-        },
-        {
-            text: "Bascketball"
-        },
-    ]
+const Discover = ({ navigation,data }) => {
+    const [selectedInterest,setSelectedInterest] = useState('All') 
+    const [interests,setInterest] = useState()
+    useEffect(()=>{
+        (async()=>{
+            const resp =await getInterests()
+            console.log('discover interests:',resp.message)
+            setInterest([{_id:'All',title:'All'},...resp.message])
+        })()
+    },[])
+    const handleInterest = (item)=>{
+        console.log(item._id)
+        setSelectedInterest(item._id)
+    }
 
 
     return (
@@ -51,24 +45,26 @@ const Discover = ({ navigation }) => {
             <View style={styles.scroll_container} >
                 
                 <View style={styles.vertical_container}>
-                    <FlatList
+                {interests &&  <FlatList
                         style={styles.flatlist_container}
                         horizontal
-                        data={intrestText}
-                        renderItem={(element) => {
+                        showsHorizontalScrollIndicator={false}
+                        data={interests}
+                        renderItem={({item}) => {
                             return (
-                                <View style={styles.list_content} >
-                                    <Text style={styles.intrest_text}>{element.item.text} </Text>
-                                </View>
+                                <TouchableOpacity style={styles.list_content} onPress={()=>{handleInterest(item)}}>
+                                    <Text style={styles.intrest_text}>{item.title} </Text>
+                                </TouchableOpacity>
                             )
                         }}
-                    />
+                    />}
+                   
 
                 </View>
 
             </View>
 
-          <DiscoverIneer navigation={navigation}/>
+          <DiscoverIneer navigation={navigation} userdata= {data} selectedInterest={selectedInterest}/>
 
 
 
@@ -101,7 +97,9 @@ const styles = StyleSheet.create({
         backgroundColor: "white"
 
     },
-
+    selected:{
+        backgroundColor:'yellow'
+    },
 
     vertical_container: {
         // flex:1,

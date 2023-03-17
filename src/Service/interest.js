@@ -1,9 +1,8 @@
 import apiUrl from "./env"
 
-const getInterest = async()=>{
-    const resp = await fetch(apiUrl+'/interest/list') 
-    console.log(resp)
+const getInterests = async()=>{
+    const resp = await fetch(apiUrl+'interest/list') 
     return await resp.json()
 
 }
- export default getInterest
+ export default getInterests
