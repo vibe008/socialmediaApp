@@ -20,10 +20,11 @@ const DiscoverIneer = ({ navigation,userdata,selectedInterest }) => {
         if(selectedInterest === 'All'){
             const resp = await getDiscovers(userdata.data._id)
             setConnections(resp.message)
-            // console.log(connections)
+            
         }else{
             const resp = await getFiltersDiscovers(userdata.data._id+'/'+selectedInterest)
             setConnections(resp.message)
+            console.log(connections.length)
         }
     }
     const [modalVisible, setModalVisible] = useState(false);
@@ -201,7 +202,7 @@ const DiscoverIneer = ({ navigation,userdata,selectedInterest }) => {
     );
     return (
         <View style={styles.container}>
-            
+            {connections !== 'Not Found!' &&
             <SwipeListView
                 data={connections}
                 renderItem={renderedItem}
@@ -215,6 +216,9 @@ const DiscoverIneer = ({ navigation,userdata,selectedInterest }) => {
                 keyExtractor={item => item._id}
             // onRowDidOpen={onRowDidOpen}
             />
+            }
+           
+            
         </View>
     )
 }
