@@ -24,7 +24,6 @@ const DiscoverIneer = ({ navigation,userdata,selectedInterest }) => {
         }else{
             const resp = await getFiltersDiscovers(userdata.data._id+'/'+selectedInterest)
             setConnections(resp.message)
-            // console.log(resp.message)
         }
     }
     const [modalVisible, setModalVisible] = useState(false);
