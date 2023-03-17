@@ -137,7 +137,7 @@ const DiscoverIneer = ({ navigation }) => {
 
 
             <View style={styles.discover_People_container}>
-                <View >
+                <View  >
 
 
                     <TouchableOpacity style={styles.discovere_people_image}

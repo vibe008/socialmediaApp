@@ -61,7 +61,7 @@ const Navigatetointrest  = ()=>{
     <View style={styles.outerconatiner}>
       <View style={styles.innerconatiner}>
         <View>
-        <Arrow heading="We havent talked about you" navigation={navigation}/>
+        <Arrow heading="We haven't talked about you" navigation={navigation}/>
         <Br_lines/>
         </View>
         <View style={{marginTop:12}}>

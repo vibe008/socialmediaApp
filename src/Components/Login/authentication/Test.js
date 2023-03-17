@@ -8,7 +8,7 @@ const Test = ({navigation}) => {
     <View style={styles.outerconatiner}>
       <View style={styles.innerconatiner}>
         <View>
-          <Arrow heading="Woukd you like to give a test" navigation={navigation} />
+          <Arrow heading="Would you like to give a test" navigation={navigation} />
           <Br_lines />
         </View>
         <View style={{ }}>

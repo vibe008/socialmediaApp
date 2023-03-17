@@ -70,7 +70,7 @@ const Profile = ({ navigation }) => {
     <View style={styles.outerconatiner}>
       <View style={styles.innerconatiner}>
         <View>
-          <Arrow heading="Profile Pic ?" navigation={navigation} />
+          <Arrow heading="Profile Photo ?" navigation={navigation} />
           <Br_lines />
         </View>
 

@@ -84,7 +84,8 @@ useEffect(() => {
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
     { label: 'Male', value: 'male' },
-    { label: 'Female', value: 'female' }
+    { label: 'Female', value: 'female' },
+    { label: 'Other', value: 'Other' }
   ]);
 
 
@@ -117,7 +118,7 @@ useEffect(() => {
               ref={multiSelect}
               onSelectedItemsChange={onSelectedItemsChange}
               selectedItems={selectedIntrestIte}
-              selectText="Enter you itrest"
+              selectText="Enter you interest"
               searchInputPlaceholderText="Search Intrest"
               
               onToggleList={(e) => { console.log('toggle', e); return false }}
@@ -149,7 +150,9 @@ useEffect(() => {
 
           <View style={{display:"flex", flexDirection:"row", }} >
             {/* flex gender datepicker */}
-            <View style={{width:"50%"}}>
+            <TouchableOpacity
+            onPress={showDatePicker}
+            style={{width:"50%"}}>
               {/* gender */}
               <DropDownPicker
                 placeholder='Gender'
@@ -161,7 +164,7 @@ useEffect(() => {
                 setValue={setValue}
                 setItems={setItems}
               />
-            </View>
+            </TouchableOpacity>
 
               {/* date picker */}
             <View style={{backgroundColor:"white"  , display:"flex" , alignItems:"center", justifyContent:'space-evenly' , flexDirection:"row" , marginLeft:20 , borderRadius:6 , width:"42%"}}>
@@ -220,7 +223,7 @@ useEffect(() => {
         </View>
         {/* button end */}
       {multiSelect.current && selectedIntrestIte.length ?
-              <ScrollView style={{  marginTop:0}} >
+              <ScrollView style={{  marginTop:0 , zIndex:-1}} >
                 <View style={{}}>
                   {multiSelect.current.getSelectedItemsExt(selectedIntrestIte)}
                 </View>

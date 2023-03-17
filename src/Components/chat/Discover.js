@@ -8,21 +8,27 @@ import DiscoverIneer from './DiscoverIneer';
 const Discover = ({ navigation }) => {
     const intrestText = [
         {
+            id:1,
             text: "All"
         },
         {
+            id:2,
             text: "Personal"
         },
         {
+            id:3,
             text: "Design"
         },
         {
+            id:4,
             text: "Work"
         },
         {
+            id:5,
             text: "Football"
         },
         {
+            id:6,
             text: "Bascketball"
         },
     ]
@@ -55,11 +61,17 @@ const Discover = ({ navigation }) => {
                         style={styles.flatlist_container}
                         horizontal
                         data={intrestText}
-                        renderItem={(element) => {
+                        renderItem={({item}) => {
                             return (
-                                <View style={styles.list_content} >
-                                    <Text style={styles.intrest_text}>{element.item.text} </Text>
-                                </View>
+                                <TouchableOpacity style={styles.list_content} 
+                                onPress={(itemid)=>{
+                                 if(intrestText.filter(item => item.id === itemid)){
+                                    console.log(item.id)
+                                 }
+                                }}
+                                >
+                                    <Text style={styles.intrest_text}>{item.text} </Text>
+                                </TouchableOpacity>
                             )
                         }}
                     />

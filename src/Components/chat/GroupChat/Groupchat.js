@@ -91,8 +91,14 @@ const Groupchat = ({ navigation }) => {
     ]
 
     // const [rendermsg, setRendermsg] = useState(message)
-
-
+    // useEffect(() => {
+    //     flatlistref.current?.scrollToEnd()
+    //     console.log("ok")
+    // }, [])
+    
+ const scrollend = ()=>{
+    flatlistref.current?.scrollToEnd()
+ }
 
 
     return (
@@ -117,6 +123,8 @@ const Groupchat = ({ navigation }) => {
             {/* group chat */}
             <View style={styles.group_chat_container}>
                 <FlatList
+                // inverted
+                
                     data={message}
                     ref={flatlistref}
                     showsVerticalScrollIndicator={false}
@@ -202,9 +210,11 @@ const Groupchat = ({ navigation }) => {
                         {/* <View style={styles.open_camera} >
                             <Feather name="camera" size={24} color="black" />
                         </View> */}
-                        <View style={styles.emoji}>
-                            <Entypo name="emoji-happy" size={24} color="black" />
-                        </View>
+                        <TouchableOpacity
+                        onPress={scrollend}
+                        style={styles.emoji}>
+                        <Feather name="send" size={24} color="black" />
+                        </TouchableOpacity>
                     </View>
                 </View>
                 <Modal
