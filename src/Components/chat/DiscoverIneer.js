@@ -8,6 +8,7 @@ import { Octicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import {getDiscovers,getFiltersDiscovers} from '../../Service/discover';
 import multiavatar from '@multiavatar/multiavatar'
+// import Placeholder from './Placeholder';
 
 const DiscoverIneer = ({ navigation,userdata,selectedInterest }) => {
     const [connections,setConnections] = useState()
@@ -59,7 +60,7 @@ const DiscoverIneer = ({ navigation,userdata,selectedInterest }) => {
 
 
             <View style={styles.discover_People_container}>
-                <View >
+                <View  >
 
 
                     <TouchableOpacity style={styles.discovere_people_image}
@@ -202,6 +203,7 @@ const DiscoverIneer = ({ navigation,userdata,selectedInterest }) => {
     );
     return (
         <View style={styles.container}>
+            {/* <Placeholder/> */}
             {connections !== 'Not Found!' &&
             <SwipeListView
                 data={connections}
@@ -284,7 +286,7 @@ const styles = StyleSheet.create({
         paddingTop: 15,
         paddingBottom: 15,
         borderBottomColor: "#E0E0E0",
-        borderBottomWidth: 0.7,
+        borderBottomWidth: 0.8,
         position: "relative",
         // marginBottom: 7,
 

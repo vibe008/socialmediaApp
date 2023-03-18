@@ -26,7 +26,7 @@ export default StyleSheet.create({
 
     containerStyle: {
         borderColor: "white",
-        // backgroundColor:"white"
+        // backgroundColor:"red"
     },
     showdate: {
         display: "flex"
