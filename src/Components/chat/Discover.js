@@ -9,7 +9,6 @@ import getInterests from '../../Service/interest';
 const Discover = ({ navigation, data }) => {
     const [selectedInterest, setSelectedInterest] = useState('All')
     const [interests, setInterest] = useState()
-    const [intrestTouch ,  setIntrestTouch] =  useState(false)
     useEffect(() => {
         (async () => {
             const resp = await getInterests()
@@ -18,9 +17,8 @@ const Discover = ({ navigation, data }) => {
         })()
     }, [])
     const handleInterest = (item) => {
-        console.log(item._id)
+        console.log("interest click")
         setSelectedInterest(item._id)
-        setIntrestTouch(!intrestTouch)
     }
 
 
@@ -47,20 +45,19 @@ const Discover = ({ navigation, data }) => {
             <View style={styles.scroll_container} >
 
                 <View style={styles.vertical_container}>
-                    {interests && <FlatList
+                     <FlatList
                         style={styles.flatlist_container}
                         horizontal
                         showsHorizontalScrollIndicator={false}
                         data={interests}
                         renderItem={({ item }) => {
                             return (
-
-                                <TouchableOpacity style={[selectedInterest === item._id ?   styles.touchList_content : styles.list_content]} onPress={() => { handleInterest(item) }}>
+                                <TouchableOpacity delayPressIn={0} style={selectedInterest === item._id ?   styles.touchList_content : styles.list_content} onPress={() => { handleInterest(item) }}>
                                     <Text style={styles.intrest_text}>{item.title} </Text>
                                 </TouchableOpacity>
                             )
                         }}
-                    />}
+                    />
 
 
                 </View>

@@ -8,16 +8,19 @@ import { Octicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import {getDiscovers,getFiltersDiscovers} from '../../Service/discover';
 import multiavatar from '@multiavatar/multiavatar'
-// import Placeholder from './Placeholder';
+import Placeholder from './Placeholder';
 
 const DiscoverIneer = ({ navigation,userdata,selectedInterest }) => {
     const [connections,setConnections] = useState()
+    const [isLoading,setIsLoading] = useState(true)
     // const [defConn, setDefConn] = useState('All')
     useEffect(()=>{
+        setIsLoading(true)
         console.log('in DiscoverIneer useEffect',selectedInterest)
         handleDiscover()
     },[selectedInterest])
     const handleDiscover=async()=>{
+        
         if(selectedInterest === 'All'){
             const resp = await getDiscovers(userdata.data._id)
             setConnections(resp.message)
@@ -27,6 +30,7 @@ const DiscoverIneer = ({ navigation,userdata,selectedInterest }) => {
             setConnections(resp.message)
             console.log(connections.length)
         }
+        setIsLoading(false)
     }
     const [modalVisible, setModalVisible] = useState(false);
     const [modalData, setModelData] = useState(null)
@@ -203,7 +207,7 @@ const DiscoverIneer = ({ navigation,userdata,selectedInterest }) => {
     );
     return (
         <View style={styles.container}>
-            {/* <Placeholder/> */}
+            {isLoading && <Placeholder/>}
             {connections !== 'Not Found!' &&
             <SwipeListView
                 data={connections}

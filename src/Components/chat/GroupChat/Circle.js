@@ -152,7 +152,7 @@ const [userData,setUserData] = useState()
 
                         <TouchableOpacity onPress={() => navigation.navigate("Chathome")}>
                             <Text style={{ fontSize: 16, fontWeight: "500", padding: 8 }}>Discover</Text>
-                        </TouchableOpacity >
+                        </TouchableOpacity>
 
                         <TouchableOpacity onPress={() => navigation.navigate("Chat")} >
                             <Text style={{ fontSize: 16, fontWeight: "500", padding: 8 }}>Chat</Text>
