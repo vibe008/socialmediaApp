@@ -162,7 +162,7 @@ const DiscoverIneer = ({ navigation,userdata,selectedInterest }) => {
                         </View>
                         <View style={styles.people_intrest}>
                             <Text>
-                                {(data.item.interests.map(item=>item.title)).join(',')}
+                                {(data.item.interests.map(item=>item.title)).join(', ')}
                             </Text>
                         </View>
                     </View>
@@ -281,12 +281,12 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         backgroundColor: "white",
         width: "100%",
-        paddingTop: 10,
-        paddingBottom: 10,
+        paddingTop: 15,
+        paddingBottom: 15,
         borderBottomColor: "#E0E0E0",
-        borderBottomWidth: 1,
+        borderBottomWidth: 0.7,
         position: "relative",
-        marginBottom: 7,
+        // marginBottom: 7,
 
 
     },
