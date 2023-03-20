@@ -4,6 +4,7 @@ import ContentLoader, { Rect, Circle, Path }  from 'react-content-loader/native'
 const Placeholder = props => {
   return (
     <ContentLoader
+      speed={2}
       height={1200}
       width={1060}
       primaryColor="#d9d9d9"

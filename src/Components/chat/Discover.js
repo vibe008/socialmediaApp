@@ -12,7 +12,7 @@ const Discover = ({ navigation, data }) => {
     useEffect(() => {
         (async () => {
             const resp = await getInterests()
-            console.log('discover interests:', resp.message)
+            console.log('discover interests:')
             setInterest([{ _id: 'All', title: 'All' }, ...resp.message])
         })()
     }, [])
@@ -43,7 +43,6 @@ const Discover = ({ navigation, data }) => {
 
             </View>
             <View style={styles.scroll_container} >
-
                 <View style={styles.vertical_container}>
                      <FlatList
                         style={styles.flatlist_container}
@@ -52,11 +51,15 @@ const Discover = ({ navigation, data }) => {
                         data={interests}
                         renderItem={({ item }) => {
                             return (
-                                <TouchableOpacity delayPressIn={0} style={selectedInterest === item._id ?   styles.touchList_content : styles.list_content} onPress={() => { handleInterest(item) }}>
+                                <TouchableOpacity delayPressIn={0} style={selectedInterest === item._id ?   styles.touchList_content : styles.list_content} onPress={(e) => { handleInterest(item) }}>
                                     <Text style={styles.intrest_text}>{item.title} </Text>
                                 </TouchableOpacity>
                             )
-                        }}
+                        }
+                        }
+                        keyExtractor={(item,index)=>{
+                                return item._id
+                        }}  
                     />
 
 
