@@ -71,7 +71,7 @@ const highlightbar1 = ()=>{
                                 </Text> 
                             </View>
                             <View style={styles.intrest_section}>
-                                <Text style={{ color: "white" }}>Interests: {(data.data.interests.map(item=>item.title)).join(',')}</Text>
+                                <Text style={{ color: "white" }}>Interests: {(data.data.interests.map(item=>item.title)).join(', ')}</Text>
                             </View>
                         </View>
                     </View>
