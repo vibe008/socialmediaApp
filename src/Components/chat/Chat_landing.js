@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Discover from './Discover'
 import { Entypo } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
+
 import Chat_Profile from './Chat_Profile';
 import Header from '../Login/common/Header';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -11,12 +12,14 @@ const Chat_landing = ({ navigation }) => {
     const [userData,setUserData] = useState()
     useEffect(()=>{
         (async()=>{
-            console.log('Chat_landing useEffect')
+            // console.log('Chat_landing useEffect')
             const data = await AsyncStorage.getItem('userDataResp')
-            console.log(data)
+            // console.log(data)
             setUserData(JSON.parse(data))
         })();
     },[])
+
+    
 
     return (
         <>{userData && <View style={{ backgroundColor: "white", paddingTop: 50, flex: 1, }}>

@@ -1,6 +1,7 @@
 import { SafeAreaView, StyleSheet, Text, View, FlatList, TouchableOpacity, Image, TouchableHighlight } from 'react-native'
 import React, { useEffect, useState } from 'react'
-
+// import socket from '../../Socket/socket';
+import socket from '../../Socket/Socket';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import DiscoverIneer from './DiscoverIneer';
 import getInterests from '../../Service/interest';
@@ -9,24 +10,37 @@ import getInterests from '../../Service/interest';
 const Discover = ({ navigation, data }) => {
     const [selectedInterest, setSelectedInterest] = useState('All')
     const [interests, setInterest] = useState()
+
+    // useEffect(()=>{
+
+    // },[])
+
+
     useEffect(() => {
         (async () => {
             const resp = await getInterests()
-            console.log('discover interests:')
+            // console.log('discover interests:', resp.message)
             setInterest([{ _id: 'All', title: 'All' }, ...resp.message])
         })()
     }, [])
     const handleInterest = (item) => {
-        console.log("interest click")
+        // console.log("interest click")
         setSelectedInterest(item._id)
     }
 
-
+    useEffect(() => {
+        socket.on("connection" , ()=>{
+            console.log("connection" , "kjuio")
+        })
+    }, [])
     return (
         <SafeAreaView style={styles.Discover_container}>
             <View style={styles.active_link}>
                 <View style={styles.active_link_inner}>
-                    <TouchableOpacity onPress={() => navigation.navigate("Chathome")}
+                    <TouchableOpacity onPress={() => {
+                        navigation.navigate("Chathome")
+                        socket.emit("message", interests)
+                    }}
                         style={{ borderBottomColor: "#227ee3", borderBottomWidth: 3, borderRadius: 2, }}>
                         <Text style={{ fontSize: 16, fontWeight: "500", padding: 8 }}>Discover</Text>
 
@@ -44,14 +58,14 @@ const Discover = ({ navigation, data }) => {
             </View>
             <View style={styles.scroll_container} >
                 <View style={styles.vertical_container}>
-                     <FlatList
+                    <FlatList
                         style={styles.flatlist_container}
                         horizontal
                         showsHorizontalScrollIndicator={false}
                         data={interests}
                         renderItem={({ item }) => {
                             return (
-                                <TouchableOpacity delayPressIn={0} style={selectedInterest === item._id ?   styles.touchList_content : styles.list_content} onPress={(e) => { handleInterest(item) }}>
+                                <TouchableOpacity delayPressIn={0} style={selectedInterest === item._id ? styles.touchList_content : styles.list_content} onPress={() => { handleInterest(item) }}>
                                     <Text style={styles.intrest_text}>{item.title} </Text>
                                 </TouchableOpacity>
                             )
@@ -68,7 +82,7 @@ const Discover = ({ navigation, data }) => {
             </View>
 
 
-            
+
             <DiscoverIneer navigation={navigation} userdata={data} selectedInterest={selectedInterest} />
 
 
@@ -157,45 +171,45 @@ const styles = StyleSheet.create({
 
         elevation: 10,
     },
-    touchList_content:{
+    touchList_content: {
 
-    
-    margin: 10,
-    paddingTop: 5,
-    paddingBottom: 5,
-    paddingRight: 10,
-    paddingLeft: 10,
-    // padding:5,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 30,
-    // shadowColor: "#000",
 
-     },
+        margin: 10,
+        paddingTop: 5,
+        paddingBottom: 5,
+        paddingRight: 10,
+        paddingLeft: 10,
+        // padding:5,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: 30,
+        // shadowColor: "#000",
+
+    },
     intrest_text: {
-    // marginLeft:10,
-},
+        // marginLeft:10,
+    },
     container: {
-    backgroundColor: 'white',
-    flex: 1,
-},
+        backgroundColor: 'white',
+        flex: 1,
+    },
     backTextWhite: {
-    color: '#FFF',
-},
+        color: '#FFF',
+    },
 
     active_link_inner: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    height: 40,
-    // width:"100%"
-    // backgroundColor:"green"
-},
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        height: 40,
+        // width:"100%"
+        // backgroundColor:"green"
+    },
     active_link: {
-    // backgroundColor:"red",
-    width: "96%",
-    marginHorizontal: 6
-}
+        // backgroundColor:"red",
+        width: "96%",
+        marginHorizontal: 6
+    }
 })

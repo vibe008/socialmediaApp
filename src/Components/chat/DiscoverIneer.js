@@ -16,7 +16,7 @@ const DiscoverIneer = ({ navigation,userdata,selectedInterest }) => {
     // const [defConn, setDefConn] = useState('All')
     useEffect(()=>{
         setIsLoading(true)
-        console.log('in DiscoverIneer useEffect',selectedInterest)
+        // console.log('in DiscoverIneer useEffect',selectedInterest)
         handleDiscover()
     },[selectedInterest])
     const handleDiscover=async()=>{
@@ -28,7 +28,7 @@ const DiscoverIneer = ({ navigation,userdata,selectedInterest }) => {
         }else{
             const resp = await getFiltersDiscovers(userdata.data._id+'/'+selectedInterest)
             setConnections(resp.message)
-            console.log(connections.length)
+            // console.log(connections.length)
         }
         setIsLoading(false)
     }
@@ -42,7 +42,7 @@ const DiscoverIneer = ({ navigation,userdata,selectedInterest }) => {
     };
 
     const deleteRow = (rowMap, rowKey) => {
-        console.log("rowkey", rowKey)
+        // console.log("rowkey", rowKey)
         closeRow(rowMap, rowKey);
         const newData = [...connections];
         const prevIndex = connections.findIndex(item => item._id === rowKey);
@@ -196,7 +196,7 @@ const DiscoverIneer = ({ navigation,userdata,selectedInterest }) => {
                 onPress={() => {
                     deleteRow(rowMap, data.item._id)
                     // alert("are you sure! you want to delet this user")
-                    console.log("deleting user back", data.item._id)
+                    // console.log("deleting user back", data.item._id)
                 }}
             >
                 <View >

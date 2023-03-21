@@ -145,6 +145,8 @@ const Questions = (props) => {
         onPress={async()=>{
           setInitVal(mark)
           console.log(mark)
+          console.log("props.count",props.count)
+          console.log("props.length",props.length)
           if(props.count ===props.length-1)
           {
             const data = await AsyncStorage.getItem('userData')

@@ -37,7 +37,9 @@ const QueContainer = ({navigation}) => {
     }
     useEffect(()=>{
       (async()=>{
+        console.log("getQuestions",getQuestions())
         const resp = await getQuestions()
+        console.log(resp.message)
         setQuestionRespData(resp.message)
       })()
     },[])
