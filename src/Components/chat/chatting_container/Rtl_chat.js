@@ -15,6 +15,7 @@ import { Entypo } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
 import { Ionicons } from '@expo/vector-icons';
 import IntrestBar from './IntrestBar';
+import socket from '../../../Socket/Socket';
 import { isSearchBarAvailableForCurrentPlatform } from 'react-native-screens';
 import Slide from './Slide';
 // import { GestureDetector, TouchableOpacity } from 'react-native-gesture-handler';
@@ -215,6 +216,8 @@ const Rtl_chat = ({ navigation }) => {
             return [...curData, { id: Math.random().toString(36).slice(2), senderId: currUser, receiverId: friendUser, message: inputvalue, date: new Date(), time: new Date() , usersound : playsound }]
         })
 
+
+         socket.emit("message" , inputvalue )
         setInputvalue('')
     }
     useEffect(() => {
@@ -225,6 +228,13 @@ const Rtl_chat = ({ navigation }) => {
 
     }, [renderMsg])
 
+
+    useEffect(() => {
+    socket.on("recive message" , (data)=>{
+        console.log(data)
+    })
+    }, [])
+    
 
     const ShowInputMenu = () => {
         setInputmenu(!inputmenu)

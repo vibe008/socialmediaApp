@@ -5,7 +5,6 @@ import styles from './common/Style';
 import styles1 from '../styles/Login_style'
 import Br_lines from './common/Br_lines'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import login from '../../Service/login';
 import {items} from '../Data/Data.js'
@@ -19,6 +18,9 @@ const Login = ({ navigation }) => {
 
     const [countrycode, setCountrycode] = useState("91")
     const [flag, setFlag] = useState("https://flagcdn.com/w320/in.png")
+
+    // })
+
 
     const selecteditems = (item) => {
         const code = item.callingCodes
