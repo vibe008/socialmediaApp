@@ -27,6 +27,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const Rtl_chat = ({ navigation  , route }) => {
     // route.params = id
     const OtherID = route.params.OtherId
+    const myId = route.params.myID
     // const DATA = route.params
     // console.log("id",DATA)
     const [left, setLeft] = useState(-183)
@@ -222,15 +223,19 @@ const Rtl_chat = ({ navigation  , route }) => {
     const newMsg = () => {
         socket.emit("message" , {otherId : OtherID , message:inputvalue})
         setRenderMsg((curData) => {
-            return [...curData, { id: Math.random().toString(36).slice(2), senderId: currUser, receiverId: friendUser, message: inputvalue, date: new Date(), time: new Date(), usersound: playsound }]
+            return [...curData, { id: Math.random().toString(36).slice(2), senderId: myId, receiverId: friendUser, message: inputvalue, date: new Date(), time: new Date(), usersound: playsound }]
         })
         setInputvalue('')
     }
     useEffect(() => {
         (async()=>{
             const chats = await AsyncStorage.getItem("chats")
-            
-            setRenderMsg(JSON.parse(chats))
+            if(JSON.parse(chats))
+                {
+                    console.log(JSON.parse(chats))
+                    setRenderMsg(JSON.parse(chats))
+                }
+               
         })()
         console.log("useeffect rtl chat")
         socket.on("receive" , (data)=>{
@@ -325,7 +330,7 @@ const Rtl_chat = ({ navigation  , route }) => {
                         <View style={styles.chat_container}>
 
 
-                            {(element.item.senderId == currUser) ?
+                            {(element.item.senderId == myId) ?
 
                                 /* right message */
 
