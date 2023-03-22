@@ -6,34 +6,41 @@ import { MaterialIcons } from "@expo/vector-icons"
 import { Feather } from "@expo/vector-icons"
 import { Octicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import {getDiscovers,getFiltersDiscovers} from '../../Service/discover';
+import { getDiscovers, getFiltersDiscovers } from '../../Service/discover';
 import multiavatar from '@multiavatar/multiavatar'
 import Placeholder from './Placeholder';
+import socket from '../../Socket/Socket';
+const DiscoverIneer = ({ navigation, userdata, selectedInterest }) => {
 
-const DiscoverIneer = ({ navigation,userdata,selectedInterest }) => {
-    const [connections,setConnections] = useState()
-    const [isLoading,setIsLoading] = useState(true)
-    // const [defConn, setDefConn] = useState('All')
-    useEffect(()=>{
+
+    const [connections, setConnections] = useState()
+    const [isLoading, setIsLoading] = useState(true)
+    const [modalVisible, setModalVisible] = useState(false);
+    const [modalData, setModelData] = useState(null)
+
+
+
+
+    useEffect(() => {
         setIsLoading(true)
         // console.log('in DiscoverIneer useEffect',selectedInterest)
         handleDiscover()
-    },[selectedInterest])
-    const handleDiscover=async()=>{
-        
-        if(selectedInterest === 'All'){
+    }, [selectedInterest])
+    const handleDiscover = async () => {
+
+        if (selectedInterest === 'All') {
             const resp = await getDiscovers(userdata.data._id)
+            // console.log(userdata.data._id)
             setConnections(resp.message)
-            
-        }else{
-            const resp = await getFiltersDiscovers(userdata.data._id+'/'+selectedInterest)
+
+        } else {
+            const resp = await getFiltersDiscovers(userdata.data._id + '/' + selectedInterest)
             setConnections(resp.message)
             // console.log(connections.length)
         }
         setIsLoading(false)
     }
-    const [modalVisible, setModalVisible] = useState(false);
-    const [modalData, setModelData] = useState(null)
+
 
     const closeRow = (rowMap, rowKey) => {
         if (rowMap[rowKey]) {
@@ -50,33 +57,37 @@ const DiscoverIneer = ({ navigation,userdata,selectedInterest }) => {
         setConnections(newData);
     };
 
-    const openmodel = () => {
 
-        setModalVisible(true)
-        // console.log("ju",id)
+
+
+    const hendlepress = (data) => {
+        // console.log("userID", data.item._id)
+        let OtherId = data.item._id
+        let myID = userdata.data._id
+        socket.emit("Join", myID)
+        // socket.emit("join room" ,{room:`${OtherId}-${userdata.data._id}`})
+        // navigation.navigate("Rtlchat" , {room:`${OtherId}-${userdata.data._id}`})
+           navigation.navigate("Rtlchat" , {OtherId:OtherId , myID:myID , screenName:userdata.data.screenName})
     }
 
-    const deletmodal = () => {
 
-    }
+
+
+
+
+
+
     const renderedItem = (data) => (
         <View >
-
-
             <View style={styles.discover_People_container}>
                 <View  >
-
-
                     <TouchableOpacity style={styles.discovere_people_image}
-                        // key={data.item._id}
-
                         onPress={() => { setModelData(data.item._id); setModalVisible(true); }}
                     >
                         <Image style={{ height: 50, width: 50, borderRadius: 50 / 2, resizeMode: 'contain', }}
                             source={{
-                                uri: "data:image/svg+xml;utf8,"+multiavatar(data.item.avatarId)
+                                uri: "data:image/svg+xml;utf8," + multiavatar(data.item.avatarId)
                             }}
-
                         />
                         <Modal
                             // animationType="fade"
@@ -107,7 +118,7 @@ const DiscoverIneer = ({ navigation,userdata,selectedInterest }) => {
                                         <View style={{ position: "absolute", top: "70%", display: "flex", flexDirection: "row", width: "100%", justifyContent: "space-between" }}>
                                             <View >
                                                 <View style={{ marginTop: 30, backgroundColor: "#227ee3", width: 40, height: 40, borderRadius: 40 / 2, alignItems: "center", justifyContent: "center", marginLeft: 28, borderWidth: 2, borderColor: "white" }}>
-                                                    <TouchableOpacity activeOpacity={8} 
+                                                    <TouchableOpacity activeOpacity={8}
                                                     // onPress={() => {
                                                     //     deleteRow(rowKey, data.item._id)
                                                     //     console.log("deleting user", rowKey)
@@ -122,13 +133,15 @@ const DiscoverIneer = ({ navigation,userdata,selectedInterest }) => {
                                             </View>
                                             <View style={{ width: 120, height: 120, alignItems: "center", justifyContent: "center", borderRadius: 120 / 2, borderWidth: 5, borderColor: "white", }}>
                                                 <Image style={{ height: 110, width: 110, borderRadius: 110 / 2, resizeMode: 'contain', }}
-                                                    source={{ uri: "data:image/svg+xml;utf8,"+multiavatar(data.item.avatarId)
-                                                    // "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" 
+                                                    source={{
+                                                        uri: "data:image/svg+xml;utf8," + multiavatar(data.item.avatarId)
+                                                        // "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" 
                                                     }} />
                                             </View>
                                             <View>
                                                 <View style={{ marginTop: 30, backgroundColor: "#227ee3", width: 40, height: 40, borderRadius: 40 / 2, alignItems: "center", justifyContent: "center", marginRight: 30, borderWidth: 2, borderColor: "white" }}>
                                                     <TouchableOpacity activeOpacity={8} onPress={() => {
+
                                                         navigation.navigate("Rtlchat")
                                                         setModalVisible(false)
                                                     }}>
@@ -155,7 +168,9 @@ const DiscoverIneer = ({ navigation,userdata,selectedInterest }) => {
                         </Modal>
                     </TouchableOpacity>
                 </View>
-                <TouchableHighlight onPress={() => navigation.navigate('Rtlchat')}
+                <TouchableHighlight onPress={() => {
+                    hendlepress(data)
+                }}
                     style={styles.rowFront}
                     underlayColor={'#fff'}
                 >
@@ -167,7 +182,7 @@ const DiscoverIneer = ({ navigation,userdata,selectedInterest }) => {
                         </View>
                         <View style={styles.people_intrest}>
                             <Text>
-                                {(data.item.interests.map(item=>item.title)).join(', ')}
+                                {(data.item.interests.map(item => item.title)).join(', ')}
                             </Text>
                         </View>
                     </View>
@@ -207,24 +222,24 @@ const DiscoverIneer = ({ navigation,userdata,selectedInterest }) => {
     );
     return (
         <View style={styles.container}>
-            {isLoading && <Placeholder/>}
+            {isLoading && <Placeholder />}
             {connections !== 'Not Found!' &&
-            <SwipeListView
-                data={connections}
-                renderItem={renderedItem}
-                renderHiddenItem={renderHiddenItem}
-                style={styles.SwipeListView}
-                rightOpenValue={-150}
-                previewRowKey={'100'}
-                previewOpenValue={-10}
-                previewOpenDelay={2000}
-                showsVerticalScrollIndicator={false}
-                keyExtractor={item => item._id}
-            // onRowDidOpen={onRowDidOpen}
-            />
+                <SwipeListView
+                    data={connections}
+                    renderItem={renderedItem}
+                    renderHiddenItem={renderHiddenItem}
+                    style={styles.SwipeListView}
+                    rightOpenValue={-150}
+                    previewRowKey={'100'}
+                    previewOpenValue={-10}
+                    previewOpenDelay={2000}
+                    showsVerticalScrollIndicator={false}
+                    keyExtractor={item => item._id}
+                // onRowDidOpen={onRowDidOpen}
+                />
             }
-           
-            
+
+
         </View>
     )
 }

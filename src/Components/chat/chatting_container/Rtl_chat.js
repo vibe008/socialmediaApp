@@ -1,6 +1,6 @@
 import {
     Image, Text, View, FlatList, SafeAreaView, TextInput, Button, TouchableOpacity, NativeModules,
-    LayoutAnimation, Modal,ImageBackground
+    LayoutAnimation, Modal, ImageBackground
 } from 'react-native'
 import React, { useState, useRef, useEffect } from 'react'
 const { UIManager } = NativeModules;
@@ -22,117 +22,125 @@ import Slide from './Slide';
 import Inputslide from './Inputslide';
 import Animated from 'react-native-reanimated';
 import FinalSlider from './FinalSlider';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { Modal } from 'react-native-web';
-const Rtl_chat = ({ navigation }) => {
+const Rtl_chat = ({ navigation  , route }) => {
+    // route.params = id
+    const OtherID = route.params.OtherId
+    // const DATA = route.params
+    // console.log("id",DATA)
     const [left, setLeft] = useState(-183)
-    const [showbar, setShowbar] = useState(false)
     const [inputvalue, setInputvalue] = useState("")
-    const [newvalue, setNewvalue] = useState("")
     const [inputmenu, setInputmenu] = useState(false)
     const flatlistref = useRef()
     const [modalVisible, setModalVisible] = useState(false);
-
-    // start recording
     const [recording, setRecording] = useState();
     const [playsound, setPlaySound] = useState([]);
     const [soundmessage, setSoundmessage] = useState("")
     const message = [
-        {
-            id: 1,
-            senderId: 'shbsd33bjj44',
-            receiverId: 'shbsd33bjj45',
-            date: '2023-01-16T06:51:56.247Z',
-            time: '2023-01-16T06:51:56.247Z',
-            message: "hii , how are you"
-        },
-        {
-            id: 2,
-            senderId: 'shbsd33bjj45',
-            receiverId: 'shbsd33bjj44',
-            date: '2023-01-16T06:51:56.247Z',
-            time: '2023-01-16T06:51:56.247Z',
-            message: "good"
-        },
-        {
-            id: 3,
-            senderId: 'shbsd33bjj44',
-            receiverId: 'shbsd33bjj45',
-            date: '2023-01-16T06:51:56.247Z',
-            time: '2023-01-16T06:51:56.247Z',
-            message: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum corporis aliquid mollitia!"
-        },
-        {
-            id: 4,
-            senderId: 'shbsd33bjj45',
-            receiverId: 'shbsd33bjj44',
-            date: '2023-01-16T06:51:56.247Z',
-            time: '2023-01-16T06:51:56.247Z',
-            message: "Lorem ipsum dolor sit amet consectetur adipisicing elit. "
-        },
-        {
-            id: 5,
-            senderId: 'shbsd33bjj45',
-            receiverId: 'shbsd33bjj44',
-            date: '2023-01-16T06:51:56.247Z',
-            time: '2023-01-16T06:51:56.247Z',
-            message: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum corporis aliquid "
-        },
-        {
-            id: 6,
-            senderId: 'shbsd33bjj44',
-            receiverId: 'shbsd33bjj45',
-            date: '2023-01-16T06:51:56.247Z',
-            time: '2023-01-16T06:51:56.247Z',
-            message: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum "
-        },
-        {
-            id: 7,
-            senderId: 'shbsd33bjj45',
-            receiverId: 'shbsd33bjj44',
-            date: '2023-01-16T06:51:56.247Z',
-            time: '2023-01-16T06:51:56.247Z',
-            message: "Lorem ipsum dolor sit amet consectetur  "
-        },
-        {
-            id: 8,
-            senderId: 'shbsd33bjj45',
-            receiverId: 'shbsd33bjj44',
-            date: '2023-01-16T06:51:56.247Z',
-            time: '2023-01-16T06:51:56.247Z',
-            message: "Lorem ipsum dolor sit amet consectetur  "
-        },
-        {
-            id: 9,
-            senderId: 'shbsd33bjj44',
-            receiverId: ' shbsd33bjj45',
-            date: '2023-01-16T06:51:56.247Z',
-            time: '2023-01-16T06:51:56.247Z',
-            message: "Lorem ipsum dolor sit amet consectetur  "
-        },
-        {
-            id: 10,
-            senderId: 'shbsd33bjj44',
-            receiverId: 'shbsd33bjj45',
-            date: '2023-01-16T06:51:56.247Z',
-            time: '2023-01-16T06:51:56.247Z',
-            message: "Lorem ipsum dolor sit amet consectetur  "
-        },
+        // {
+        //     id: 1,
+        //     senderId: 'shbsd33bjj44',
+        //     receiverId: 'shbsd33bjj45',
+        //     date: '2023-01-16T06:51:56.247Z',
+        //     time: '2023-01-16T06:51:56.247Z',
+        //     message: "hii , how are you"
+        // },
+        // {
+        //     id: 2,
+        //     senderId: 'shbsd33bjj45',
+        //     receiverId: 'shbsd33bjj44',
+        //     date: '2023-01-16T06:51:56.247Z',
+        //     time: '2023-01-16T06:51:56.247Z',
+        //     message: "good"
+        // },
+        // {
+        //     id: 3,
+        //     senderId: 'shbsd33bjj44',
+        //     receiverId: 'shbsd33bjj45',
+        //     date: '2023-01-16T06:51:56.247Z',
+        //     time: '2023-01-16T06:51:56.247Z',
+        //     message: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum corporis aliquid mollitia!"
+        // },
+        // {
+        //     id: 4,
+        //     senderId: 'shbsd33bjj45',
+        //     receiverId: 'shbsd33bjj44',
+        //     date: '2023-01-16T06:51:56.247Z',
+        //     time: '2023-01-16T06:51:56.247Z',
+        //     message: "Lorem ipsum dolor sit amet consectetur adipisicing elit. "
+        // },
+        // {
+        //     id: 5,
+        //     senderId: 'shbsd33bjj45',
+        //     receiverId: 'shbsd33bjj44',
+        //     date: '2023-01-16T06:51:56.247Z',
+        //     time: '2023-01-16T06:51:56.247Z',
+        //     message: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum corporis aliquid "
+        // },
+        // {
+        //     id: 6,
+        //     senderId: 'shbsd33bjj44',
+        //     receiverId: 'shbsd33bjj45',
+        //     date: '2023-01-16T06:51:56.247Z',
+        //     time: '2023-01-16T06:51:56.247Z',
+        //     message: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum "
+        // },
+        // {
+        //     id: 7,
+        //     senderId: 'shbsd33bjj45',
+        //     receiverId: 'shbsd33bjj44',
+        //     date: '2023-01-16T06:51:56.247Z',
+        //     time: '2023-01-16T06:51:56.247Z',
+        //     message: "Lorem ipsum dolor sit amet consectetur  "
+        // },
+        // {
+        //     id: 8,
+        //     senderId: 'shbsd33bjj45',
+        //     receiverId: 'shbsd33bjj44',
+        //     date: '2023-01-16T06:51:56.247Z',
+        //     time: '2023-01-16T06:51:56.247Z',
+        //     message: "Lorem ipsum dolor sit amet consectetur  "
+        // },
+        // {
+        //     id: 9,
+        //     senderId: 'shbsd33bjj44',
+        //     receiverId: ' shbsd33bjj45',
+        //     date: '2023-01-16T06:51:56.247Z',
+        //     time: '2023-01-16T06:51:56.247Z',
+        //     message: "Lorem ipsum dolor sit amet consectetur  "
+        // },
+        // {
+        //     id: 10,
+        //     senderId: 'shbsd33bjj44',
+        //     receiverId: 'shbsd33bjj45',
+        //     date: '2023-01-16T06:51:56.247Z',
+        //     time: '2023-01-16T06:51:56.247Z',
+        //     message: "Lorem ipsum dolor sit amet consectetur  "
+        // },
     ]
-    
+
     const [renderMsg, setRenderMsg] = useState(message)
+
+    // const [room, setRoom] = useState(null)
+
+    // socket.on("room id", (data) => {
+    //     setRoom(data)
+    //     console.log(`you are in room${data}`)
+    // })
     const barOpen = () => {
         // setShowbar(!showbar)
         LayoutAnimation.spring();
-        if(left === -183){
+        if (left === -183) {
             setLeft(-115)
         }
-        else{
+        else {
             setLeft(-183)
         }
         console.log("uuuuuuuu")
         setModalVisible(true)
     }
-    const barClose = ()=>{
+    const barClose = () => {
         LayoutAnimation.spring();
         setLeft(-183)
         setModalVisible(false)
@@ -173,7 +181,7 @@ const Rtl_chat = ({ navigation }) => {
         setRecording(undefined);
         await recording.stopAndUnloadAsync();
         const uri = recording.createNewLoadedSoundAsync()
-        console.log("uri",uri)
+        console.log("uri", uri)
         const updateRecordings = [...playsound];
         const { sound, status } = await recording.createNewLoadedSoundAsync()
         updateRecordings.push({
@@ -196,7 +204,7 @@ const Rtl_chat = ({ navigation }) => {
                 </View>
             )
         })
-    } 
+    }
 
     //  const user = Alert.prompt("jj")
     const currUser = 'shbsd33bjj44'
@@ -208,17 +216,55 @@ const Rtl_chat = ({ navigation }) => {
     const convertDay = (date) => {
         let time = moment(date).format('dddds')
         return time
-    }  
+    }
 
 
     const newMsg = () => {
+        socket.emit("message" , {otherId : OtherID , message:inputvalue})
         setRenderMsg((curData) => {
-            return [...curData, { id: Math.random().toString(36).slice(2), senderId: currUser, receiverId: friendUser, message: inputvalue, date: new Date(), time: new Date() , usersound : playsound }]
+            return [...curData, { id: Math.random().toString(36).slice(2), senderId: currUser, receiverId: friendUser, message: inputvalue, date: new Date(), time: new Date(), usersound: playsound }]
         })
-
-
-         socket.emit("message" , inputvalue )
         setInputvalue('')
+    }
+    useEffect(() => {
+        (async()=>{
+            const chats = await AsyncStorage.getItem("chats")
+            
+            setRenderMsg(JSON.parse(chats))
+        })()
+        console.log("useeffect rtl chat")
+        socket.on("receive" , (data)=>{
+            setRenderMsg((curData)=>{
+                return[...curData , {id: Math.random().toString(36).slice(2), senderId: OtherID, receiverId: OtherID, message: data, date: new Date(), time: new Date}]
+            })
+            console.log('useeffect receive msg',data)
+        })
+    }, []) 
+    useEffect(() => {
+        (async()=>{
+            await AsyncStorage.setItem("chats", JSON.stringify(renderMsg))
+        })()
+    }, [renderMsg])
+    
+
+    // socket.on("receive" , (data)=>{
+    //     console.log("receive message" ,data)
+    //   })
+    
+    // useEffect(() => {
+    //     socket.on("recive message", (data) => {
+    //         setRenderMsg((curData) => {
+    //             return [...curData, { message: data }]
+    //         })
+    //         console.log("recive message", data)
+    //     })
+    // }, [])
+
+
+
+
+    const sendMsg = () => {
+
     }
     useEffect(() => {
         // console.log(renderMsg)
@@ -229,17 +275,13 @@ const Rtl_chat = ({ navigation }) => {
     }, [renderMsg])
 
 
-    useEffect(() => {
-    socket.on("recive message" , (data)=>{
-        console.log(data)
-    })
-    }, [])
-    
+
+
+
+
 
     const ShowInputMenu = () => {
         setInputmenu(!inputmenu)
-
-
     }
 
 
@@ -286,13 +328,13 @@ const Rtl_chat = ({ navigation }) => {
                             {(element.item.senderId == currUser) ?
 
                                 /* right message */
- 
+
                                 <View style={styles.right_chat_container}>
 
                                     <View style={styles.Right_message}>
                                         <View style={styles.inne_righ_message}>
                                             <Text>{soundmessage}</Text>
-                                    {getRecordingdLine()}
+                                            {getRecordingdLine()}
                                             <Text style={{ color: "white" }} >
 
                                                 {element.item.message}
@@ -365,8 +407,8 @@ const Rtl_chat = ({ navigation }) => {
                             <Feather name="camera" size={24} color="black" />
                         </View> */}
                         <TouchableOpacity
-                           onPress={()=>newMsg()}
-                        style={styles.emoji}>
+                            onPress={newMsg}
+                            style={styles.emoji}>
                             <Feather name="send" size={24} color="black" />
                         </TouchableOpacity>
                     </View>
@@ -396,24 +438,24 @@ const Rtl_chat = ({ navigation }) => {
                 </View>
             </View>
 
-            <TouchableOpacity style={[ left === -115 ? styles.openforsidebar : styles.closeforsidebar]}onPress={barClose}>
+            <TouchableOpacity style={[left === -115 ? styles.openforsidebar : styles.closeforsidebar]} onPress={barClose}>
 
             </TouchableOpacity>
 
 
             <View style={[styles.showbar, { left: left }]} >
-            <ImageBackground source={require("../../../../assets/barimg2.png")} resizeMode="contain" style={{height:"100%", width:"100%", zIndex:-1}}> 
-            <FinalSlider/>
-            </ImageBackground>
-            {/* <Inputslide /> */}
+                <ImageBackground source={require("../../../../assets/barimg2.png")} resizeMode="contain" style={{ height: "100%", width: "100%", zIndex: -1 }}>
+                    <FinalSlider />
+                </ImageBackground>
+                {/* <Inputslide /> */}
                 <TouchableOpacity onPress={barOpen}
-                    style={{ position: "absolute", top: 0, left: 110 , height:110 , width:30 , justifyContent:"center", alignItems:"center"  , }}>
-                        {left === -183 ? <Ionicons name='chevron-forward' size={30} color={"black"} /> :<Ionicons name='chevron-back' size={30} color={"black"} /> }
-                    
+                    style={{ position: "absolute", top: 0, left: 110, height: 110, width: 30, justifyContent: "center", alignItems: "center", }}>
+                    {left === -183 ? <Ionicons name='chevron-forward' size={30} color={"black"} /> : <Ionicons name='chevron-back' size={30} color={"black"} />}
+
                 </TouchableOpacity>
             </View>
-         
-                {/* <TouchableOpacity onPress={barOpen} */}
+
+            {/* <TouchableOpacity onPress={barOpen} */}
         </SafeAreaView>
 
     </>

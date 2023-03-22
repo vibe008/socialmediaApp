@@ -28,18 +28,13 @@ const Discover = ({ navigation, data }) => {
         setSelectedInterest(item._id)
     }
 
-    useEffect(() => {
-        socket.on("connection" , ()=>{
-            console.log("connection" , "kjuio")
-        })
-    }, [])
+
     return (
         <SafeAreaView style={styles.Discover_container}>
             <View style={styles.active_link}>
                 <View style={styles.active_link_inner}>
                     <TouchableOpacity onPress={() => {
                         navigation.navigate("Chathome")
-                        socket.emit("message", interests)
                     }}
                         style={{ borderBottomColor: "#227ee3", borderBottomWidth: 3, borderRadius: 2, }}>
                         <Text style={{ fontSize: 16, fontWeight: "500", padding: 8 }}>Discover</Text>

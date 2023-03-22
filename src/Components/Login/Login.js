@@ -97,7 +97,7 @@ else{
                             placeholder='Plese Enter Your Number'
                             onChangeText={(value) => {
                                 setValue(value)
-                                console.log(value)
+                                // console.log(value)
                             }
                             }
                             keyboardType="numeric"
@@ -156,7 +156,7 @@ else{
                             }}>
 
                                 <SearchableDropdown
-                                    onTextChange={(text) => console.log(text)}
+                                    // onTextChange={(text) => console.log(text)}
                                     onItemSelect={selecteditems}
                                     containerStyle={{ padding: 5 }}
                                     textInputStyle={{
