@@ -64,10 +64,12 @@ const DiscoverIneer = ({ navigation, userdata, selectedInterest }) => {
         // console.log("userID", data.item._id)
         let OtherId = data.item._id
         let myID = userdata.data._id
+
+        console.log(myID,OtherId)
         socket.emit("Join", myID)
         // socket.emit("join room" ,{room:`${OtherId}-${userdata.data._id}`})
         // navigation.navigate("Rtlchat" , {room:`${OtherId}-${userdata.data._id}`})
-           navigation.navigate("Rtlchat" , {OtherId:OtherId , myID:myID , screenName:userdata.data.screenName})
+           navigation.navigate("Rtlchat" , {OtherId:OtherId , myID:myID })
     }
 
 
