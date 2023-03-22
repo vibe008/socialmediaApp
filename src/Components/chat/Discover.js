@@ -52,7 +52,6 @@ const Discover = ({ navigation, data }) => {
 
             </View>
             <View style={styles.scroll_container} >
-
                 <View style={styles.vertical_container}>
                     <FlatList
                         style={styles.flatlist_container}
@@ -65,7 +64,11 @@ const Discover = ({ navigation, data }) => {
                                     <Text style={styles.intrest_text}>{item.title} </Text>
                                 </TouchableOpacity>
                             )
-                        }}
+                        }
+                        }
+                        keyExtractor={(item,index)=>{
+                                return item._id
+                        }}  
                     />
 
 

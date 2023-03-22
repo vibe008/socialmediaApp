@@ -143,7 +143,6 @@ const Chat = ({ navigation }) => {
         (async()=>{
             console.log('Chat useEffect')
             const data = await AsyncStorage.getItem('userDataResp')
-            console.log(data)
             setUserData(JSON.parse(data))
         })();
     },[])
