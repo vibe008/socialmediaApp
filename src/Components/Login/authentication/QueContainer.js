@@ -6,6 +6,7 @@ import getQuestions from '../../../Service/question'
 const QueContainer = ({navigation}) => {
     const [questionRespData,setQuestionRespData] = useState()
     const [count,setCount] = useState(0)
+    const [calibration,setCalibration] = useState({'@':0,'#':0,'$':0,'%':0,'&':0,'*':0})
     const countHandler=(newcount)=>{
         setCount(newcount)
     }
@@ -19,7 +20,14 @@ const QueContainer = ({navigation}) => {
   return (
     <>
       {questionRespData && 
-        <Questions item={questionRespData[count]} countHandler={countHandler} count={count} length = {questionRespData.length} navigation={navigation}/>
+        <Questions
+          item={questionRespData[count]} 
+          countHandler={countHandler} 
+          count={count} 
+          length = {questionRespData.length} 
+          calibration = {calibration}
+          setCalibration = {setCalibration}
+          navigation={navigation}/>
       }
     
     </>
