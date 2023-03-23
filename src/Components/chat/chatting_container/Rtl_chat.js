@@ -231,10 +231,10 @@ const Rtl_chat = ({ navigation, route }) => {
 
     const newMsg = () => {
         setDayTime(true)
-        // socket.emit("message", { otherId: OtherID, message: inputvalue })
-        // setRenderMsg((curData) => {
-        //     return [...curData, { id: Math.random().toString(36).slice(2), senderId: currUser, receiverId: friendUser, message: inputvalue, date: new Date(), time: new Date(), usersound: playsound }]
-        // })
+        socket.emit("message", { otherId:otherData._id, message: inputvalue })
+        setRenderMsg((curData) => {
+            return [...curData, { id: Math.random().toString(36).slice(2), senderId: myData._id, receiverId: otherData._id, message: inputvalue, date: new Date(), time: new Date(), usersound: playsound }]
+        })
         setInputvalue('')
     }
     useEffect(() => {
@@ -249,7 +249,7 @@ const Rtl_chat = ({ navigation, route }) => {
         console.log("useeffect rtl chat")
         socket.on("receive", (data) => {
             setRenderMsg((curData) => {
-                return [...curData, { id: Math.random().toString(36).slice(2), senderId: OtherID, receiverId: OtherID, message: data, date: new Date(), time: new Date }]
+                return [...curData, { id: Math.random().toString(36).slice(2), senderId: otherData._id, receiverId: myData._id, message: data, date: new Date(), time: new Date }]
             })
             console.log('useeffect receive msg', data)
         })
@@ -342,7 +342,7 @@ const Rtl_chat = ({ navigation, route }) => {
                         <>
                             <View style={styles.chat_container}>
                             
-                                {(element.item.senderId == currUser) ?
+                                {(element.item.senderId == myData._id) ?
 
                                     
 
