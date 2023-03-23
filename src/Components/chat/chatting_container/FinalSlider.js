@@ -8,7 +8,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 const Slider_hight = 400
 const Knoob_Width = 30
 const FinalSlider = (props) => {
-    const deefalutValue = props.myData.defaultTrust
+    const deefalutValue = props.otherData.defaultTrust
     const y = useSharedValue(Math.ceil((-deefalutValue*372)/100))
 
     const handleGesture = useAnimatedGestureHandler({

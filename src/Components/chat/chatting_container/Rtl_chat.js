@@ -1,7 +1,8 @@
 import {
-    Image, Text, View, FlatList, SafeAreaView, TextInput, Button, TouchableOpacity, NativeModules,
+     Text, View, FlatList, SafeAreaView, TextInput, Button, TouchableOpacity, NativeModules,
     LayoutAnimation, Modal, ImageBackground
 } from 'react-native'
+import Image from 'react-native-remote-svg';
 import React, { useState, useRef, useEffect } from 'react'
 const { UIManager } = NativeModules;
 UIManager.setLayoutAnimationEnabledExperimental &&
@@ -15,6 +16,7 @@ import { Entypo } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
 import { Ionicons } from '@expo/vector-icons';
 import IntrestBar from './IntrestBar';
+import multiavatar from '@multiavatar/multiavatar'
 import socket from '../../../Socket/Socket';
 import { isSearchBarAvailableForCurrentPlatform } from 'react-native-screens';
 import Slide from './Slide';
@@ -239,7 +241,7 @@ const Rtl_chat = ({ navigation, route }) => {
     }
     useEffect(() => {
         (async () => {
-            const chats = await AsyncStorage.getItem("chats")
+            const chats = await AsyncStorage.getItem(myData._id + '-' + otherData._id)
             if (JSON.parse(chats)) {
 
                 setRenderMsg(JSON.parse(chats))
@@ -257,7 +259,7 @@ const Rtl_chat = ({ navigation, route }) => {
 
     useEffect(() => {
         (async () => {
-            await AsyncStorage.setItem("chats", JSON.stringify(renderMsg))
+            await AsyncStorage.setItem(myData._id + '-' + otherData._id, JSON.stringify(renderMsg))
         })()
     }, [renderMsg])
 
@@ -313,9 +315,10 @@ const Rtl_chat = ({ navigation, route }) => {
                 </View>
 
                 <View style={styles.user_images}>
+
                     <Image style={{ height: 40, width: 40, borderRadius: 40 / 2, resizeMode: 'contain', }}
                         source={{
-                            uri: "https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                            uri:  "data:image/svg+xml;utf8," +multiavatar(otherData.avatarId)
                         }} />
                 </View>
 
@@ -324,7 +327,7 @@ const Rtl_chat = ({ navigation, route }) => {
                 </View>
 
                 <View style={styles.user_percentage}>
-                    <Text style={{ fontSize: 10, color: "white" }}>{otherData.defaultTrust}%</Text>
+                    <Text style={{ fontSize: 10, color: "white" }}>{myData.defaultTrust}%</Text>
                 </View>
             </View>
             {/* top end */}
@@ -457,7 +460,7 @@ const Rtl_chat = ({ navigation, route }) => {
 
             <View style={[styles.showbar, { left: left }]} >
                 <ImageBackground source={require("../../../../assets/barimg2.png")} resizeMode="contain" style={{ height: "100%", width: "100%", zIndex: -1 }}>
-                    <FinalSlider  myData={myData}/>
+                    <FinalSlider  otherData={otherData}/>
                 </ImageBackground>
                 {/* <Inputslide /> */}
                 <TouchableOpacity onPress={barOpen}
