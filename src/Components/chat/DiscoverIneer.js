@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, Image as ReactImage, TouchableHighlight, Modal, FlatList } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Image as ReactImage, TouchableHighlight, Modal, FlatList, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Image from 'react-native-remote-svg';
 import { SwipeListView } from 'react-native-swipe-list-view';
@@ -6,7 +6,7 @@ import { MaterialIcons } from "@expo/vector-icons"
 import { Feather } from "@expo/vector-icons"
 import { Octicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { getDiscovers, getFiltersDiscovers } from '../../Service/discover';
+import { getDiscovers, getFiltersDiscovers,setActiveDiscover } from '../../Service/discover';
 import multiavatar from '@multiavatar/multiavatar'
 import Placeholder from './Placeholder';
 import socket from '../../Socket/Socket';
@@ -19,8 +19,7 @@ const DiscoverIneer = ({ navigation, userdata, selectedInterest }) => {
     const [modalData, setModelData] = useState(null)
 
 
-
-
+    
     useEffect(() => {
         setIsLoading(true)
         // console.log('in DiscoverIneer useEffect',selectedInterest)
@@ -39,6 +38,9 @@ const DiscoverIneer = ({ navigation, userdata, selectedInterest }) => {
             // console.log(connections.length)
         }
         setIsLoading(false)
+    }
+    const activeChat = async(otherId)=>{
+        return await setActiveDiscover(userdata.data._id + '/' + otherId)
     }
 
 
@@ -60,16 +62,20 @@ const DiscoverIneer = ({ navigation, userdata, selectedInterest }) => {
 
 
 
-    const hendlepress = (data) => {
+    const hendlepress = async(data) => {
+       
         // console.log("userID", data.item._id)
         let OtherId = data.item._id
         let myID = userdata.data._id
-
-        console.log(myID,OtherId)
-        socket.emit("Join", myID)
-        // socket.emit("join room" ,{room:`${OtherId}-${userdata.data._id}`})
-        // navigation.navigate("Rtlchat" , {room:`${OtherId}-${userdata.data._id}`})
-           navigation.navigate("Rtlchat" , {OtherId:OtherId , myID:myID })
+        const resp = await activeChat(OtherId)
+        if(resp.status !== 200){
+            Alert.alert('Problem!','Unable to chat')
+        }else{
+            console.log(myID,OtherId)
+            socket.emit("Join", myID)
+            navigation.navigate("Rtlchat" , {OtherId:OtherId , myID:myID })
+        }
+       
     }
 
 
