@@ -24,11 +24,12 @@ import Animated from 'react-native-reanimated';
 import FinalSlider from './FinalSlider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { Modal } from 'react-native-web';
-const Rtl_chat = ({ navigation  , route }) => {
-    // route.params = id
-    const OtherID = route.params.OtherId
-    // const DATA = route.params
-    // console.log("id",DATA)
+const Rtl_chat = ({ navigation, route }) => {
+
+    const myData = route.params.myData
+    const otherData = route.params.OtherDAta
+    console.log("myData",myData)
+    console.log("OtherDAta",otherData)
     const [left, setLeft] = useState(-183)
     const [inputvalue, setInputvalue] = useState("")
     const [inputmenu, setInputmenu] = useState(false)
@@ -37,6 +38,7 @@ const Rtl_chat = ({ navigation  , route }) => {
     const [recording, setRecording] = useState();
     const [playsound, setPlaySound] = useState([]);
     const [soundmessage, setSoundmessage] = useState("")
+    const [daytime, setDayTime] = useState(false)
     const message = [
         // {
         //     id: 1,
@@ -122,6 +124,14 @@ const Rtl_chat = ({ navigation  , route }) => {
 
     const [renderMsg, setRenderMsg] = useState(message)
 
+    useEffect(() => {
+    //    console.log("hii")
+    //    socket.on("connection" , ()=>{
+    //     console.log("connection")
+    //    })
+     socket.emit("user_connected" , {id:"2"} )  
+    }, [])
+    
     // const [room, setRoom] = useState(null)
 
     // socket.on("room id", (data) => {
@@ -220,37 +230,42 @@ const Rtl_chat = ({ navigation  , route }) => {
 
 
     const newMsg = () => {
-        socket.emit("message" , {otherId : OtherID , message:inputvalue})
-        setRenderMsg((curData) => {
-            return [...curData, { id: Math.random().toString(36).slice(2), senderId: currUser, receiverId: friendUser, message: inputvalue, date: new Date(), time: new Date(), usersound: playsound }]
-        })
+        setDayTime(true)
+        // socket.emit("message", { otherId: OtherID, message: inputvalue })
+        // setRenderMsg((curData) => {
+        //     return [...curData, { id: Math.random().toString(36).slice(2), senderId: currUser, receiverId: friendUser, message: inputvalue, date: new Date(), time: new Date(), usersound: playsound }]
+        // })
         setInputvalue('')
     }
     useEffect(() => {
-        (async()=>{
+        (async () => {
             const chats = await AsyncStorage.getItem("chats")
-            
-            setRenderMsg(JSON.parse(chats))
+            if (JSON.parse(chats)) {
+
+                setRenderMsg(JSON.parse(chats))
+            }
         })()
+
         console.log("useeffect rtl chat")
-        socket.on("receive" , (data)=>{
-            setRenderMsg((curData)=>{
-                return[...curData , {id: Math.random().toString(36).slice(2), senderId: OtherID, receiverId: OtherID, message: data, date: new Date(), time: new Date}]
+        socket.on("receive", (data) => {
+            setRenderMsg((curData) => {
+                return [...curData, { id: Math.random().toString(36).slice(2), senderId: OtherID, receiverId: OtherID, message: data, date: new Date(), time: new Date }]
             })
-            console.log('useeffect receive msg',data)
+            console.log('useeffect receive msg', data)
         })
-    }, []) 
+    }, [])
+
     useEffect(() => {
-        (async()=>{
+        (async () => {
             await AsyncStorage.setItem("chats", JSON.stringify(renderMsg))
         })()
     }, [renderMsg])
-    
+
 
     // socket.on("receive" , (data)=>{
     //     console.log("receive message" ,data)
     //   })
-    
+
     // useEffect(() => {
     //     socket.on("recive message", (data) => {
     //         setRenderMsg((curData) => {
@@ -292,7 +307,9 @@ const Rtl_chat = ({ navigation  , route }) => {
             <View style={styles.new_User_profile}>
 
                 <View  >
-                    <AntDesign name="arrowleft" size={28} onPress={() => navigation.goBack()} color={"#227ee3"} />
+                    <AntDesign name="arrowleft" size={28} onPress={() => {
+                        socket.emit("user_disconnected" , {userid : "2"})
+                        navigation.goBack()}} color={"#227ee3"} />
                 </View>
 
                 <View style={styles.user_images}>
@@ -303,73 +320,68 @@ const Rtl_chat = ({ navigation  , route }) => {
                 </View>
 
                 <View style={styles.Screeen_Name_container}>
-                    <Text style={{ fontSize: 15, fontWeight: "500" }}>screen name</Text>
+                    <Text style={{ fontSize: 15, fontWeight: "500" }}>{otherData.screenName}</Text>
                 </View>
 
                 <View style={styles.user_percentage}>
-                    <Text style={{ fontSize: 10, color: "white" }}>25%</Text>
+                    <Text style={{ fontSize: 10, color: "white" }}>{otherData.defaultTrust}%</Text>
                 </View>
             </View>
             {/* top end */}
 
 
-            {/* messages container  */}
+            {/* messages container  */}  
             <FlatList
-                // style={{zIndex:99}}
+                // style={{backgroundColor:"pink" , flex:1}}
                 data={renderMsg}
                 showsVerticalScrollIndicator={false}
                 ref={flatlistref}
                 // keyExtractor={message.id}
                 renderItem={(element) => {
                     return (
-                        <View style={styles.chat_container}>
+                        <>
+                            <View style={styles.chat_container}>
+                            
+                                {(element.item.senderId == currUser) ?
 
+                                    
 
-                            {(element.item.senderId == currUser) ?
+                                    <View style={styles.right_chat_container}>
 
-                                /* right message */
+                                        <View style={styles.Right_message}>
+                                            <View style={styles.inne_righ_message}>
+                                                <Text>{soundmessage}</Text>
+                                                {getRecordingdLine()}
+                                                <Text style={{ color: "white" }} >
 
-                                <View style={styles.right_chat_container}>
-
-                                    <View style={styles.Right_message}>
-                                        <View style={styles.inne_righ_message}>
-                                            <Text>{soundmessage}</Text>
-                                            {getRecordingdLine()}
-                                            <Text style={{ color: "white" }} >
-
-                                                {element.item.message}
-                                            </Text>
-                                        </View>
-                                        <View style={styles.right_time}>
-                                            <Text style={{ fontSize: 12, marginRight: 6, color: "white" }}>{convertTime(element.item.time)}</Text>
-                                            {/* <Ionicons name="ios-eye-outline" size={14} color="black" /> */}
-                                            <Ionicons name="ios-eye-off-outline" size={14} color="white" />
-                                        </View>
-                                    </View>
-                                </View>
-
-                                :
-
-                                /* left message */
-                                <View style={styles.left_chat_contaier}>
-                                    <View style={styles.Left_message}>
-                                        <View style={styles.inner_left_message}>
-                                            <Text  >
-                                                {element.item.message}
-                                            </Text>
-                                        </View>
-                                        <View style={styles.left_time}>
-                                            <Text style={{ fontSize: 12 }}>{convertTime(element.item.time)}</Text>
+                                                    {element.item.message}
+                                                </Text>
+                                            </View>
+                                            <View style={styles.right_time}>
+                                                <Text style={{ fontSize: 12, marginRight: 6, color: "white" }}>{convertTime(element.item.time)}</Text>
+                                                <Ionicons name="ios-eye-off-outline" size={14} color="white" />
+                                            </View>
                                         </View>
                                     </View>
-                                </View>
-                            }
-
-
-                            {/* left message */}
-
-
-                        </View>
+                                    // <View style={{backgroundColor:"red", width:"100%" , marginTop:10 , height:20}}>
+                                   
+                                    // </View>
+                                    :
+                                    <View style={styles.left_chat_contaier}>
+                                        <View style={styles.Left_message}>
+                                            <View style={styles.inner_left_message}>
+                                                <Text  >
+                                                    {element.item.message}
+                                                </Text>
+                                            </View>
+                                            <View style={styles.left_time}>
+                                                <Text style={{ fontSize: 12 }}>{convertTime(element.item.time)}</Text>
+                                            </View>
+                                        </View>
+                                    </View>
+                                }
+                            </View>
+                        </>
                     )
                 }}
             />
@@ -445,7 +457,7 @@ const Rtl_chat = ({ navigation  , route }) => {
 
             <View style={[styles.showbar, { left: left }]} >
                 <ImageBackground source={require("../../../../assets/barimg2.png")} resizeMode="contain" style={{ height: "100%", width: "100%", zIndex: -1 }}>
-                    <FinalSlider />
+                    <FinalSlider  myData={myData}/>
                 </ImageBackground>
                 {/* <Inputslide /> */}
                 <TouchableOpacity onPress={barOpen}

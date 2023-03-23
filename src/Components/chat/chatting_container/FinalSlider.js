@@ -7,7 +7,7 @@ const AnimatedTextInput = Animated.createAnimatedComponent(TextInput)
 import { LinearGradient } from 'expo-linear-gradient';
 const Slider_hight = 400
 const Knoob_Width = 30
-const FinalSlider = () => {
+const FinalSlider = (props) => {
     const y = useSharedValue(0)
 
     const handleGesture = useAnimatedGestureHandler({
@@ -17,6 +17,7 @@ const FinalSlider = () => {
         },
         onActive: (event, ctx) => {
             y.value = ctx.StartY + event.translationY > 0 ? 0 : ctx.StartY + event.translationY < -372 ? -372 : ctx.StartY + event.translationY
+            // y.value = 10
             console.log("yvalue", (y.value/372)*100)
 
         }
@@ -49,8 +50,8 @@ const FinalSlider = () => {
     })
     const number = useAnimatedProps(() => {
         return {
-            // text: `${(-y.value / -327)*100 }`
-            text : `${Math.ceil((-y.value/372)*100)}%`
+            text: `${props.myData.defaultTrust}%`
+            // text : `${Math.ceil((-y.value/372)*100)}%`
 
         }
     })

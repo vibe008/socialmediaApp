@@ -36,7 +36,7 @@ export default StyleSheet.create({
         marginLeft: 30
     },
     chat_container: {
-        // backgroundColor: "red"
+        // backgroundColor: "red",
         flex: 1
     },
 
@@ -51,16 +51,18 @@ export default StyleSheet.create({
         alignSelf: "flex-end",
         // width: "60%",
         maxWidth: "80%",
+        marginRight:5,
+        // padding:10,
         // padding: 5,
         borderTopLeftRadius: 14,
         borderBottomLeftRadius: 14,
         borderTopRightRadius: 16,
         borderBottomRightRadius: 5,
-        marginRight: 5,
-        paddingTop: 10,
+        // marginRight: 5,
+        // paddingTop: 10,
         // paddingRight:20,
-        paddingLeft: 20,
-        paddingBottom: 5,
+        // paddingLeft: 20,
+        // paddingBottom: 5,
         shadowColor: "black",
         shadowOffset: {
             width: 0,
@@ -68,7 +70,8 @@ export default StyleSheet.create({
         },
         shadowOpacity: 0.20,
         shadowRadius: 5.62,
-        elevation: 8
+        elevation: 8,
+        paddingLeft:10
 
     },
     inne_righ_message: {
