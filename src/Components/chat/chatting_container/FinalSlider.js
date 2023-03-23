@@ -50,7 +50,7 @@ const FinalSlider = (props) => {
     })
     const number = useAnimatedProps(() => {
         return {
-            text: `${props.myData.defaultTrust}%`
+            text: `1`
             // text : `${Math.ceil((-y.value/372)*100)}%`
 
         }

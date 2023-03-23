@@ -139,7 +139,6 @@ const [userData,setUserData] = useState()
         (async()=>{
             console.log('Chat useEffect')
             const data = await AsyncStorage.getItem('userDataResp')
-            console.log(data)
             setUserData(JSON.parse(data))
         })();
     },[])
@@ -175,7 +174,9 @@ const [userData,setUserData] = useState()
                             <>
                                 <View style={{ flex: 1 }}>
                                     <View style={{  display: "flex", flexDirection: "row" ,borderBottomWidth:1 ,  borderColor:"#BDBDBD" , paddingBottom:10 , paddingTop:10, paddingRight:10 , paddingLeft:0}}>
-                                        <TouchableOpacity onPress={(e)=>{setModalVisible(true)
+                                        <TouchableOpacity onPress={(e)=>{
+                                            console.log('circle click')
+                                            setModalVisible(true)
                                             if(shownmessage.filter((item)=> item.key === e)){
                                                 setValue(item.key)
                                             }
