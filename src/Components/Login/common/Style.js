@@ -43,6 +43,22 @@ export default StyleSheet.create({
         // backgroundColor:"red",
         justifyContent: "space-between"
 
-    }
+    },
+    imagepreviewcontainer:{
+        alignItems:'center',
+        justifyContent:'center',
+        width:'100%',
+        height:200,
+        backgroundColor:'#f0cced',
+        marginVertical:8,
+        borderRadius:8,
+        },
+        previewText:{
+        color:'#592454',
+        },
+        imageStyle:{
+        width:'100%',
+        height:'100%',
+        }
 
 })

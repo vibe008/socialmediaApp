@@ -41,6 +41,7 @@ const Rtl_chat = ({ navigation, route }) => {
     const [playsound, setPlaySound] = useState([]);
     const [soundmessage, setSoundmessage] = useState("")
     const [daytime, setDayTime] = useState(false)
+    const [currentDay, setCurrentDay] = useState('');
     const message = [
         // {
         //     id: 1,
@@ -134,6 +135,10 @@ const Rtl_chat = ({ navigation, route }) => {
      socket.emit("user_connected" , {id:"2"} )  
     }, [])
     
+
+    socket.on('currentDay', (day) => {
+        setCurrentDay(day);
+      });
     // const [room, setRoom] = useState(null)
 
     // socket.on("room id", (data) => {
@@ -238,7 +243,11 @@ const Rtl_chat = ({ navigation, route }) => {
             return [...curData, { id: Math.random().toString(36).slice(2), senderId: myData._id, receiverId: otherData._id, message: inputvalue, date: new Date(), time: new Date(), usersound: playsound }]
         })
         setInputvalue('')
+        console.log("newdate" ,convertDay)
     }
+
+
+
     useEffect(() => {
         (async () => {
             const chats = await AsyncStorage.getItem(myData._id + '-' + otherData._id)
@@ -279,7 +288,7 @@ const Rtl_chat = ({ navigation, route }) => {
 
 
 
-
+console.log("day",currentDay)
     const sendMsg = () => {
 
     }

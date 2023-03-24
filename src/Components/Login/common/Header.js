@@ -5,6 +5,7 @@ import { Entypo } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { Modal } from 'react-native';
 const Header = ({ navigation,data }) => {
+    console.log()
     const [menubar, setMenubar] = useState("")
     const [ lightbar , setLightbar] = useState(false)
    const [modelopen , setModalopen] = useState(false)
@@ -60,7 +61,7 @@ const highlightbar1 = ()=>{
                             <View style={styles.img_name}>
                                 <Image style={{ height: 50, width: 50, borderRadius: 50 / 2, resizeMode: 'contain', }}
                                     source={{
-                                        uri: "data:image/svg+xml;utf8,"+data.avatar
+                                        uri: data.data.profileImgUrl?data.data.profileImgUrl:"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                                     }} />
                                 
                                 <Text style={styles.text}>
