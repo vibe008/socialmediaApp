@@ -1,3 +1,5 @@
 import { io } from "socket.io-client";
-const socket = io.connect("http://192.168.1.12:3000");
+import apiUrl from './../Service/env'
+
+const socket = io.connect(apiUrl.slice(0,23));
 export default socket;
