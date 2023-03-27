@@ -25,6 +25,7 @@ import Inputslide from './Inputslide';
 import Animated from 'react-native-reanimated';
 import FinalSlider from './FinalSlider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { setDeactiveDiscover } from '../../../Service/discover';
 // import { Modal } from 'react-native-web';
 const Rtl_chat = ({ navigation, route }) => {
 
@@ -469,7 +470,14 @@ console.log("day",currentDay)
 
             <View style={[styles.showbar, { left: left }]} >
                 <ImageBackground source={require("../../../../assets/barimg2.png")} resizeMode="contain" style={{ height: "100%", width: "100%", zIndex: -1 }}>
-                    <FinalSlider  otherData={otherData}/>
+                    <FinalSlider  otherData={otherData} navigation={async()=>{
+                        const resp = await setDeactiveDiscover(myData._id+'/'+otherData._id)
+                        if(resp.status !== 200){
+                            Alert.alert('Problem!','Unable to chat')
+                        }else{
+                            navigation.navigate('Chathome')
+                        }
+                        }}/>
                 </ImageBackground>
                 {/* <Inputslide /> */}
                 <TouchableOpacity onPress={barOpen}

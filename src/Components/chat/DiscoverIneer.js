@@ -11,8 +11,9 @@ import multiavatar from '@multiavatar/multiavatar'
 import Placeholder from './Placeholder';
 import socket from '../../Socket/Socket';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useIsFocused } from '@react-navigation/native';
 const DiscoverIneer = ({ navigation, userdata, selectedInterest }) => {
-
+    const isFocused = useIsFocused();
 
     const [connections, setConnections] = useState()
     const [isLoading, setIsLoading] = useState(true)
@@ -23,9 +24,9 @@ const DiscoverIneer = ({ navigation, userdata, selectedInterest }) => {
     
     useEffect(() => {
         setIsLoading(true)
-        // console.log('in DiscoverIneer useEffect',selectedInterest)
+        console.log('in DiscoverIneer useEffect')
         handleDiscover()
-    }, [selectedInterest])
+    }, [isFocused,selectedInterest])
     const handleDiscover = async () => {
 
         if (selectedInterest === 'All') {

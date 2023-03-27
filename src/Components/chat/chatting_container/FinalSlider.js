@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TextInput, View , ImageBackground, Alert} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { GestureHandlerRootView, PanGestureHandler } from 'react-native-gesture-handler'
-import Animated, { useAnimatedGestureHandler, useAnimatedProps, useAnimatedStyle, useSharedValue } from 'react-native-reanimated'
+import Animated, { set, useAnimatedGestureHandler, useAnimatedProps, useAnimatedStyle, useSharedValue, runOnJS } from 'react-native-reanimated'
 const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput)
 import { LinearGradient } from 'expo-linear-gradient';
@@ -9,9 +9,18 @@ const Slider_hight = 400
 const Knoob_Width = 30
 const FinalSlider = (props) => {
     const deefalutValue = props.otherData.defaultTrust
-    const y = useSharedValue(Math.ceil((-deefalutValue*372)/100))
+    const y=useSharedValue(Math.ceil((-deefalutValue*372)/100))
     const [isZero,setIsZero]= useState(Math.ceil((-y.value/372)*100))
-
+    console.log(isZero)
+    const handleZero=async(val)=>{
+        // 'worklet';
+        if(val === 0){
+            console.log('its zero',val)
+            props.navigation()
+        }
+        
+        
+    }
     const handleGesture = useAnimatedGestureHandler({
         onStart: (_, ctx) => {
             ctx.StartY = y.value
@@ -20,10 +29,13 @@ const FinalSlider = (props) => {
         onActive: (event, ctx) => {
             y.value = ctx.StartY + event.translationY > 0 ? 0 : ctx.StartY + event.translationY < -372 ? -372 : ctx.StartY + event.translationY
             // y.value = 10
-            console.log("yvalue", (y.value/372)*100)
+            // console.log(Math.ceil((-y.value/372)*100))
             // setIsZero(Math.ceil((-y.value/372)*100))
+        },
+        onEnd:(_)=>{
+            runOnJS(handleZero)((Math.ceil((-y.value/372)*100)))
         }
-    })
+    },[])
 
 
     const stylebar = useAnimatedStyle(() => {
@@ -52,7 +64,6 @@ const FinalSlider = (props) => {
     })
  
     const number = useAnimatedProps(() => {
-       
         return {
             // text: `${y.value}`
             
@@ -61,12 +72,10 @@ const FinalSlider = (props) => {
         }
     })
     
-    useEffect(()=>{
-        console.log(isZero)
-    },[isZero])
-    const handleZero=()=>{
-        Alert.alert('its zero')
-    }
+    // useEffect(()=>{
+    //     console.log(number.initial.value.text)
+    // },[number.initial.value.text])
+    
     return (
         <GestureHandlerRootView style={styles.main}>
                         <View style={styles.slider}>
@@ -85,6 +94,7 @@ const FinalSlider = (props) => {
  
                     </Animated.View>
                 </PanGestureHandler>
+                {console.log(number.initial.value.text)}
                 <AnimatedTextInput style={styles.textinputstyle}
                             defaultValue='0' animatedProps={number} editable={false}
                         />
