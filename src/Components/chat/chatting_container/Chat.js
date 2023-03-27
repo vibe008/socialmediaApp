@@ -1,136 +1,139 @@
-import { FlatList, Image, StyleSheet, Text, View, TouchableOpacity, Modal } from 'react-native'
+import { FlatList, StyleSheet, Text, View, TouchableOpacity, Modal } from 'react-native'
 import React, { useState , useEffect} from 'react'
 import Header from '../../Login/common/Header'
 import { MaterialIcons } from "@expo/vector-icons"
+import Image from 'react-native-remote-svg';
+import multiavatar from '@multiavatar/multiavatar'
 import { Feather } from "@expo/vector-icons"
 import { Octicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { getChats } from '../../../Service/discover'
 const Chat = ({ navigation }) => {
+const [shownmessage , setShownmessage]= useState([])
+    // const shownmessage = [
+    //     {
+    //         screenName: "rohan",
+    //         message: "Lorem ipsum dolor sit amet consectetur adipisicing elit..",
+    //         lastonline: "5min",
+    //         messagecount: "1",
+    //         key: '1',
+    //         img: require('../../../../assets/groupprofile1.jpg'),
+    //     },
 
-    const shownmessage = [
-        {
-            username: "rohan",
-            message: "Lorem ipsum dolor sit amet consectetur adipisicing elit..",
-            lastonline: "5min",
-            messagecount: "1",
-            key: '1',
-            img: require('../../../../assets/groupprofile1.jpg'),
-        },
-
-        {
-            username: "erdwkt",
-            message: "Lorem ipsum dolor sit amet consectetur adipisicing elit..",
-            lastonline: "7min",
-            messagecount: "3",
-            key: '2',
-            img: require('../../../../assets/user.png'),
-        },
-        {
-            username: "arpit",
-            message: "Lorem ipsum dolor sit amet consectetur adipisicing elit..",
-            lastonline: "3min",
-            messagecount: "5",
-            key: '3',
-            img: require("../../../../assets/groupprofile3.jpg"),
-        },
-        {
-            username: "vibhu",
-            message: "Lorem ipsum dolor sit amet consectetur adipisicing elit..",
-            lastonline: "9min",
-            messagecount: "1",
-            key: '4',
-            img: require('../../../../assets/groupprofile9.jpg'),
-        },
-        {
-            username: "aakansha",
-            message: "Lorem ipsum dolor sit amet consectetur adipisicing elit..",
-            lastonline: "1min",
-            messagecount: "4",
-            key: '5',
-            img: require('../../../../assets/groupprofile4.jpg'),
-        },
-        {
-            username: "priyanka",
-            message: "Lorem ipsum dolor sit amet consectetur adipisicing elit..",
-            lastonline: "6min",
-            messagecount: "6",
-            key: '6',
-            img: require('../../../../assets/groupprofile5.jpg'),
-        },
-        {
-            username: "etset",
-            message: "Lorem ipsum dolor sit amet consectetur adipisicing elit..",
-            lastonline: "6min",
-            messagecount: "6",
-            key: '7',
-            img: require('../../../../assets/user.png'),
-        },
-        {
-            username: "arpit",
-            message: "Lorem ipsum dolor sit amet consectetur adipisicing elit..",
-            lastonline: "6min",
-            messagecount: "6",
-            key: '8',
-            img: require('../../../../assets/groupprofile5.jpg'),
-        },
-        {
-            username: "hdrets",
-            message: "Lorem ipsum dolor sit amet consectetur adipisicing elit..",
-            lastonline: "6min",
-            messagecount: "6",
-            key: '9',
-            img: require('../../../../assets/user.png'),
-        },
-        {
-            username: "arpit",
-            message: "Lorem ipsum dolor sit amet consectetur adipisicing elit..",
-            lastonline: "6min",
-            messagecount: "6",
-            key: '10',
-            img: require('../../../../assets/groupprofile5.jpg'),
-        },
-        {
-            username: "arpit",
-            message: "Lorem ipsum dolor sit amet consectetur adipisicing elit..",
-            lastonline: "6min",
-            messagecount: "6",
-            key: '11',
-            img: require('../../../../assets/groupprofile5.jpg'),
-        },
-        {
-            username: "arpit",
-            message: "Lorem ipsum dolor sit amet consectetur adipisicing elit..",
-            lastonline: "6min",
-            messagecount: "6",
-            key: '12',
-            img: require('../../../../assets/groupprofile5.jpg'),
-        },
-        {
-            username: "arpit",
-            message: "Lorem ipsum dolor sit amet consectetur adipisicing elit..",
-            lastonline: "6min",
-            messagecount: "6",
-            key: '13',
-            img: require('../../../../assets/groupprofile5.jpg'),
-        },
-        {
-            username: "arpit",
-            message: "Lorem ipsum dolor sit amet consectetur adipisicing elit..",
-            lastonline: "6min",
-            messagecount: "6",
-            key: '14',
-            img: require('../../../../assets/groupprofile5.jpg'),
-        },
-        {
-            username: "arpit",
-            message: "Lorem ipsum dolor sit amet consectetur adipisicing elit..",
-            lastonline: "6min",
-            messagecount: "6",
-            key: '15',
-            img: require('../../../../assets/groupprofile5.jpg'),
-        },
-    ]
+    //     {
+    //         screenName: "erdwkt",
+    //         message: "Lorem ipsum dolor sit amet consectetur adipisicing elit..",
+    //         lastonline: "7min",
+    //         messagecount: "3",
+    //         key: '2',
+    //         img: require('../../../../assets/user.png'),
+    //     },
+    //     {
+    //         screenName: "arpit",
+    //         message: "Lorem ipsum dolor sit amet consectetur adipisicing elit..",
+    //         lastonline: "3min",
+    //         messagecount: "5",
+    //         key: '3',
+    //         img: require("../../../../assets/groupprofile3.jpg"),
+    //     },
+    //     {
+    //         screenName: "vibhu",
+    //         message: "Lorem ipsum dolor sit amet consectetur adipisicing elit..",
+    //         lastonline: "9min",
+    //         messagecount: "1",
+    //         key: '4',
+    //         img: require('../../../../assets/groupprofile9.jpg'),
+    //     },
+    //     {
+    //         screenName: "aakansha",
+    //         message: "Lorem ipsum dolor sit amet consectetur adipisicing elit..",
+    //         lastonline: "1min",
+    //         messagecount: "4",
+    //         key: '5',
+    //         img: require('../../../../assets/groupprofile4.jpg'),
+    //     },
+    //     {
+    //         screenName: "priyanka",
+    //         message: "Lorem ipsum dolor sit amet consectetur adipisicing elit..",
+    //         lastonline: "6min",
+    //         messagecount: "6",
+    //         key: '6',
+    //         img: require('../../../../assets/groupprofile5.jpg'),
+    //     },
+    //     {
+    //         screenName: "etset",
+    //         message: "Lorem ipsum dolor sit amet consectetur adipisicing elit..",
+    //         lastonline: "6min",
+    //         messagecount: "6",
+    //         key: '7',
+    //         img: require('../../../../assets/user.png'),
+    //     },
+    //     {
+    //         screenName: "arpit",
+    //         message: "Lorem ipsum dolor sit amet consectetur adipisicing elit..",
+    //         lastonline: "6min",
+    //         messagecount: "6",
+    //         key: '8',
+    //         img: require('../../../../assets/groupprofile5.jpg'),
+    //     },
+    //     {
+    //         screenName: "hdrets",
+    //         message: "Lorem ipsum dolor sit amet consectetur adipisicing elit..",
+    //         lastonline: "6min",
+    //         messagecount: "6",
+    //         key: '9',
+    //         img: require('../../../../assets/user.png'),
+    //     },
+    //     {
+    //         screenName: "arpit",
+    //         message: "Lorem ipsum dolor sit amet consectetur adipisicing elit..",
+    //         lastonline: "6min",
+    //         messagecount: "6",
+    //         key: '10',
+    //         img: require('../../../../assets/groupprofile5.jpg'),
+    //     },
+    //     {
+    //         screenName: "arpit",
+    //         message: "Lorem ipsum dolor sit amet consectetur adipisicing elit..",
+    //         lastonline: "6min",
+    //         messagecount: "6",
+    //         key: '11',
+    //         img: require('../../../../assets/groupprofile5.jpg'),
+    //     },
+    //     {
+    //         screenName: "arpit",
+    //         message: "Lorem ipsum dolor sit amet consectetur adipisicing elit..",
+    //         lastonline: "6min",
+    //         messagecount: "6",
+    //         key: '12',
+    //         img: require('../../../../assets/groupprofile5.jpg'),
+    //     },
+    //     {
+    //         screenName: "arpit",
+    //         message: "Lorem ipsum dolor sit amet consectetur adipisicing elit..",
+    //         lastonline: "6min",
+    //         messagecount: "6",
+    //         key: '13',
+    //         img: require('../../../../assets/groupprofile5.jpg'),
+    //     },
+    //     {
+    //         screenName: "arpit",
+    //         message: "Lorem ipsum dolor sit amet consectetur adipisicing elit..",
+    //         lastonline: "6min",
+    //         messagecount: "6",
+    //         key: '14',
+    //         img: require('../../../../assets/groupprofile5.jpg'),
+    //     },
+    //     {
+    //         screenName: "arpit",
+    //         message: "Lorem ipsum dolor sit amet consectetur adipisicing elit..",
+    //         lastonline: "6min",
+    //         messagecount: "6",
+    //         key: '15',
+    //         img: require('../../../../assets/groupprofile5.jpg'),
+    //     },
+    // ]
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedItemId, setSelectedItemId] = useState(1);
     const [value, setValue] = useState(null)
@@ -138,14 +141,33 @@ const Chat = ({ navigation }) => {
 
         setModalVisible(true)
     }
+    
     const [userData,setUserData] = useState()
-    useEffect(()=>{
-        (async()=>{
-            console.log('Chat useEffect')
-            const data = await AsyncStorage.getItem('userDataResp')
-            setUserData(JSON.parse(data))
-        })();
-    },[])
+    const setuser = async()=>{
+        console.log('Chat useEffect')
+        const data = await AsyncStorage.getItem('userDataResp')
+        setUserData(()=>JSON.parse(data))
+        console.log("userData",JSON.parse(data).data._id)
+            const chatUsers = await getChats(JSON.parse(data).data._id)
+            if(chatUsers.status===200)
+            setShownmessage(chatUsers.message)
+            console.log(chatUsers.message)
+    }
+    
+    useEffect(() => {
+    (async()=>{
+        await setuser()
+        
+    })()
+    }, [])
+    
+    const handlePress = (data)=>{
+        const OtherDAta = data
+        const myData = userData.data
+        navigation.navigate("Rtlchat" , {OtherDAta , myData})
+        console.log(OtherDAta)
+        console.log(myData) 
+    }
     return (<>{userData && 
         <View style={styles.chat_outer_container}>
             <Header navigation={navigation} data = {userData}/>
@@ -167,7 +189,7 @@ const Chat = ({ navigation }) => {
                     style={{}}
                     showsVerticalScrollIndicator={false}
                     data={shownmessage}
-                    // keyExtractor={(item) => item.key}
+                    keyExtractor={(item) => item._id}
                     renderItem={({ item }) => {
                         return (
                             <>
@@ -178,8 +200,8 @@ const Chat = ({ navigation }) => {
                                     }}>
                                         <TouchableOpacity activeOpacity={0}
                                             onPress={(e) => {
-                                                if (shownmessage.filter(item => item.key === e)) {
-                                                    setValue(item.key)
+                                                if (shownmessage.filter(item => item._id === e)) {
+                                                    setValue(item._id)
                                                     setModalVisible(true)
                                                 }
                                             }}>
@@ -187,7 +209,7 @@ const Chat = ({ navigation }) => {
                                                 animationType="fade"
                                                 closeOnClick={true}
                                                 transparent={true}
-                                                visible={value === item.key ? modalVisible:""}
+                                                visible={value === item._id ? modalVisible:""}
                                             >
                                                 <TouchableOpacity activeOpacity={8} onPress={() => { setModalVisible(!modalVisible) }} style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: "transparent" }}>
 
@@ -205,9 +227,9 @@ const Chat = ({ navigation }) => {
 
                                                         <View style={{ backgroundColor: "#227ee3", height: 150, width: 300, borderRadius: 10, position: "relative" }}>
                                                             <View style={{ alignItems: "center", justifyContent: "center", marginTop: 30 }}>
-                                                                {/* <Text style={{ color: "white", padding: 5, fontSize: 20, fontWeight: "bold" }}>{pairkey === element.item.key ? "" : element.item.username}</Text> */}
+                                                                {/* <Text style={{ color: "white", padding: 5, fontSize: 20, fontWeight: "bold" }}>{pairkey === element.item.key ? "" : element.item.screenName}</Text> */}
                                                                 <Text style={{ color: "white", padding: 5, fontSize: 20, fontWeight: "bold" }}>
-                                                                    {value === item.key ? item.username : "noo"}
+                                                                    {value === item.key ? item.screenName : "noo"}
                                                                     
                                                                 </Text>
                                                                 <Text style={{ color: "white", padding: 5 }}>20/2/2023</Text>
@@ -230,15 +252,16 @@ const Chat = ({ navigation }) => {
                                                                     </View>
                                                                 </View>
                                                                 <View style={{ width: 120, height: 120, alignItems: "center", justifyContent: "center", borderRadius: 120 / 2, borderWidth: 5, borderColor: "white", }}>
+                                                                    {console.log(item.avatarId)}
                                                                     <Image style={{ height: 110, width: 110, borderRadius: 110 / 2, resizeMode: 'contain', }}
-                                                                        source={value === item.key ?item.img :""}
+                                                                        source={{   uri: "data:image/svg+xml;utf8," + multiavatar(item.avatarId)}}
  
                                                                     />
                                                                 </View>
                                                                 <View>
                                                                     <View style={{ marginTop: 30, backgroundColor: "#227ee3", width: 40, height: 40, borderRadius: 40 / 2, alignItems: "center", justifyContent: "center", marginRight: 30, borderWidth: 2, borderColor: "white" }}>
                                                                         <TouchableOpacity activeOpacity={8} onPress={() => {
-                                                                            navigation.navigate("Rtlchat")
+                                                                           handlePress(item)
                                                                             setModalVisible(false)
                                                                         }}>
                                                                             <MaterialCommunityIcons name='android-messages' size={28} style={{ color: "white" }} />
@@ -266,7 +289,7 @@ const Chat = ({ navigation }) => {
                                             <View>
                                                 <View style={styles.userprofile_status}>
                                                     <Image style={{ height: 60, width: 60, borderRadius: 60 / 2, resizeMode: 'contain' }}
-                                                        source={item.img}
+                                                        source={{uri: "data:image/svg+xml;utf8," + multiavatar(item.avatarId)}}
                                                     />
                                                     <View style={styles.status_dot}>
                                                     </View>
@@ -275,11 +298,11 @@ const Chat = ({ navigation }) => {
                                         </TouchableOpacity>
 
 
-                                        <TouchableOpacity onPress={() => navigation.navigate("Rtlchat")} activeOpacity={2} >
+                                        <TouchableOpacity onPress={() => handlePress(item)} activeOpacity={2} >
                                             <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
 
                                                 <View style={{ width: "67%", marginLeft: 15, }}>
-                                                    <Text>{item.username}</Text>
+                                                    <Text>{item.screenName}</Text>
                                                     <Text>{item.message}</Text>
                                                 </View>
                                                 <View>

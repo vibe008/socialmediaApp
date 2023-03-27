@@ -4,29 +4,29 @@ import React, { useState } from 'react'
 import { Entypo } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { Modal } from 'react-native';
-const Header = ({ navigation,data }) => {
+const Header = ({ navigation, data }) => {
     console.log()
     const [menubar, setMenubar] = useState("")
-    const [ lightbar , setLightbar] = useState(false)
-   const [modelopen , setModalopen] = useState(false)
+    const [lightbar, setLightbar] = useState(false)
+    const [modelopen, setModalopen] = useState(false)
     const toggleMenuBar = () => {
         setMenubar(!menubar)
     }
-const highlightbar = ()=>{
-setLightbar(!lightbar)
-navigation.navigate("Chathome")
-}
+    const highlightbar = () => {
+        setLightbar(!lightbar)
+        navigation.navigate("Chathome")
+    }
 
-const highlightbar1 = ()=>{
-    // setLightbar(!lightbar)
-    navigation.navigate("Chat")
-}
+    const highlightbar1 = () => {
+        // setLightbar(!lightbar)
+        navigation.navigate("Chat")
+    }
     return (
         <>
             <View style={styles.header}>
                 <View style={styles.inner_header}>
                     <View>
-                        <TouchableOpacity onPress={()=>setModalopen(true)}>
+                        <TouchableOpacity onPress={() => setModalopen(true)}>
                             <Entypo name="menu" size={32} color="black" />
                         </TouchableOpacity>
                     </View>
@@ -40,42 +40,46 @@ const highlightbar1 = ()=>{
                     </View>
 
                     <Modal
-                            animationType="fade"
-                            transparent={true}
-                            visible={modelopen}
-                            onRequestClose={() => {
+                        animationType="fade"
+                        transparent={true}
+                        visible={modelopen}
+                        onRequestClose={() => {
                             //   Alert.alert('Modal has been closed.');
-                              setModalopen(!modelopen);
-                            }}
+                            setModalopen(!modelopen);
+                        }}
                     >
-                        <TouchableOpacity style={{flex:1 ,}}
-                        onPress={()=> setModalopen(!modelopen)}
-                        activeOpacity={8}
+                        <TouchableOpacity style={{ flex: 1, }}
+                            onPress={() => setModalopen(!modelopen)}
+                            activeOpacity={8}
                         >
-                    <View style={styles.showmwnu}>
-                        <TouchableOpacity onPress={()=>setModalopen(false)}
-                            style={styles.cross_circle} >
-                            <Entypo name='circle-with-cross' size={30} />
-                        </TouchableOpacity>
-                        <View style={styles.profile_section}>
-                            <View style={styles.img_name}>
-                                <Image style={{ height: 50, width: 50, borderRadius: 50 / 2, resizeMode: 'contain', }}
-                                    source={{
-                                        uri: data.data.profileImgUrl?data.data.profileImgUrl:"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                                    }} />
-                                
-                                <Text style={styles.text}>
-                                    Name: {data.data.fullName}
-                                </Text>
-                                <Text style={styles.text}>
-                                    Screen Name: {data.data.screenName}
-                                </Text> 
+                            <View style={styles.showmwnu}>
+                                <TouchableOpacity onPress={() => setModalopen(false)}
+                                    style={styles.cross_circle} >
+                                    <Entypo name='circle-with-cross' size={30} />
+                                </TouchableOpacity>
+                                <View style={styles.profile_section}>
+                                    <View style={styles.img_name}>
+                                        <Image style={{ width: 70, height: 70, resizeMode: 'contain', borderRadius: 70 / 2, borderColor: "white", borderWidth: 1 }}
+                                            source={{
+                                                uri: data.data.profileImgUrl ? data.data.profileImgUrl : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                                            }} />
+                                        <View
+                                            style={{marginTop:10}}
+                                        >
+                                            <Text style={styles.text}>
+                                                Name: {data.data.fullName}
+                                            </Text>
+                                            <Text style={styles.text}>
+                                                Screen Name: {data.data.screenName}
+                                            </Text>
+                                            <View >
+                                                <Text style={styles.text}>Interests: {(data.data.interests.map(item => item.title)).join(', ')}</Text>
+                                            </View>
+                                        </View>
+
+                                    </View>
+                                </View>
                             </View>
-                            <View style={styles.intrest_section}>
-                                <Text style={{ color: "white" }}>Interests: {(data.data.interests.map(item=>item.title)).join(', ')}</Text>
-                            </View>
-                        </View>
-                    </View>
                         </TouchableOpacity>
                     </Modal>
                 </View>
@@ -93,7 +97,7 @@ const styles = StyleSheet.create({
         height: "100%",
         width: "80%",
         zIndex: 999,
-        marginTop:20
+        marginTop: 20
 
     },
     hidemenu: {
@@ -114,14 +118,15 @@ const styles = StyleSheet.create({
         // backgroundColor:"green"
     },
     intrest_section: {
-        width: "50%",
-        padding: 20,
+        // width: "50%",
+        // padding: 20,
         // backgroundColor:"red"
     },
     text: {
         fontWeight: "500",
         fontSize: 15,
-        color: "white"
+        color: "white",
+        padding:2
     },
     header: {
         backgroundColor: "white",
@@ -154,11 +159,11 @@ const styles = StyleSheet.create({
     cross_circle: {
         position: "absolute", top: -15, right: -15, zIndex: 9999, borderRadius: 51, backgroundColor: "white"
     },
-    showligth:{
+    showligth: {
         borderBottomColor: "#227ee3", borderBottomWidth: 3, borderRadius: 2,
     },
-    hidelight:{
-        borderColor:'none'
+    hidelight: {
+        borderColor: 'none'
     }
 
 })
