@@ -10,6 +10,7 @@ import { getDiscovers, getFiltersDiscovers,setActiveDiscover } from '../../Servi
 import multiavatar from '@multiavatar/multiavatar'
 import Placeholder from './Placeholder';
 import socket from '../../Socket/Socket';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const DiscoverIneer = ({ navigation, userdata, selectedInterest }) => {
 
 
@@ -63,8 +64,7 @@ const DiscoverIneer = ({ navigation, userdata, selectedInterest }) => {
 
 
     const hendlepress = async(data) => {
-       
-        // console.log("userID", data.item._id)
+        console.log("userID", data.item._id)
         let OtherId = data.item._id
         let myID = userdata.data._id
         // console.log("other", data.item)
@@ -81,7 +81,16 @@ const DiscoverIneer = ({ navigation, userdata, selectedInterest }) => {
             // navigation.navigate("Rtlchat" , {room:`${OtherId}-${userdata.data._id}`})
                navigation.navigate("Rtlchat" , {OtherDAta , myData})
         }
-       
+        const chatUserData = await AsyncStorage.getItem("chatUsers" )
+        if(chatUserData){
+           const newChatUsers = [...JSON.parse(chatUserData),data.item]
+           await AsyncStorage.setItem("chatUsers" , JSON.stringify(newChatUsers) )
+        }
+        else{
+           await AsyncStorage.setItem("chatUsers" , JSON.stringify([data.item]))
+        }
+        const updateList = connections.filter(item => item._id !== data.item._id)
+        setConnections(updateList)
     }
 
 
@@ -183,7 +192,7 @@ const DiscoverIneer = ({ navigation, userdata, selectedInterest }) => {
                     </TouchableOpacity>
                 </View>
                 <TouchableHighlight onPress={() => {
-                    hendlepress(data)
+                     hendlepress(data)
                 }}
                     style={styles.rowFront}
                     underlayColor={'#fff'}

@@ -12,4 +12,8 @@ const setActiveDiscover = async(data)=>{
     const resp = await fetch(apiUrl+'connection/'+data,{method:'patch'}) 
     return await resp.json()
 }
- export  {getDiscovers,getFiltersDiscovers,setActiveDiscover}
+const getChats = async(data)=>{
+    const resp = await fetch(apiUrl+'connection/chatUsers/'+data) 
+    return await resp.json()
+}
+ export  {getDiscovers,getFiltersDiscovers,setActiveDiscover,getChats}

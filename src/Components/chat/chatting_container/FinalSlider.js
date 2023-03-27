@@ -1,5 +1,5 @@
-import { StyleSheet, Text, TextInput, View , ImageBackground} from 'react-native'
-import React, { useState } from 'react'
+import { StyleSheet, Text, TextInput, View , ImageBackground, Alert} from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { GestureHandlerRootView, PanGestureHandler } from 'react-native-gesture-handler'
 import Animated, { useAnimatedGestureHandler, useAnimatedProps, useAnimatedStyle, useSharedValue } from 'react-native-reanimated'
 const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
@@ -10,6 +10,7 @@ const Knoob_Width = 30
 const FinalSlider = (props) => {
     const deefalutValue = props.otherData.defaultTrust
     const y = useSharedValue(Math.ceil((-deefalutValue*372)/100))
+    const [isZero,setIsZero]= useState(Math.ceil((-y.value/372)*100))
 
     const handleGesture = useAnimatedGestureHandler({
         onStart: (_, ctx) => {
@@ -20,7 +21,7 @@ const FinalSlider = (props) => {
             y.value = ctx.StartY + event.translationY > 0 ? 0 : ctx.StartY + event.translationY < -372 ? -372 : ctx.StartY + event.translationY
             // y.value = 10
             console.log("yvalue", (y.value/372)*100)
-
+            // setIsZero(Math.ceil((-y.value/372)*100))
         }
     })
 
@@ -49,8 +50,9 @@ const FinalSlider = (props) => {
             ]
         }
     })
+ 
     const number = useAnimatedProps(() => {
-    
+       
         return {
             // text: `${y.value}`
             
@@ -58,6 +60,13 @@ const FinalSlider = (props) => {
 
         }
     })
+    
+    useEffect(()=>{
+        console.log(isZero)
+    },[isZero])
+    const handleZero=()=>{
+        Alert.alert('its zero')
+    }
     return (
         <GestureHandlerRootView style={styles.main}>
                         <View style={styles.slider}>
