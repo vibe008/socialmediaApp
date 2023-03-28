@@ -25,12 +25,14 @@ import Inputslide from './Inputslide';
 import Animated from 'react-native-reanimated';
 import FinalSlider from './FinalSlider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { setDeactiveDiscover } from '../../../Service/discover';
+import { getTrust, setDeactiveDiscover, updateTrust } from '../../../Service/discover';
 // import { Modal } from 'react-native-web';
 const Rtl_chat = ({ navigation, route }) => {
 
     const myData = route.params.myData
     const otherData = route.params.OtherDAta
+    const trust = route.params.trust
+    console.log('trust',trust)
     console.log("myData",myData)
     console.log("OtherDAta",otherData)
     const [left, setLeft] = useState(-183)
@@ -43,6 +45,7 @@ const Rtl_chat = ({ navigation, route }) => {
     const [soundmessage, setSoundmessage] = useState("")
     const [daytime, setDayTime] = useState(false)
     const [currentDay, setCurrentDay] = useState('');
+
     const message = [
         // {
         //     id: 1,
@@ -129,6 +132,7 @@ const Rtl_chat = ({ navigation, route }) => {
     const [renderMsg, setRenderMsg] = useState(message)
 
     useEffect(() => {
+        
     //    console.log("hii")
     //    socket.on("connection" , ()=>{
     //     console.log("connection")
@@ -136,7 +140,7 @@ const Rtl_chat = ({ navigation, route }) => {
      socket.emit("user_connected" , {id:"2"} )  
     }, [])
     
-
+    
     socket.on('currentDay', (day) => {
         setCurrentDay(day);
       });
@@ -247,10 +251,11 @@ const Rtl_chat = ({ navigation, route }) => {
         console.log("newdate" ,convertDay)
     }
 
-
+    
 
     useEffect(() => {
         (async () => {
+            
             const chats = await AsyncStorage.getItem(myData._id + '-' + otherData._id)
             if (JSON.parse(chats)) {
 
@@ -337,7 +342,7 @@ console.log("day",currentDay)
                 </View>
 
                 <View style={styles.user_percentage}>
-                    <Text style={{ fontSize: 10, color: "white" }}>{myData.defaultTrust}%</Text>
+                    <Text style={{ fontSize: 10, color: "white" }}>{trust.status}%</Text>
                 </View>
             </View>
             {/* top end */}
@@ -470,14 +475,28 @@ console.log("day",currentDay)
 
             <View style={[styles.showbar, { left: left }]} >
                 <ImageBackground source={require("../../../../assets/barimg2.png")} resizeMode="contain" style={{ height: "100%", width: "100%", zIndex: -1 }}>
-                    <FinalSlider  otherData={otherData} navigation={async()=>{
-                        const resp = await setDeactiveDiscover(myData._id+'/'+otherData._id)
-                        if(resp.status !== 200){
-                            Alert.alert('Problem!','Unable to chat')
-                        }else{
-                            navigation.navigate('Chathome')
-                        }
-                        }}/>
+                    <FinalSlider
+                        otherData={otherData} 
+                        navigation={async()=>{
+                            const resp = await setDeactiveDiscover(myData._id+'/'+otherData._id+'/'+otherData.defaultTrust)
+                            if(resp.status !== 200){
+                                Alert.alert('Problem!','Unable to chat')
+                            }else{
+                                navigation.navigate('Chathome')
+                            }
+                        }}
+                        updateTrust = {async(val)=>{
+                            console.log('update karna hai bhai',val)
+                            const resp = await updateTrust(myData._id+'/'+otherData._id+'/'+val)
+                            console.log(resp)
+                            if(resp.status !== 200){
+                                Alert.alert('Problem!','Unable to chat')
+                            }else{
+                                console.log('trust updated to server')
+                            }
+                        }}
+                        trust = {trust.meter}
+                    />
                 </ImageBackground>
                 {/* <Inputslide /> */}
                 <TouchableOpacity onPress={barOpen}

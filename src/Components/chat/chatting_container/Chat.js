@@ -8,7 +8,7 @@ import { Feather } from "@expo/vector-icons"
 import { Octicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { getChats } from '../../../Service/discover'
+import { getChats,getTrust } from '../../../Service/discover'
 const Chat = ({ navigation }) => {
 const [shownmessage , setShownmessage]= useState([])
     // const shownmessage = [
@@ -161,10 +161,11 @@ const [shownmessage , setShownmessage]= useState([])
     })()
     }, [])
     
-    const handlePress = (data)=>{
+    const handlePress = async (data)=>{
         const OtherDAta = data
         const myData = userData.data
-        navigation.navigate("Rtlchat" , {OtherDAta , myData})
+        const {status,message} = await getTrust(myData._id+'/'+OtherDAta._id)
+        navigation.navigate("Rtlchat" , {OtherDAta , myData,trust:message})
         console.log(OtherDAta)
         console.log(myData) 
     }

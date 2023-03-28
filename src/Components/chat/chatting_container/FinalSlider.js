@@ -8,15 +8,17 @@ import { LinearGradient } from 'expo-linear-gradient';
 const Slider_hight = 400
 const Knoob_Width = 30
 const FinalSlider = (props) => {
-    const deefalutValue = props.otherData.defaultTrust
+    const deefalutValue = props.trust
     const y=useSharedValue(Math.ceil((-deefalutValue*372)/100))
-    const [isZero,setIsZero]= useState(Math.ceil((-y.value/372)*100))
-    console.log(isZero)
+
     const handleZero=async(val)=>{
         // 'worklet';
         if(val === 0){
             console.log('its zero',val)
             props.navigation()
+        }
+        else{
+            props.updateTrust(val)
         }
         
         
