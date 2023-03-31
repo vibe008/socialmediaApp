@@ -6,13 +6,14 @@ import { MaterialIcons } from "@expo/vector-icons"
 import { Feather } from "@expo/vector-icons"
 import { Octicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { getDiscovers, getFiltersDiscovers,setActiveDiscover } from '../../Service/discover';
+import { getDiscovers, getFiltersDiscovers,setActiveDiscover,getTrust } from '../../Service/discover';
 import multiavatar from '@multiavatar/multiavatar'
 import Placeholder from './Placeholder';
 import socket from '../../Socket/Socket';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useIsFocused } from '@react-navigation/native';
 const DiscoverIneer = ({ navigation, userdata, selectedInterest }) => {
-
+    const isFocused = useIsFocused();
 
     const [connections, setConnections] = useState()
     const [isLoading, setIsLoading] = useState(true)
@@ -23,9 +24,9 @@ const DiscoverIneer = ({ navigation, userdata, selectedInterest }) => {
     
     useEffect(() => {
         setIsLoading(true)
-        // console.log('in DiscoverIneer useEffect',selectedInterest)
+        console.log('in DiscoverIneer useEffect')
         handleDiscover()
-    }, [selectedInterest])
+    }, [isFocused,selectedInterest])
     const handleDiscover = async () => {
 
         if (selectedInterest === 'All') {
@@ -60,7 +61,7 @@ const DiscoverIneer = ({ navigation, userdata, selectedInterest }) => {
         setConnections(newData);
     };
 
-
+   
 
 
     const hendlepress = async(data) => {
@@ -71,15 +72,16 @@ const DiscoverIneer = ({ navigation, userdata, selectedInterest }) => {
         const OtherDAta = data.item
         const myData =  userdata.data
         // console.log("mydata", userdata.data)
-       
+        const {status,message} = await getTrust(myData._id+'/'+OtherDAta._id)
+        console.log('trustttt',status,message)
         const resp = await activeChat(OtherId)
-        if(resp.status !== 200){
+        if(resp.status !== 200 && status!== 200){
             Alert.alert('Problem!','Unable to chat')
         }else{
             socket.emit("Join", myID)
             // socket.emit("join room" ,{room:`${OtherId}-${userdata.data._id}`})
             // navigation.navigate("Rtlchat" , {room:`${OtherId}-${userdata.data._id}`})
-               navigation.navigate("Rtlchat" , {OtherDAta , myData})
+               navigation.navigate("Rtlchat" , {OtherDAta , myData,trust:message})
         }
         const chatUserData = await AsyncStorage.getItem("chatUsers" )
         if(chatUserData){
