@@ -115,7 +115,7 @@ const DiscoverIneer = ({ navigation, userdata, selectedInterest }) => {
                             }}
                         />
                         <Modal
-                            // animationType="fade"
+                            animationType="fade"
                             closeOnClick={true}
                             transparent={true}
                             visible={modalData === data.item._id ? modalVisible : ""}
