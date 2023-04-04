@@ -7,7 +7,7 @@ import { EvilIcons } from '@expo/vector-icons';
 import DatePicker from 'react-native-modern-datepicker';
 import getInterest from '../../../Service/interest';
 import React, { useState, useRef , useEffect} from 'react'
-import apiUrl from '../../../Service/env';
+import apiUrl from './../../../Service/env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const IntrestedAres = ({navigation}) => {
