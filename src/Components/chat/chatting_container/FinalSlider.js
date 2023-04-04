@@ -98,7 +98,7 @@ const FinalSlider = (props) => {
                 </PanGestureHandler>
                 {console.log(number.initial.value.text)}
                 <AnimatedTextInput style={styles.textinputstyle}
-                            defaultValue='0' animatedProps={number} editable={false}
+                            defaultValue={deefalutValue} animatedProps={number} editable={false}
                         />
             </View>
         </GestureHandlerRootView>
