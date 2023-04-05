@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, TouchableOpacity, Image as ImageReact } from 'react-native'
-import Image from 'react-native-remote-svg';
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native'
+// import Image from 'react-native-remote-svg';
 import React, { useState } from 'react'
 import { Entypo } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
@@ -61,7 +61,7 @@ const Header = ({ navigation, data }) => {
                                     <View style={styles.img_name}>
                                         <Image style={{ width: 70, height: 70, resizeMode: 'contain', borderRadius: 70 / 2, borderColor: "white", borderWidth: 1 }}
                                             source={{
-                                                uri: data.data.profileImgUrl ? data.data.profileImgUrl : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                                                uri: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                                             }} />
                                         <View
                                             style={{marginTop:10}}

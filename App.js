@@ -32,6 +32,7 @@ import FinalSlider from './src/Components/chat/chatting_container/FinalSlider';
 import Groupinfo from './src/Components/chat/GroupChat/Groupinfo';
 import Container from './src/Components/Container/Container';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import WebView from 'react-native-webview';
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -52,7 +53,8 @@ export default function App() {
   ,[])
   const navigationFunc = ()=>{
     if(checkLogin === true){
-      return (<>
+      return (
+      <>
       <NavigationContainer>
     <Stack.Navigator>
         <Stack.Screen name="Chathome" component={Chat_landing} options={{ headerShown: false }} />
@@ -95,12 +97,11 @@ export default function App() {
   }
 
   return (
-    
 
-    // <Discover/>
-    // <Header/>
     <>
+
     {navigationFunc()}
+
     </>
    
   );

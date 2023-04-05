@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View, TouchableOpacity, Image as ReactImage, TouchableHighlight, Modal, FlatList, Alert } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Image, TouchableHighlight, Modal, FlatList, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import Image from 'react-native-remote-svg';
+// import Image from 'react-native-remote-svg';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { MaterialIcons } from "@expo/vector-icons"
 import { Feather } from "@expo/vector-icons"
@@ -111,7 +111,8 @@ const DiscoverIneer = ({ navigation, userdata, selectedInterest }) => {
                     >
                         <Image style={{ height: 50, width: 50, borderRadius: 50 / 2, resizeMode: 'contain', }}
                             source={{
-                                uri: "data:image/svg+xml;utf8," + multiavatar(data.item.avatarId)
+                                // uri: "data:image/svg+xml;utf8," + multiavatar(data.item.avatarId)
+                                uri:"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                             }}
                         />
                         <Modal
@@ -159,7 +160,8 @@ const DiscoverIneer = ({ navigation, userdata, selectedInterest }) => {
                                             <View style={{ width: 120, height: 120, alignItems: "center", justifyContent: "center", borderRadius: 120 / 2, borderWidth: 5, borderColor: "white", }}>
                                                 <Image style={{ height: 110, width: 110, borderRadius: 110 / 2, resizeMode: 'contain', }}
                                                     source={{
-                                                        uri: "data:image/svg+xml;utf8," + multiavatar(data.item.avatarId)
+                                                        // uri: "data:image/svg+xml;utf8," + multiavatar(data.item.avatarId)
+                                                        uri: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                                                         // "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" 
                                                     }} />
                                             </View>
