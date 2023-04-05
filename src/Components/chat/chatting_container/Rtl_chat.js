@@ -1,8 +1,8 @@
 import {
      Text, View, FlatList, SafeAreaView, TextInput, Button, TouchableOpacity, NativeModules,
-    LayoutAnimation, Modal, ImageBackground
+    LayoutAnimation, Modal, ImageBackground, Image
 } from 'react-native'
-import Image from 'react-native-remote-svg';
+// import Image from 'react-native-remote-svg';
 import React, { useState, useRef, useEffect } from 'react'
 const { UIManager } = NativeModules;
 UIManager.setLayoutAnimationEnabledExperimental &&
@@ -32,9 +32,9 @@ const Rtl_chat = ({ navigation, route }) => {
     const myData = route.params.myData
     const otherData = route.params.OtherDAta
     const trust = route.params.trust
-    console.log('trust',trust)
-    console.log("myData",myData)
-    console.log("OtherDAta",otherData)
+    // console.log('trust',trust)
+    // console.log("myData",myData)
+    // console.log("OtherDAta",otherData)
     const [left, setLeft] = useState(-183)
     const [inputvalue, setInputvalue] = useState("")
     const [inputmenu, setInputmenu] = useState(false)
@@ -253,7 +253,8 @@ console.log("day",currentDay)
 
                     <Image style={{ height: 40, width: 40, borderRadius: 40 / 2, resizeMode: 'contain', }}
                         source={{
-                            uri:  "data:image/svg+xml;utf8," +multiavatar(otherData.avatarId)
+                            // uri:  "data:image/svg+xml;utf8," +multiavatar(otherData.avatarId)
+                            uri:  "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                         }} />
                 </View>
 

@@ -87,7 +87,7 @@ const Profile = ({ navigation }) => {
       const data = JSON.parse(jsondata)
       const newdata = {...data,profileImgUrl:imagepath?'data:image/jpeg;base64,'+imagepath:'',deviceId,deviceToken,deviceType}
       const resp = await saveUserData(newdata)
-      console.log(resp)
+      // console.log(resp)
       await AsyncStorage.setItem('userDataResp',JSON.stringify(resp))
       navigation.navigate("Chathome")
     }

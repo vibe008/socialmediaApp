@@ -1,8 +1,8 @@
-import { FlatList, StyleSheet, Text, View, TouchableOpacity, Modal } from 'react-native'
+import { FlatList, StyleSheet, Text, View, TouchableOpacity, Modal,Image } from 'react-native'
 import React, { useState , useEffect} from 'react'
 import Header from '../../Login/common/Header'
 import { MaterialIcons } from "@expo/vector-icons"
-import Image from 'react-native-remote-svg';
+// import Image from 'react-native-remote-svg';
 import multiavatar from '@multiavatar/multiavatar'
 import { Feather } from "@expo/vector-icons"
 import { Octicons } from '@expo/vector-icons';
@@ -255,7 +255,8 @@ const [shownmessage , setShownmessage]= useState([])
                                                                 <View style={{ width: 120, height: 120, alignItems: "center", justifyContent: "center", borderRadius: 120 / 2, borderWidth: 5, borderColor: "white", }}>
                                                                     {console.log(item.avatarId)}
                                                                     <Image style={{ height: 110, width: 110, borderRadius: 110 / 2, resizeMode: 'contain', }}
-                                                                        source={{   uri: "data:image/svg+xml;utf8," + multiavatar(item.avatarId)}}
+                                                                        // source={{   uri: "data:image/svg+xml;utf8," + multiavatar(item.avatarId)}}
+                                                                        source={{   uri: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"}}
  
                                                                     />
                                                                 </View>
@@ -290,7 +291,8 @@ const [shownmessage , setShownmessage]= useState([])
                                             <View>
                                                 <View style={styles.userprofile_status}>
                                                     <Image style={{ height: 60, width: 60, borderRadius: 60 / 2, resizeMode: 'contain' }}
-                                                        source={{uri: "data:image/svg+xml;utf8," + multiavatar(item.avatarId)}}
+                                                        // source={{uri: "data:image/svg+xml;utf8," + multiavatar(item.avatarId)}}
+                                                        source={{uri: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"}}
                                                     />
                                                     <View style={styles.status_dot}>
                                                     </View>
