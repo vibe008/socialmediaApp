@@ -5,7 +5,7 @@ import { StyleSheet,  View } from 'react-native'
 // import Discover from './src/Components/chat/DiscoverOld';
 // import Arrow from './src/Components/Login/common/Arrow';
 import QueContainer from './src/Components/Login/authentication/QueContainer';
-import Profile from './src/Components/Login/authentication/Profile';
+// import Profile from './src/Components/Login/authentication/Profile';
 import Otp from './src/Components/Login/Otp';
 import IntrestedAres from './src/Components/Login/authentication/IntrestedAres';
 import Test from './src/Components/Login/authentication/Test';
@@ -32,6 +32,7 @@ import FinalSlider from './src/Components/chat/chatting_container/FinalSlider';
 import Groupinfo from './src/Components/chat/GroupChat/Groupinfo';
 import Container from './src/Components/Container/Container';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const Stack = createNativeStackNavigator();
 export default function App() {
   const [checkLogin,setCheckLogin] = useState('')
@@ -75,7 +76,7 @@ export default function App() {
     <Stack.Screen name="IntrestedAres" component={IntrestedAres} options={{ headerShown: false }}/>
     <Stack.Screen name="Test" component={Test} options={{ headerShown: false }}/>
     <Stack.Screen name="QueContainer" component={QueContainer} options={{ headerShown: false }}/>
-    <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }} />
+    {/* <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }} /> */}
 
     <Stack.Screen name="Chathome" component={Chat_landing} options={{ headerShown: false }} />
         {/* <Stack.Screen name="Container" component={Container} options={{ headerShown: false }}/>  */}

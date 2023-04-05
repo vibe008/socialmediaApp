@@ -7,7 +7,7 @@ import { EvilIcons } from '@expo/vector-icons';
 import DatePicker from 'react-native-modern-datepicker';
 import getInterest from '../../../Service/interest';
 import React, { useState, useRef , useEffect} from 'react'
-import apiUrl from './../../../Service/env';
+// import apiUrl from './../../../Service/env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const IntrestedAres = ({navigation}) => {
@@ -34,7 +34,7 @@ const getData = async()=>{
   // setIntrestitem([...resp.message])
 }
 useEffect(() => {
-  fetch(apiUrl+'interest/list').then(resp=>resp.json()).then(data=>{console.log(data)
+  fetch('http://13.234.43.25/serverapi/api/'+'interest/list').then(resp=>resp.json()).then(data=>{console.log(data)
     setIntrestitem([...data.message])
   })
 }, [])
