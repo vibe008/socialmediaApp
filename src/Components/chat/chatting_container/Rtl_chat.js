@@ -32,9 +32,9 @@ const Rtl_chat = ({ navigation, route }) => {
     const myData = route.params.myData
     const otherData = route.params.OtherDAta
     const trust = route.params.trust
-    console.log('trust',trust)
-    console.log("myData",myData)
-    console.log("OtherDAta",otherData)
+    // console.log('trust',trust)
+    // console.log("myData",myData)
+    // console.log("OtherDAta",otherData)
     const [left, setLeft] = useState(-183)
     const [inputvalue, setInputvalue] = useState("")
     const [inputmenu, setInputmenu] = useState(false)

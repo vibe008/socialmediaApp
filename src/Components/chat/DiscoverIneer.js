@@ -65,7 +65,7 @@ const DiscoverIneer = ({ navigation, userdata, selectedInterest }) => {
 
 
     const hendlepress = async(data) => {
-        console.log("userID", data.item._id)
+        // console.log("userID", data.item._id)
         let OtherId = data.item._id
         let myID = userdata.data._id
         // console.log("other", data.item)
