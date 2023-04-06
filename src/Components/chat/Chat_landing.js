@@ -1,4 +1,4 @@
-import { Button, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Button, Image, StyleSheet, Text, TouchableOpacity, View,BackHandler } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Discover from './Discover'
 import { Entypo } from '@expo/vector-icons';
@@ -19,7 +19,14 @@ const Chat_landing = ({ navigation }) => {
         })();
     },[])
 
-    
+    useEffect(()=>{
+        navigation.addListener('beforeRemove', (e) => {
+            // Prevent default behavior of leaving the screen
+            console.log(e)
+            e.preventDefault();
+            BackHandler.exitApp()
+        })
+    },[])
 
     return (
         <>{userData && <View style={{ backgroundColor: "white", paddingTop: 50, flex: 1, }}>
